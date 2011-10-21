@@ -31,7 +31,8 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 	}
 
 	private void init(byte defaultQuality) {
-		this.defaultQuality = defaultQuality;		
+		this.defaultQuality = defaultQuality;
+		curseq = new StringBuilder();
 	}
 	
 	public boolean hasNext() {

@@ -2,7 +2,7 @@ package biojava.impl;
 
 import biolite.Sequence;
 
-public class SequenceQualImpl implements Sequence {
+public class SequenceQualImpl extends Sequence {
 	private byte[] seq;
 	private byte[] qual;
 	private String id;

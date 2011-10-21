@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import biolite.Sequence;
 
-public class SequenceConstQualImpl implements Sequence {
+public class SequenceConstQualImpl extends Sequence {
 	private byte[] seq;
 	private byte qual;
 	private String id;
