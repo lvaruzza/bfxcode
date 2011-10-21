@@ -7,18 +7,20 @@ import java.util.Iterator;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
+import org.apache.log4j.Logger;
 
 import biojava.impl.SequenceConstQualImpl;
 import biolite.Sequence;
 
 public class LineBasedFastaIterator implements Iterator<Sequence> {
+	private static Logger log = Logger.getLogger(LineBasedFastaIterator.class);
 	private LineIterator li;
 	private byte defaultQuality;
 	
 	private StringBuilder curseq;
 	private String line = "";
 	private String header = "";
-	private boolean first = false;
+	private boolean first = true;
 	
 	public LineBasedFastaIterator(Reader fastaReader, byte defaultQuality) {
 		li =  IOUtils.lineIterator(fastaReader);
@@ -32,7 +34,7 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 
 	private void init(byte defaultQuality) {
 		this.defaultQuality = defaultQuality;
-		curseq = new StringBuilder();
+		//curseq = new StringBuilder();
 	}
 	
 	public boolean hasNext() {
@@ -44,17 +46,23 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 		while(li.hasNext()) {
 			line = li.next();
 			if (line.startsWith(">")) {
+				log.debug(String.format("line=%s first=%s ",line,first));
 				if (first) {
 					first = false;
+					header = line.substring(1);
+					curseq = new StringBuilder();
+					log.debug("Founded new sequence: '" + header +"'");
 				} else {
-					return new SequenceConstQualImpl(header,
+					log.debug("Returning sequence: '" + header +"'");
+					Sequence seq = new SequenceConstQualImpl(header,
 														curseq.toString(),
 														defaultQuality);
+					header = line.substring(1);
+					curseq = new StringBuilder();
+					return seq;
 				}
-				header = line;
-				curseq = new StringBuilder();
 			} else {
-				curseq.append(line.trim());
+				if (!first) curseq.append(line.trim());
 			}
 		}
 		return new SequenceConstQualImpl(header,
