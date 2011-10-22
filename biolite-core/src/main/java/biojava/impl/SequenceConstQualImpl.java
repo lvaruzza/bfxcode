@@ -20,15 +20,15 @@ public class SequenceConstQualImpl extends Sequence {
 		Arrays.fill(q, qual);
 		return q;
 	}
-	
-	public SequenceConstQualImpl(String id, byte[] seq, byte qual) {
-		super();
-		this.id = id;
+
+	public SequenceConstQualImpl(String header,byte[] seq, byte qual) {
+		super(header);
+
 		this.seq = seq;
 		this.qual = qual;
 	}
 	
-	public SequenceConstQualImpl(String id, String seq, byte qual) {
-		this(id,seq.getBytes(),qual);
+	public SequenceConstQualImpl(String header,String seq, byte qual) {
+		this(header,seq.getBytes(),qual);
 	}	
 }

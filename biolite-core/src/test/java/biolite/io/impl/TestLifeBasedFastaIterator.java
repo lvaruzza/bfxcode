@@ -34,4 +34,12 @@ public class TestLifeBasedFastaIterator {
 		assertEquals("CCCCCC",seq2.getSeqAsString());
 		log.debug(seq2);
 	}
+	
+	@Test
+	public void testReadFromFile() throws IOException {
+		Iterator<Sequence> it = reader.read("data/test/ncbi_small.fasta");
+		while(it.hasNext()) {
+			log.debug(it.next().getId());
+		}
+	}	
 }

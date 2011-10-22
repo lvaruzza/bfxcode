@@ -3,10 +3,37 @@ package biolite;
 import java.util.Arrays;
 
 public abstract class Sequence {
-	public abstract String getId();
+	private String id;
+	private String comments;
+	
+	public String getId() {
+		return id;
+	}
+	
+	public String getComments() {
+		return comments;
+	}
+	
 	public abstract byte[] getSeq();
 	public abstract byte[] getQual();
 
+	
+	
+	public Sequence(String id, String comments) {
+		super();
+		assert(id != null);
+		assert(comments != null);
+		
+		this.id = id;
+		this.comments = comments;
+	}
+
+	public Sequence(String header) {
+		String[] h = parseHeader(header);
+		id = h[0];
+		comments = h[1];
+	}
+	
 	public String getSeqAsString() {
 		return new String(getSeq());
 	}
@@ -16,6 +43,14 @@ public abstract class Sequence {
 		return "Sequence [Id=" + getId() + ", seq=" +
 				getSeqAsString() + ", qual="
 				+ Arrays.toString(getQual()) + "]";
+	}
+
+	public static String[] parseHeader(String header) {
+		int idx = header.indexOf(' ');
+		if (idx != -1)
+			return new String[] {header.substring(0, idx),header.substring(idx+1)};
+		else
+			return new String[] {header,""};			
 	}
 	
 	
