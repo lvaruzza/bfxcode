@@ -1,0 +1,9 @@
+gi|194374060|dbj|AK300657.1|	Homo sapiens cDNA FLJ55163 complete cds, highly similar to Myoglobin	7f3f86bb65248141cc0f66b449eb47e7
+gi|164697006|dbj|AK314057.1|	Homo sapiens cDNA, FLJ94722, highly similar to Homo sapiens myoglobin (MB), mRNA	e4be728fe92f51ff4996140790a12253
+gi|123998840|gb|DQ896050.2|	Synthetic construct Homo sapiens clone IMAGE:100010510; FLH189875.01L; RZPDo839C0265D myoglobin (MB) gene, encodes complete protein	d15db492eb3fdc860dae3e09191fedde
+gi|123994006|gb|DQ893679.2|	Synthetic construct clone IMAGE:100006309; FLH189879.01X; RZPDo839C0275D myoglobin (MB) gene, encodes complete protein	f4a1e4f6a18b5faf055de6c03367e00d
+gi|109451947|emb|CU013404.1|	Homo sapiens MB, mRNA (cDNA clone IMAGE:100000277), complete cds, without stop codon, in Gateway system	212b608bdb9ba4e1ec073acc514c5f8c
+gi|109451371|emb|CU013116.1|	Homo sapiens MB, mRNA (cDNA clone IMAGE:100000373), complete cds, with stop codon, in Gateway system	8367cd87d442b2fb90e40bdcbba33e95
+gi|62511906|gb|DQ003030.1|	Homo sapiens myoglobin transcript variant 1 (MB) gene, complete cds	b4c914baab217719950ae7cee8dd1c2b
+gi|49456852|emb|CR541949.1|	Homo sapiens full open reading frame cDNA clone RZPDo834C1234D for gene MB, myoglobin; complete cds, without stopcodon	40375381106a2ab8c0e66ea7cafdf9f2
+gi|47678562|emb|CR456516.1|	Homo sapiens MB full length open reading frame (ORF) cDNA clone (cDNA clone C22ORF:pGEM.MB)	11e5cb4b9311885ab7c0d1d1384b5102
