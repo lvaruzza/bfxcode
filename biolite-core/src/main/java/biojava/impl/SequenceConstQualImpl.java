@@ -7,11 +7,7 @@ import biolite.Sequence;
 public class SequenceConstQualImpl extends Sequence {
 	private byte[] seq;
 	private byte qual;
-	private String id;
-	
-	public String getId() {
-		return id;
-	}
+
 	public byte[] getSeq() {
 		return seq;
 	}

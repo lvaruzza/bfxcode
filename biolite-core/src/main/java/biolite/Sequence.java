@@ -2,7 +2,11 @@ package biolite;
 
 import java.util.Arrays;
 
+import org.apache.log4j.Logger;
+
 public abstract class Sequence {
+	private static Logger log = Logger.getLogger(Sequence.class);
+	
 	private String id;
 	private String comments;
 	
@@ -30,6 +34,7 @@ public abstract class Sequence {
 
 	public Sequence(String header) {
 		String[] h = parseHeader(header);
+		log.debug(String.format("'%s' = %s",header,Arrays.toString(h)));
 		id = h[0];
 		comments = h[1];
 	}
