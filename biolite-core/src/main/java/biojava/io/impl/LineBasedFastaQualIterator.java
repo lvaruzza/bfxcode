@@ -1,34 +1,92 @@
 package biojava.io.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
+import org.apache.log4j.Logger;
+
+import biojava.impl.SequenceConstQualImpl;
+import biojava.impl.SequenceQualImpl;
 import biolite.Sequence;
 
 public class LineBasedFastaQualIterator implements Iterator<Sequence> {
+	private static Logger log = Logger.getLogger(LineBasedFastaQualIterator.class);
+	
+	private LineIterator liseq;
+	private LineIterator liqual;
+
+	private StringBuilder curseq;
+	private StringBuilder curqual;
+	private String seqline = "";
+	private String qualline = "";
+	private String header = "";
+	private boolean first = true;
 	
 	public LineBasedFastaQualIterator(Reader fastaReader, Reader qualReader) {
-		// TODO Auto-generated constructor stub
+		this.liseq = IOUtils.lineIterator(fastaReader);
+		this.liqual = IOUtils.lineIterator(qualReader);
 	}
 
-	public LineBasedFastaQualIterator(InputStream fastaInput, InputStream qualInput) {
-		// TODO Auto-generated constructor stub
+	public LineBasedFastaQualIterator(InputStream fastaInput, InputStream qualInput) throws IOException {
+		this.liseq = IOUtils.lineIterator(fastaInput,"ASCII");
+		this.liqual = IOUtils.lineIterator(qualInput,"ASCII");	
 	}
 
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		return liseq.hasNext();
 	}
 
 	public Sequence next() {
-		// TODO Auto-generated method stub
-		return null;
+		while(liseq.hasNext()) {
+			seqline = liseq.next();
+			if (seqline.startsWith(">")) {
+				log.debug(String.format("line=%s first=%s ",seqline,first));
+				if (first) {
+					first = false;
+					header = seqline.substring(1);
+					curseq = new StringBuilder();
+					log.debug("Founded new sequence: '" + header +"'");
+					// Go to the first sequence in the qual file
+					while(liqual.hasNext()) {
+						qualline = liqual.next();
+						if(qualline.startsWith("^>")) break;
+					}
+				} else {
+					log.debug("Reading qual");
+					curqual = new StringBuilder();
+					// Read the qual entry;
+					assert(header.equals(qualline.substring(1)));
+					
+					while(liqual.hasNext()) {
+						qualline = liqual.next();
+						if (qualline.startsWith(">")) break;
+						curqual.append(qualline);
+					}
+					
+					log.debug("Returning sequence: '" + header +"'");
+					Sequence seq = new SequenceQualImpl(header,
+														curseq.toString(),
+														curqual.toString());
+					header = seqline.substring(1);
+					curseq = new StringBuilder();
+					curqual = new StringBuilder();
+					return seq;
+				}
+			} else {
+				if (!first) curseq.append(seqline.trim());
+			}
+		}
+		return new SequenceQualImpl(header,
+				curseq.toString(),
+				curqual.toString());
 	}
 
 	public void remove() {
-		// TODO Auto-generated method stub
-
+		throw new RuntimeException("Invalid invocation of remove()");
 	}
 
 }
