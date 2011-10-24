@@ -32,7 +32,11 @@
 					<artifactId>jmxtools</artifactId>
 				</exclusion>
 			</exclusions>
-
+  	</dependency>
+  	<dependency>
+  		<groupId>com.google.guava</groupId>
+  		<artifactId>guava</artifactId>
+  		<version>10.0.1</version>
   	</dependency>
   </dependencies>
 </project>
