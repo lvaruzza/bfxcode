@@ -24,7 +24,7 @@ public abstract class BaseReader<T> implements AbstractReader<T> {
 
 	public T read(File in) throws IOException {
 		try {
-			return read(new FileInputStream(in));
+			return read(CompressionUtils.openInputStream(in));
 		} catch(java.lang.Exception e) {
 			throw new FileProcessingException(e,in);
 		}

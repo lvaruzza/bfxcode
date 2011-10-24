@@ -58,7 +58,10 @@ public abstract class BaseSingleAndDualReader<T> implements AbstractDualReader<T
 	
 	public T read(File file1,File file2) throws IOException {
 		try {
-			return read(new FileInputStream(file1),new FileInputStream(file2));
+
+			return read(CompressionUtils.openInputStream(file1),
+				    CompressionUtils.openInputStream(file2));
+
 		} catch(java.lang.Exception e) {
 			throw new MultipleFilesProcessingException(e,file1,file2);
 		}

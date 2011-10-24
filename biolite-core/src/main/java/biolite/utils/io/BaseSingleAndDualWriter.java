@@ -50,7 +50,10 @@ public abstract class BaseSingleAndDualWriter<T> implements AbstractWriter<T>,Ab
 
 	public void write(File file1,File file2, T data) throws IOException {
 		try {
-			write(new FileOutputStream(file1),new FileOutputStream(file2),data);
+
+			write(CompressionUtils.openOutputStream(file1),
+				  CompressionUtils.openOutputStream(file2),data);
+
 		} catch(Exception e) {
 			throw new MultipleFilesProcessingException(e,file1,file2);
 		}

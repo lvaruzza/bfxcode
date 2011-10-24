@@ -23,16 +23,16 @@ public abstract class BaseWriter<T> implements AbstractWriter<T> {
 	/* (non-Javadoc)
 	 * @see biolite.utils.io.AbstractWriter#write(java.io.Writer, T)
 	 */
-	abstract public void write(Writer out,T data) throws IOException;
+	abstract public void write(Writer writer,T data) throws IOException;
 
 	/* (non-Javadoc)
 	 * @see biolite.utils.io.AbstractWriter#write(java.io.File, T)
 	 */
-	public void write(File in,T data) throws IOException {
+	public void write(File file,T data) throws IOException {
 		try {
-			write(new FileOutputStream(in),data);
+			write(CompressionUtils.openOutputStream(file),data);
 		} catch(java.lang.Exception e) {
-			throw new FileProcessingException(e,in);
+			throw new FileProcessingException(e,file);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package biolite.utils.compression;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,6 +22,19 @@ public class CompressionUtils {
 		}
 	}
 
+	static private InputStream openInputStream0(File file) throws IOException {
+		return new FileInputStream(file);
+	}
+	
+	static public InputStream openInputStream(File file) throws IOException {
+		if (file.getName().endsWith(".gz")) {
+			return new GZIPInputStream(openInputStream0(file));
+		} else {
+			return openInputStream0(file);
+		}
+	}
+	
+	
 	static private OutputStream openOutputStream0(String filename) throws IOException {
 		return new FileOutputStream(filename);
 	}
@@ -33,5 +47,16 @@ public class CompressionUtils {
 		}
 	}
 
+	static private OutputStream openOutputStream0(File file) throws IOException {
+		return new FileOutputStream(file);
+	}
+	
+	static public OutputStream openOutputStream(File file) throws IOException {
+		if (file.getName().endsWith(".gz")) {
+			return new GZIPOutputStream(openOutputStream0(file));
+		} else {
+			return openOutputStream0(file);
+		}
+	}
 	
 }
