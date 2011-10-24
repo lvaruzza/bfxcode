@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.io.Writer;
 
 import biolite.exceptions.FileProcessingException;
 import biolite.utils.compression.CompressionUtils;
 
 /*
- * Implemens the write method for several java potencial reading
+ * Implements the write method for several java potential reading
  * sources (Files, URL's, etc).
  * 
  */
