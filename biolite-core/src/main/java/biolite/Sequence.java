@@ -1,5 +1,8 @@
 package biolite;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
@@ -57,6 +60,33 @@ public abstract class Sequence {
 		else
 			return new String[] {header,""};			
 	}
+
+	public String digestSeq(String algorithm) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance(algorithm);
+        digest.reset();
+		return String.format("%032x",new BigInteger(1,digest.digest(getSeq())));
+	}
 	
+	public String digestSeq() {
+		try {
+			return digestSeq("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public String digestQual(String algorithm) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance(algorithm);
+        digest.reset();
+		return String.format("%032x",new BigInteger(1,digest.digest(getQual())));
+	}
+	
+	public String digestQual() {
+		try {
+			return digestQual("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 }
