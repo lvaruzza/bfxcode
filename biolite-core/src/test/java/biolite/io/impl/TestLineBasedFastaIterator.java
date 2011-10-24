@@ -41,11 +41,10 @@ public class TestLineBasedFastaIterator {
 		log.debug(seq2);
 	}
 	
-	@Test
-	public void testReadFromFieNCBISmall() throws IOException {
+	private void testReadFromFile(String filename,String checkname) throws IOException {
 		//log.setLevel(Level.INFO);
-		Iterator<Sequence> it = reader.read("data/test/ncbi_small.fasta");
-		Iterator<String[]> check = tblReader.read("data/test/ncbi_small.check.txt");
+		Iterator<Sequence> it = reader.read(filename);
+		Iterator<String[]> check = tblReader.read(checkname);
 		while(it.hasNext()) {
 			assertTrue(check.hasNext());
 			String[] chk = check.next();
@@ -58,4 +57,15 @@ public class TestLineBasedFastaIterator {
 			log.debug("=====> " + md5);
 		}
 	}	
+	
+	@Test
+	public void testReadFromFileNCBISmall() throws IOException {
+		testReadFromFile("data/test/ncbi_small.fasta","data/test/ncbi_small.check.txt");
+	}
+
+	@Test
+	public void testReadFromCompressedFileNCBISmall() throws IOException {
+		testReadFromFile("data/test/ncbi_small_compressed.fasta.gz","data/test/ncbi_small.check.txt");
+	}
+	
 }
