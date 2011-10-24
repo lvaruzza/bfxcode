@@ -1,6 +1,6 @@
 package biolite.io.impl;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -13,15 +13,18 @@ import org.junit.Test;
 import biojava.io.impl.FastaSequenceReader;
 import biolite.Sequence;
 import biolite.io.SequenceReader;
+import biolite.utils.io.TableReader;
 
-public class TestLifeBasedFastaIterator {
-	private static Logger log = Logger.getLogger(TestLifeBasedFastaIterator.class);
+public class TestLineBasedFastaIterator {
+	private static Logger log = Logger.getLogger(TestLineBasedFastaIterator.class);
 	
 	SequenceReader reader;
+	TableReader tblReader;
 	
 	@Before
 	public void setUp() {
 		reader = new FastaSequenceReader();
+		tblReader = new TableReader();
 	}
 	
 	@Test
@@ -39,11 +42,20 @@ public class TestLifeBasedFastaIterator {
 	}
 	
 	@Test
-	public void testReadFromFile() throws IOException {
-		log.setLevel(Level.INFO);
+	public void testReadFromFieNCBISmall() throws IOException {
+		//log.setLevel(Level.INFO);
 		Iterator<Sequence> it = reader.read("data/test/ncbi_small.fasta");
+		Iterator<String[]> check = tblReader.read("data/test/ncbi_small.check.txt");
 		while(it.hasNext()) {
-			log.debug(it.next().getId());
+			assertTrue(check.hasNext());
+			String[] chk = check.next();
+			Sequence seq = it.next();
+			assertEquals(chk[0],seq.getId());
+			assertEquals(chk[1],seq.getComments());
+			String md5 = seq.digestSeq();
+			assertEquals(chk[2],md5);
+			log.debug(seq.getId());
+			log.debug("=====> " + md5);
 		}
 	}	
 }
