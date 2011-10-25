@@ -2,6 +2,7 @@ package biojava.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 
 /*
@@ -11,20 +12,24 @@ import java.io.PrintWriter;
 public class QualRepr extends AbstractQualRepr {
 
 	@Override
-	public byte[] qualToBytes(byte[] qual) {
+	public byte[] qualToBytes(byte[] qual,int off,int len) {
 		ByteArrayOutputStream buff = new ByteArrayOutputStream(qual.length*3);
 		PrintWriter out = new PrintWriter(buff);
-		int i = qual.length;
-		for(byte b: qual) {
-			out.print(b);
-			if (i-- > 0)out.print(' ');
+		for(int i=0;i<len;i++) {
+			out.print(qual[off+i]);
+			if (i!=len-1)out.print(' ');
 		}
 		return buff.toByteArray();
 	}
-
+	
 	@Override
 	public byte[] bytesToQual(byte[] repr) {
 		return stringToQual(new String(repr));
+	}
+
+
+	public byte[] bytesToQual(byte[] repr, int off, int len) {
+		return stringToQual(new String(Arrays.copyOfRange(repr, off, off+len)));
 	}
 
 	

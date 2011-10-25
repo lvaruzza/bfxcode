@@ -65,6 +65,7 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 						qualline = liqual.next();
 						if (qualline.startsWith(">")) break;
 						curqual.append(qualline);
+						curqual.append(' ');
 					}
 					
 					log.debug("Returning sequence: '" + header +"'");

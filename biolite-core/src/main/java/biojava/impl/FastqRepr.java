@@ -38,10 +38,10 @@ public class FastqRepr extends AbstractQualRepr {
 	}
 
 	@Override
-	public byte[] qualToBytes(byte[] qual) {
-		byte[] out = new byte[qual.length];
-		for(int i=0;i<qual.length;i++) {
-			out[i] = (byte)(qual[i] + encoding.getEncodingStart());
+	public byte[] qualToBytes(byte[] qual, int off, int len) {
+		byte[] out = new byte[len];
+		for(int i=0;i<len;i++) {
+			out[i] = (byte)(qual[off+i] + encoding.getEncodingStart());
 		}
 		return out;
 	}
@@ -56,5 +56,11 @@ public class FastqRepr extends AbstractQualRepr {
 			qual[i] = (byte)(qual[i] - encoding.getEncodingStart());
 		}
 		return qual;		
+	}
+
+	@Override
+	public byte[] bytesToQual(byte[] repr, int off, int len) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
