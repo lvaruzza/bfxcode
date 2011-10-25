@@ -53,7 +53,8 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 					// Go to the first sequence in the qual file
 					while(liqual.hasNext()) {
 						qualline = liqual.next();
-						if(qualline.startsWith("^>")) break;
+						log.debug(String.format("1. qualline = %s'",qualline));
+						if(qualline.startsWith(">"))break;
 					}
 				} else {
 					log.debug("Reading qual");
@@ -68,6 +69,8 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 						curqual.append(' ');
 					}
 					
+					log.debug(String.format("Qual = '%s'",curqual.toString()));
+					
 					log.debug("Returning sequence: '" + header +"'");
 					Sequence seq = new SequenceQualImpl(header,
 														curseq.toString(),
@@ -81,6 +84,15 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 				if (!first) curseq.append(seqline.trim());
 			}
 		}
+		log.debug(String.format("curqual = '%s'",curqual.toString()));
+		curqual = new StringBuilder();
+		while(liqual.hasNext()) {
+			qualline = liqual.next();
+			if (qualline.startsWith(">")) break;
+			curqual.append(qualline);
+			curqual.append(' ');
+		}
+		
 		return new SequenceQualImpl(header,
 				curseq.toString(),
 				curqual.toString());

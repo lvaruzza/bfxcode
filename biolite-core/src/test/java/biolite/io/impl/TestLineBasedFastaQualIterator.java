@@ -15,8 +15,8 @@ import biolite.Sequence;
 import biolite.io.SequenceReader;
 import biolite.utils.io.TableReader;
 
-public class TestLineBasedFastaIterator {
-	private static Logger log = Logger.getLogger(TestLineBasedFastaIterator.class);
+public class TestLineBasedFastaQualIterator {
+	private static Logger log = Logger.getLogger(TestLineBasedFastaQualIterator.class);
 	
 	SequenceReader reader;
 	TableReader tblReader;
@@ -29,7 +29,18 @@ public class TestLineBasedFastaIterator {
 	
 	@Test
 	public void testReadFromString() throws IOException {
-		Iterator<Sequence> it = reader.readString(">1\nACGT\nCGTT\n>2\nCCCCCC");
+		Iterator<Sequence> it = reader.readString(
+				">1\n" +
+				"ACGT\n" +
+				"CGTT\n" +
+				">2\n" +
+				"CCCCCC\n",
+				">1\n" +
+				"0 1 2 3\n" +
+				"4 5 6 7\n" +
+				">2\n" +
+				"9 9 9 9 9 9");
+		
 		Sequence seq1 = it.next();
 		log.debug(seq1);		
 		assertEquals("1",seq1.getId());
@@ -41,6 +52,7 @@ public class TestLineBasedFastaIterator {
 		log.debug(seq2);
 	}
 	
+/*	
 	private void testReadFromFile(String filename,String checkname) throws IOException {
 		//log.setLevel(Level.INFO);
 		Iterator<Sequence> it = reader.read(filename);
@@ -59,7 +71,18 @@ public class TestLineBasedFastaIterator {
 	}	
 	
 	@Test
+	public void testReadFromFileNCBISmall() throws IOException {
+		testReadFromFile("data/test/ncbi_small.fasta","data/test/ncbi_small.check.txt");
+	}
+
+	@Test
+	public void testReadFromCompressedFileNCBISmall() throws IOException {
+		testReadFromFile("data/test/ncbi_small_compressed.fasta.gz","data/test/ncbi_small.check.txt");
+	}
+
+	@Test
 	public void testReadCSFasta() throws IOException {
 		testReadFromFile("data/test/sample.csfasta","data/test/sample.csfasta.check.txt");
 	}
+*/	
 }

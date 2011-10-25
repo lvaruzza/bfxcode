@@ -1,8 +1,12 @@
 package biojava.impl;
 
+import org.apache.log4j.Logger;
+
 import biolite.Sequence;
 
 public class SequenceQualImpl extends Sequence {
+	private static Logger log = Logger.getLogger(SequenceQualImpl.class);
+	
 	private static QualRepr qualrepr = new QualRepr();
 	
 	private byte[] seq;
@@ -20,7 +24,7 @@ public class SequenceQualImpl extends Sequence {
 		this.seq = seq;
 		this.qual = qual;
 	}	
-	public SequenceQualImpl(String header,String seq,String qual) {
-		this(header, seq.getBytes(), qualrepr.stringToQual(qual));
+	public SequenceQualImpl(String header,String seq,String repr) {
+		this(header, seq.getBytes(), qualrepr.stringToQual(repr));
 	}
 }
