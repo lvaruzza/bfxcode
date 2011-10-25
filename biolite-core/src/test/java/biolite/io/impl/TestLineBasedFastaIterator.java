@@ -67,5 +67,10 @@ public class TestLineBasedFastaIterator {
 	public void testReadFromCompressedFileNCBISmall() throws IOException {
 		testReadFromFile("data/test/ncbi_small_compressed.fasta.gz","data/test/ncbi_small.check.txt");
 	}
+
+	@Test
+	public void testReadCSFasta() throws IOException {
+		testReadFromFile("data/test/sample.csfasta","data/test/sample.csfasta.check.txt");
+	}
 	
 }
