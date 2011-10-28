@@ -9,4 +9,5 @@ import bfx.utils.io.AbstractReader;
 
 public interface SequenceReader extends AbstractReader<Iterator<Sequence>>,
 										AbstractDualReader<Iterator<Sequence>> {
+	
 }
