@@ -1,5 +1,7 @@
 package bfx.tools;
 
+import java.io.Serializable;
+
 public abstract class Tool {
 	private ToolConfiguration config;
 	
@@ -25,5 +27,9 @@ public abstract class Tool {
 			
 			e.printStackTrace(System.err);
 		}
+	}
+	
+	public void writeResult(String filename,String format,Report report) {
+		// TODO
 	}
 }
