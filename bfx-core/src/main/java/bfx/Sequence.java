@@ -88,5 +88,8 @@ public abstract class Sequence {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+	public int length() {
+		return this.getSeq().length;
+	}
 }

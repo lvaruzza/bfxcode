@@ -6,10 +6,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
+
 public class CompressionUtils {
+	
+	// TODO: improve extension handling. Test extensions against a list of 
+	// known extensions
+	
+	/*private static Map<String,String> extensions = new HashMap<String,String>();
+	
+	static {
+		extensions.put(".gz","gzip");
+		extensions.put(".bz2","bzip2");
+	}*/
+	
 	static private InputStream openInputStream0(String filename) throws IOException {
 		return new FileInputStream(filename);
 	}
@@ -17,6 +33,8 @@ public class CompressionUtils {
 	static public InputStream openInputStream(String filename) throws IOException {
 		if (filename.endsWith(".gz")) {
 			return new GZIPInputStream(openInputStream0(filename));
+		} else if(filename.endsWith(".bz2")) {
+			return new BZip2CompressorInputStream(openInputStream0(filename));
 		} else {
 			return openInputStream0(filename);
 		}
@@ -29,6 +47,8 @@ public class CompressionUtils {
 	static public InputStream openInputStream(File file) throws IOException {
 		if (file.getName().endsWith(".gz")) {
 			return new GZIPInputStream(openInputStream0(file));
+		} else if (file.getName().endsWith(".bz2")) {
+				return new BZip2CompressorInputStream(openInputStream0(file));
 		} else {
 			return openInputStream0(file);
 		}
@@ -42,6 +62,8 @@ public class CompressionUtils {
 	static public OutputStream openOutputStream(String filename) throws IOException {
 		if (filename.endsWith(".gz")) {
 			return new GZIPOutputStream(openOutputStream0(filename));
+		} else if(filename.endsWith(".bz2")) {
+			return new BZip2CompressorOutputStream(openOutputStream0(filename));
 		} else {
 			return openOutputStream0(filename);
 		}
@@ -54,9 +76,24 @@ public class CompressionUtils {
 	static public OutputStream openOutputStream(File file) throws IOException {
 		if (file.getName().endsWith(".gz")) {
 			return new GZIPOutputStream(openOutputStream0(file));
+		} else if(file.getName().endsWith(".bz2")) {
+			return new BZip2CompressorOutputStream(openOutputStream0(file));
 		} else {
 			return openOutputStream0(file);
 		}
 	}
 	
+	/*
+	 * Remove the compression extension from a filename or return the same same.
+	 * 
+	 */
+	static public String uncompressedFilename(String filename) {
+		if (filename.endsWith(".gz")) {
+			return filename.replaceAll(".gz$", "");
+		} else if(filename.endsWith(".bz2")) {
+			return filename.replaceAll(".bz2$", "");			
+		} else {
+			return filename;
+		}
+	}
 }
