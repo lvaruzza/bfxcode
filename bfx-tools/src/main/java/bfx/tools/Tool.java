@@ -1,6 +1,12 @@
 package bfx.tools;
 
-import java.io.Serializable;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 
 public abstract class Tool {
 	private ToolConfiguration config;
@@ -29,7 +35,4 @@ public abstract class Tool {
 		}
 	}
 	
-	public void writeResult(String filename,String format,Report report) {
-		// TODO
-	}
 }
