@@ -6,7 +6,7 @@ import java.io.Reader;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.io.SequenceFormat;
+import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 import bfx.utils.io.BaseSingleAndDualReader;
 
@@ -14,9 +14,9 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 	static {
 		SequenceReader reader = new FastQSequenceReader();
 		
-		SequenceFormat.registerExtension("fastq", reader);
-		SequenceFormat.registerExtension("fq", reader);
-		SequenceFormat.registerExtension("fastaq", reader);
+		SequenceFormats.registerExtension("fastq", reader);
+		SequenceFormats.registerExtension("fq", reader);
+		SequenceFormats.registerExtension("fastaq", reader);
 	}
 	
 	
@@ -44,4 +44,12 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 		throw new RuntimeException("Not applicable for fastq file");
 	}
 
+	private static String[] exts = {"fastq","fq","csfastq"};
+
+	@Override
+	public String[] getPreferedExtensions() {
+		return exts;
+	}
+
+	
 }
