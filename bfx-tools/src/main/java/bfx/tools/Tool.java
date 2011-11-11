@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 public abstract class Tool {
 	private ToolConfiguration config;
-	
+		
 	public void setConfig(ToolConfiguration config) {
 		this.config = config;
 	}
@@ -19,9 +19,7 @@ public abstract class Tool {
 	
 	public abstract void run() throws Exception;
 
-	public String getName() {
-		return this.getClass().getSimpleName();
-	}
+	public abstract String getName();
 
 	
 	protected void execute() {
@@ -34,5 +32,4 @@ public abstract class Tool {
 			e.printStackTrace(System.err);
 		}
 	}
-	
 }

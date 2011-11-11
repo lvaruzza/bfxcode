@@ -9,14 +9,18 @@ import bfx.io.SequenceFormat;
 import bfx.io.SequenceReader;
 import bfx.tools.Report;
 import bfx.tools.Tool;
-import bfx.tools.ToolConfiguration;
 import bfx.tools.cli.Main;
 
+import com.beust.jcommander.Parameter;
+
 public class SequenceStat extends Tool {
+	
 	static {
-		Main.addCommand("sequenceStat", Tool.class);
+		Main.addCommand("sequenceStat", SequenceStat.class);
 	}
 
+	public String getName() {return "sequenceStat"; };
+	
 	public static class StatReport extends Report {
 
 		public long totalLen;
@@ -29,11 +33,17 @@ public class SequenceStat extends Tool {
 		}
 	}
 
+	
+	
+	@Parameter(names = "-input", description = "Input File",required=true)
+	public String input;
+	
+	@Parameter(names = "-report", description = "Output Report File")
+	public String output;
+	
+	
 	@Override
 	public void run() throws Exception {
-		ToolConfiguration config = this.getConfig();
-		String input = config.get("input");
-		String output = config.get("output");
 		// String outputFormat = config.get("outputFormat","human");
 
 		SequenceReader reader = SequenceFormat.getReader(input);
@@ -47,4 +57,5 @@ public class SequenceStat extends Tool {
 		}
 		result.write(new FileOutputStream(output), Report.Format.HUMAN);
 	}
+
 }

@@ -3,15 +3,16 @@ package bfx.tools.cli;
 import static java.lang.System.err;
 import static java.lang.System.exit;
 
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 
 import org.apache.log4j.Logger;
 
 import bfx.tools.Tool;
-import bfx.tools.ToolConfiguration;
+
+import com.beust.jcommander.JCommander;
 
 public class Main {
 	private static Logger log = Logger.getLogger(Main.class);
@@ -25,15 +26,19 @@ public class Main {
 		commands.put(name,klass);
 	}
 	
+	public static void parseArgs(Object tool,String... args) {
+		JCommander jc = new JCommander(tool, args);
+	}
+	
 	public static void run(Class<? extends Tool> klass,String... args) {
 		try {
+			log.info(String.format("Loading class '%s'",klass.getName()));
+			
 			Tool tool = klass.newInstance();
-			ToolConfiguration config = new ToolConfiguration();
+			
+			// Parse the other args
+			parseArgs(tool,Arrays.copyOfRange(args, 1, args.length));
 
-			// Transform args into a configuration
-			//Arrays.copyOfRange(args, 1, args.length)
-
-			tool.setConfig(config);
 			tool.run();			
 		} catch(Exception e) {
 			err.println(String.format("Error running tool '%s': %s",args[0],e.getMessage()));
@@ -58,7 +63,7 @@ public class Main {
 			exit(-1);
 		} else {
 			if (commands.containsKey(args[0])) {
-				Class<? extends Tool> klass = commands.get(args[0]);
+				Class<? extends Tool> klass = commands.get(args[0]);				
 				run(klass,args);
 			} else {
 				err.println(String.format("Invalid tool name '%s'",args[0]));

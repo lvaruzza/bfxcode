@@ -8,10 +8,11 @@ public class CleanIndelGFF extends Tool {
 		Main.addCommand("cleanIndelGFF", CleanIndelGFF.class);
 	}
 
+	public String getName() { return "cleanIndelGFF"; };
+	
 	@Override
 	public void run() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-	
 }
