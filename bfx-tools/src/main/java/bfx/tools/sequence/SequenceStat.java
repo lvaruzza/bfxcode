@@ -12,39 +12,39 @@ import bfx.tools.Tool;
 import bfx.tools.ToolConfiguration;
 import bfx.tools.cli.Main;
 
-public class SequenceStat extends Tool {	
-			static {
-				Main.addCommand("sequenceStat", Tool.class);
-			}
-	
+public class SequenceStat extends Tool {
+	static {
+		Main.addCommand("sequenceStat", Tool.class);
+	}
+
 	public static class StatReport extends Report {
 
 		public long totalLen;
 		public int seqCount;
+
 		@Override
 		public void writeHuman(PrintWriter pr) {
 			pr.println("Total Length = " + totalLen);
 			pr.println("Number of sequences = " + seqCount);
 		}
-	}	
-		
-	
+	}
+
 	@Override
 	public void run() throws Exception {
 		ToolConfiguration config = this.getConfig();
 		String input = config.get("input");
 		String output = config.get("output");
-		//String outputFormat = config.get("outputFormat","human");
-		
+		// String outputFormat = config.get("outputFormat","human");
+
 		SequenceReader reader = SequenceFormat.getReader(input);
 		Iterator<Sequence> it = reader.read(input);
-	
+
 		StatReport result = new StatReport();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			Sequence s = it.next();
 			result.seqCount++;
 			result.totalLen += s.length();
 		}
-		result.write(new FileOutputStream(output),Report.Format.HUMAN);
+		result.write(new FileOutputStream(output), Report.Format.HUMAN);
 	}
 }

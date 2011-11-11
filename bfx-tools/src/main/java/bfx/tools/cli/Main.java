@@ -4,15 +4,24 @@ import static java.lang.System.err;
 import static java.lang.System.exit;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.ServiceLoader;
+
+import org.apache.log4j.Logger;
 
 import bfx.tools.Tool;
 import bfx.tools.ToolConfiguration;
 
 public class Main {
+	private static Logger log = Logger.getLogger(Main.class);
+	
+	private static ServiceLoader<Tool> toolLoader = ServiceLoader.load(Tool.class);
+	
 	private static Map<String,Class<? extends Tool>> commands = new HashMap<String,Class<? extends Tool>>();;
 	
 	public static void addCommand(String name,Class<? extends Tool> klass) {
+		log.debug(String.format("Registering command '%s' to class '%s'",name,klass.getName()));
 		commands.put(name,klass);
 	}
 	
@@ -31,8 +40,18 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	
+	/*
+	 * The first argument is the tool to be executed.
+	 * 
+	 * Create a instance of the proper class and run it.
+	 * 
+	 */
 	public static void main(String... args) {
+		System.out.println("All regiesterd tools");
+		for(Tool tool: toolLoader) {
+			System.out.println(tool.getClass().getName());			
+		}
+		
 		if (args.length < 1) {
 			err.println("Missing the Tool Name");
 			listValidCommands();
