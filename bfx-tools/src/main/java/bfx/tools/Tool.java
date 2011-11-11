@@ -1,22 +1,8 @@
 package bfx.tools;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
 
 public abstract class Tool {
-	private ToolConfiguration config;
-		
-	public void setConfig(ToolConfiguration config) {
-		this.config = config;
-	}
-	
-	public ToolConfiguration getConfig() { return config; };
-	
 	public abstract void run() throws Exception;
 
 	public abstract String getName();
