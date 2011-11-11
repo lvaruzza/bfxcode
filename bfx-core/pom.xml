@@ -57,6 +57,20 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
+
+	<scm>
+		<url>scm:git:ssh://repository@varuzza.dyndns.org:8022/~git/bfx-core</url>
+	</scm>
+
 </project>
