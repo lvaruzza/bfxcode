@@ -29,6 +29,15 @@ public class SequenceFormats {
 			}
 		}		
 	}
+
+	public static SequenceReader getReader(String filename,String formatName) {
+		if (formatName == null) {
+			return getReader(filename);
+		}
+		SequenceReader reader = extensionTable.get(formatName);
+		log.info("Using SequenceReader: " + reader.getClass().getName());
+		return reader;
+	}
 	
 	public static SequenceReader getReader(String filename) {
 		log.debug("Getting reader for file: " + filename);
@@ -37,6 +46,8 @@ public class SequenceFormats {
 			log.debug("Extensions: " + MapUtils.toString(extensionTable));
 			throw new RuntimeException(String.format("Unknown file format '%s' for file '%s': Could not create an appropriate sequence reader.",ext,filename));
 		}
-		return extensionTable.get(ext);
+		SequenceReader reader = extensionTable.get(ext);
+		log.info("Using SequenceReader: " + reader.getClass().getName());
+		return reader;
 	}
 }
