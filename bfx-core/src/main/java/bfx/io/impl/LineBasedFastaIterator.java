@@ -46,14 +46,11 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 		while(li.hasNext()) {
 			line = li.next();
 			if (line.startsWith(">")) {
-				log.debug(String.format("line=%s first=%s ",line,first));
 				if (first) {
 					first = false;
 					header = line.substring(1);
 					curseq = new StringBuilder();
-					log.debug("Founded new sequence: '" + header +"'");
 				} else {
-					log.debug("Returning sequence: '" + header +"'");
 					Sequence seq = new SequenceConstQualImpl(header,
 														curseq.toString(),
 														defaultQuality);

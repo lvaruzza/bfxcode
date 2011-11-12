@@ -37,7 +37,6 @@ public abstract class Sequence {
 
 	public Sequence(String header) {
 		String[] h = parseHeader(header);
-		log.debug(String.format("'%s' = %s",header,Arrays.toString(h)));
 		id = h[0];
 		comments = h[1];
 	}
