@@ -16,11 +16,6 @@ import bfx.tools.cli.Main;
 import com.beust.jcommander.Parameter;
 
 public class SequenceStat extends Tool {
-	
-	static {
-		Main.addCommand("sequenceStat", SequenceStat.class);
-	}
-
 	public String getName() {return "sequenceStat"; };
 	
 	public static class StatReport extends Report {

@@ -6,10 +6,6 @@ import bfx.tools.Tool;
 import bfx.tools.cli.Main;
 
 public class CleanIndelGFF extends Tool {
-	static {
-		Main.addCommand("cleanIndelGFF", CleanIndelGFF.class);
-	}
-
 	public String getName() { return "cleanIndelGFF"; };
 	
 	@Parameter(names = "-input", description = "Input File",required=true)

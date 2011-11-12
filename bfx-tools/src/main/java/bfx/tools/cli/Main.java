@@ -52,9 +52,8 @@ public class Main {
 	 * 
 	 */
 	public static void main(String... args) {
-		System.out.println("All regiesterd tools");
 		for(Tool tool: toolLoader) {
-			System.out.println(tool.getClass().getName());			
+			addCommand(tool.getName(),tool.getClass());
 		}
 		
 		if (args.length < 1) {
