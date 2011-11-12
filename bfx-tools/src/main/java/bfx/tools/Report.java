@@ -19,9 +19,15 @@ public abstract class Report {
 	private static ObjectMapper mapper = new ObjectMapper();
 
 	public void writeJSON(OutputStream out) throws IOException {
-		mapper.writeValue(out, this);
+		out.write(mapper.writeValueAsBytes(this));
+		out.write('\n');
+		out.flush();
 	}
 
+	public void write(OutputStream out, String format) throws IOException {
+		write(out,getFormat(format));
+	}
+	
 	public void write(OutputStream out, Format format) throws IOException {
 		switch (format) {
 		case HUMAN:
@@ -41,6 +47,17 @@ public abstract class Report {
 			writeJSON(out);
 			break;
 		}
+	}
+
+	public static Format getFormat(String outputFormat) {
+		if (outputFormat == null)
+			return Format.HUMAN;
+
+		if (outputFormat.equals("json"))
+			return Format.JSON;
+		if (outputFormat.equals("human"))
+			return Format.HUMAN;
+		throw new RuntimeException(String.format("Invalid output format: '%s'",outputFormat));
 	}
 
 }
