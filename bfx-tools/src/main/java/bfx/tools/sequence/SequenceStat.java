@@ -1,11 +1,10 @@
 package bfx.tools.sequence;
 
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.io.SequenceFormat;
+import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 import bfx.tools.Report;
 import bfx.tools.Tool;
@@ -46,7 +45,7 @@ public class SequenceStat extends Tool {
 	public void run() throws Exception {
 		// String outputFormat = config.get("outputFormat","human");
 
-		SequenceReader reader = SequenceFormat.getReader(input);
+		SequenceReader reader = SequenceFormats.getReader(input);
 		Iterator<Sequence> it = reader.read(input);
 
 		StatReport result = new StatReport();
@@ -55,7 +54,7 @@ public class SequenceStat extends Tool {
 			result.seqCount++;
 			result.totalLen += s.length();
 		}
-		result.write(new FileOutputStream(output), Report.Format.HUMAN);
+		result.write(getStdOut(output), Report.Format.HUMAN);
 	}
 
 }

@@ -24,10 +24,10 @@ public abstract class Report {
 
 	public void write(OutputStream out, Format format) throws IOException {
 		switch (format) {
-		case JSON:
+		case HUMAN:
 			writeHuman(new PrintWriter(out));
 			break;
-		case HUMAN:
+		case JSON:
 			writeJSON(out);
 			break;
 		}
