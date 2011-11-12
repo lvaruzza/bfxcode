@@ -24,11 +24,12 @@ public class SequenceStat extends Tool {
 
 		public long totalLen;
 		public int seqCount;
-
+		
 		@Override
 		public void writeHuman(PrintWriter pr) {
-			pr.println("Total Length = " + totalLen);
-			pr.println("Number of sequences = " + seqCount);
+			pr.println("Total Length       \t" + totalLen);
+			pr.println("Number of sequences\t" + seqCount);
+			pr.flush();
 		}
 	}
 
@@ -43,8 +44,6 @@ public class SequenceStat extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		// String outputFormat = config.get("outputFormat","human");
-
 		SequenceReader reader = SequenceFormats.getReader(input);
 		Iterator<Sequence> it = reader.read(input);
 

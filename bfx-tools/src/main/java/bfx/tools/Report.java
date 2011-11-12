@@ -25,7 +25,17 @@ public abstract class Report {
 	public void write(OutputStream out, Format format) throws IOException {
 		switch (format) {
 		case HUMAN:
-			writeHuman(new PrintWriter(out));
+			PrintWriter pr = new PrintWriter(out); 
+			pr.println("=====================================================================");
+			pr.println("# Result                                                            #");
+			pr.println("=====================================================================");
+			pr.println();
+			writeHuman(pr);
+			pr.println();
+			pr.println("=====================================================================");
+			pr.println("# Finished                                                          #");
+			pr.println("=====================================================================");
+			pr.flush();
 			break;
 		case JSON:
 			writeJSON(out);
