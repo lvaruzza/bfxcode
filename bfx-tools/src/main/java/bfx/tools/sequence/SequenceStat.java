@@ -11,7 +11,6 @@ import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 import bfx.tools.Report;
 import bfx.tools.Tool;
-import bfx.tools.cli.Main;
 
 import com.beust.jcommander.Parameter;
 
@@ -56,6 +55,9 @@ public class SequenceStat extends Tool {
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
 
+	@Parameter(names = {"--qual","-q"}, description = "Qual file (only appliable for fasta foramt)",required=true)
+	public String qual;
+	
 	@Parameter(names = {"--inputFormat","-if"}, description = "Input Format")
 	public String inputFormat;
 	
@@ -69,8 +71,18 @@ public class SequenceStat extends Tool {
 	@Override
 	public void run() throws Exception {
 		SequenceReader reader = SequenceFormats.getReader(input,inputFormat);
-		Iterator<Sequence> it = reader.read(input);
-	
+		Iterator<Sequence> it;
+		
+		if (qual != null && inputFormat != null && !inputFormat.equals("fasta")) {
+			throw new RuntimeException("You can only use specify a qual file for fasta format");
+		}
+		
+		if (qual != null) {
+			it = reader.read(input,qual);
+		} else {
+			it = reader.read(input);
+		}
+		
 		StatReport result = new StatReport();
 		result.symbols = new TreeMap<Character,Long>();
 		result.minSequenceLength = Integer.MAX_VALUE;
