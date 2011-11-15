@@ -3,13 +3,22 @@ package bfx;
 /*
  * Sequence Quality values text representations
  * 
+ * TODO: Do I need all this variants?
  */
 public interface QualRepr {
-	public byte[] bytesToQual(byte[] repr);
-	public byte[] bytesToQual(byte[] repr,int off,int len);
-	public byte[] stringToQual(String repr);
+	
+	/*
+	 * Convert text to a byte array with the qual values
+	 */
+	public byte[] textToQual(byte[] repr);
+	public byte[] textToQual(byte[] repr,int off,int len);
+	public byte[] textToQual(String repr);
 
-	public String qualToString(byte[] qual);
-	public byte[] qualToBytes(byte[] qual);	
-	public byte[] qualToBytes(byte[] qual,int off,int len);	
+	/*
+	 * Convert from qual byte array to text
+	 * 
+	 */
+	public String qualToTextString(byte[] qual);
+	public byte[] qualToTextBytes(byte[] qual);	
+	public byte[] qualToTextBytes(byte[] qual,int off,int len);	
 }

@@ -25,6 +25,6 @@ public class SequenceQualImpl extends Sequence {
 		this.qual = qual;
 	}	
 	public SequenceQualImpl(String header,String seq,String repr) {
-		this(header, seq.getBytes(), qualrepr.stringToQual(repr));
+		this(header, seq.getBytes(), qualrepr.textToQual(repr));
 	}
 }

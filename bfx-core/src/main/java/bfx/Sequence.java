@@ -79,7 +79,7 @@ public abstract class Sequence {
 	public String digestQual(String algorithm) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance(algorithm);
         digest.reset();
-		return String.format("%032x",new BigInteger(1,digest.digest(getQualAsString().getBytes())));
+		return String.format("%032x",new BigInteger(1,digest.digest(getQual())));
 	}
 	
 	public String digestQual() {
@@ -98,6 +98,6 @@ public abstract class Sequence {
 	private static QualRepr qrepr = new FastaQualRepr();
 	
 	public String getQualAsString() {
-		return qrepr.qualToString(getQual());
+		return qrepr.qualToTextString(getQual());
 	}
 }

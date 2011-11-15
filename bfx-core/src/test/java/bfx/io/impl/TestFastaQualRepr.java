@@ -12,7 +12,7 @@ public class TestFastaQualRepr {
 	private static FastaQualRepr repr = new FastaQualRepr();
 	
 	private void testStringToQual0(String in) {
-		byte[] b = repr.stringToQual(in);
+		byte[] b = repr.textToQual(in);
 		for (byte i=0;i<b.length;i++) {
 			assertEquals(i,b[i]);
 		}
@@ -27,7 +27,7 @@ public class TestFastaQualRepr {
 	
 	@Test
 	public void testQualToString() {
-		String r = repr.qualToString(new byte[]{1,2,3,4});
+		String r = repr.qualToTextString(new byte[]{1,2,3,4});
 		assertEquals("1 2 3 4",r);
 	}	
 }

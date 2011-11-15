@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class FastaQualRepr extends AbstractQualRepr {
 
 	@Override
-	public byte[] qualToBytes(byte[] qual,int off,int len) {
+	public byte[] qualToTextBytes(byte[] qual,int off,int len) {
 		ByteArrayOutputStream buff = new ByteArrayOutputStream(qual.length*3);
 		PrintWriter pr = new PrintWriter(buff);
 		for(int i=0;i<len;i++) {
@@ -27,18 +27,18 @@ public class FastaQualRepr extends AbstractQualRepr {
 	}
 	
 	@Override
-	public byte[] bytesToQual(byte[] repr) {
-		return stringToQual(new String(repr));
+	public byte[] textToQual(byte[] repr) {
+		return textToQual(new String(repr));
 	}
 
 
-	public byte[] bytesToQual(byte[] repr, int off, int len) {
-		return stringToQual(new String(Arrays.copyOfRange(repr, off, off+len)));
+	public byte[] textToQual(byte[] repr, int off, int len) {
+		return textToQual(new String(Arrays.copyOfRange(repr, off, off+len)));
 	}
 
 	
 	@Override
-	public byte[] stringToQual(String qual) {
+	public byte[] textToQual(String qual) {
 		String[] vals=qual.trim().split("\\s+");
 		byte[] out = new byte[vals.length];
 		

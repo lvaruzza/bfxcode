@@ -10,7 +10,7 @@ public class TestFastqRepr {
 	FastaQualRepr repr = new FastaQualRepr();
 	
 	private void test0(String in) {
-		byte[] b = repr.stringToQual(in);
+		byte[] b = repr.textToQual(in);
 		for (byte i=0;i<b.length;i++) {
 			assertEquals(i,b[i]);
 		}
