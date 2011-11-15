@@ -7,7 +7,7 @@ import bfx.Sequence;
 public class SequenceQualImpl extends Sequence {
 	private static Logger log = Logger.getLogger(SequenceQualImpl.class);
 	
-	private static QualRepr qualrepr = new QualRepr();
+	private static FastaQualRepr qualrepr = new FastaQualRepr();
 	
 	private byte[] seq;
 	private byte[] qual;

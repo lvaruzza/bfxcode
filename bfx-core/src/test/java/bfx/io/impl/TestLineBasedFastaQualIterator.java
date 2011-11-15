@@ -26,7 +26,21 @@ public class TestLineBasedFastaQualIterator {
 		reader = new FastaSequenceReader();
 		tblReader = new TableReader();
 	}
-	
+
+	@Test
+	public void testReadFromStringOnlyOne() throws IOException {
+		Iterator<Sequence> it = reader.readString(
+				">1\n" +
+				"ACGT",
+				">1\n" +
+				"1 2 3 4");
+		
+		Sequence seq1 = it.next();
+		log.debug(seq1);
+		assertEquals("ACGT",seq1.getSeqAsString());
+		assertEquals("1 2 3 4",seq1.getQualAsString());
+	}
+
 	@Test
 	public void testReadFromString() throws IOException {
 		Iterator<Sequence> it = reader.readString(
@@ -52,37 +66,28 @@ public class TestLineBasedFastaQualIterator {
 		log.debug(seq2);
 	}
 	
-/*	
-	private void testReadFromFile(String filename,String checkname) throws IOException {
+	
+	private void testReadFromFile(String seqFilename,String qualFilename,String checkname) throws IOException {
 		//log.setLevel(Level.INFO);
-		Iterator<Sequence> it = reader.read(filename);
+		Iterator<Sequence> it = reader.read(seqFilename,qualFilename);
 		Iterator<String[]> check = tblReader.read(checkname);
 		while(it.hasNext()) {
 			assertTrue(check.hasNext());
 			String[] chk = check.next();
 			Sequence seq = it.next();
 			assertEquals(chk[0],seq.getId());
-			assertEquals(chk[1],seq.getComments());
-			String md5 = seq.digestSeq();
-			assertEquals(chk[2],md5);
+			String md5 = seq.digestQual();
 			log.debug(seq.getId());
+			log.debug("=====> " + seq.getQualAsString());
 			log.debug("=====> " + md5);
+			log.debug("=====> " + chk[1]);
+			assertEquals(chk[1],md5);
 		}
 	}	
 	
 	@Test
-	public void testReadFromFileNCBISmall() throws IOException {
-		testReadFromFile("data/test/ncbi_small.fasta","data/test/ncbi_small.check.txt");
-	}
-
-	@Test
-	public void testReadFromCompressedFileNCBISmall() throws IOException {
-		testReadFromFile("data/test/ncbi_small_compressed.fasta.gz","data/test/ncbi_small.check.txt");
-	}
-
-	@Test
 	public void testReadCSFasta() throws IOException {
-		testReadFromFile("data/test/sample.csfasta","data/test/sample.csfasta.check.txt");
+		testReadFromFile("data/test/sample.csfasta","data/test/sample.qual","data/test/sample.qual.check.txt");
 	}
-*/	
+
 }

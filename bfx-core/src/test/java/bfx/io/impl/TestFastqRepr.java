@@ -3,11 +3,11 @@ package bfx.io.impl;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import bfx.impl.QualRepr;
+import bfx.impl.FastaQualRepr;
 
 public class TestFastqRepr {
 
-	QualRepr repr = new QualRepr();
+	FastaQualRepr repr = new FastaQualRepr();
 	
 	private void test0(String in) {
 		byte[] b = repr.stringToQual(in);

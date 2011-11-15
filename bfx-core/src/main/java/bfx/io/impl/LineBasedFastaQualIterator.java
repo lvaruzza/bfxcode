@@ -84,8 +84,8 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 				if (!first) curseq.append(seqline.trim());
 			}
 		}
-		log.debug(String.format("curqual = '%s'",curqual.toString()));
 		curqual = new StringBuilder();
+		//log.debug(String.format("curqual = '%s'",curqual.toString()));
 		while(liqual.hasNext()) {
 			qualline = liqual.next();
 			if (qualline.startsWith(">")) break;

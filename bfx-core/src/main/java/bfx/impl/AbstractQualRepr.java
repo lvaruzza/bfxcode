@@ -11,8 +11,8 @@ public abstract class AbstractQualRepr implements QualRepr {
 		return qualToBytes(qual,0,qual.length);
 	}
 	
-	public String qualToString(String qual) {
-		return new String(qualToBytes(qual.getBytes()));
+	public String qualToString(byte[] qual) {
+		return new String(qualToBytes(qual));
 	}
 	
 	public abstract byte[] stringToQual(String repr);

@@ -9,17 +9,21 @@ import java.util.Arrays;
  * Encode and decode quality values in the Qual format (used in fasta/qual pair)
  * 
  */
-public class QualRepr extends AbstractQualRepr {
+public class FastaQualRepr extends AbstractQualRepr {
 
 	@Override
 	public byte[] qualToBytes(byte[] qual,int off,int len) {
 		ByteArrayOutputStream buff = new ByteArrayOutputStream(qual.length*3);
-		PrintWriter out = new PrintWriter(buff);
+		PrintWriter pr = new PrintWriter(buff);
 		for(int i=0;i<len;i++) {
-			out.print(qual[off+i]);
-			if (i!=len-1)out.print(' ');
+			pr.print(qual[off+i]);
+			//System.out.println(qual[off+i]);
+			if (i!=len-1)pr.print(' ');
 		}
-		return buff.toByteArray();
+		pr.close();
+		byte[] out = buff.toByteArray();
+		//System.out.println(new String(out));
+		return out;
 	}
 	
 	@Override
