@@ -12,7 +12,6 @@ public class CLIProgressBar implements Observer {
 		System.out.print('#');
 		if (((long)x)%60==0)
 			System.out.println(" " + x);
-		System.out.println();
 		System.out.flush();
 	}
 
