@@ -8,12 +8,10 @@ import bfx.ProgressCounter;
 public class CLIProgressBar implements Observer {
 
 	public void showProgress(ProgressCounter pc) {
-		int x = (int)(pc.getTicks()/100.0*60);
-		for(int i=0;i<x;i+=60 ) {
-			for (int j=i;j<x;j++)
-				System.out.print('#');
+		double x = pc.getTicks();
+		System.out.print('#');
+		if (((long)x)%60==0)
 			System.out.println();
-		}
 		System.out.println();
 		System.out.flush();
 	}
