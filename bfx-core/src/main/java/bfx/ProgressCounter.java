@@ -29,6 +29,6 @@ public  class ProgressCounter extends Observable {
 	}
 	
 	public double getTicks() {
-		return count / tick;
+		return count * 1.0 / tick;
 	}
 }
