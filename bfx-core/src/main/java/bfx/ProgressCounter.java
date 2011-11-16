@@ -3,8 +3,8 @@ package bfx;
 import java.util.Observable;
 
 public  class ProgressCounter extends Observable {
-	private double total = 100.0;
-	private double count = 0;
+	private long tick = 100;
+	private long count = 0;
 	
 	public void reset() {
 		count = 0;
@@ -12,23 +12,23 @@ public  class ProgressCounter extends Observable {
 		this.notifyObservers();
 	}
 	
-	public void setTotal(double total) {
-		this.total = 0;
-		this.setChanged();
-		this.notifyObservers();
+	public void setTick(long tick) {
+		this.tick = tick;
 	}
 	
 	public double getCount() {
 		return count;
 	}
 	
-	public void incr(double value) {
+	public void incr(long value) {
 		count += value;
-		this.setChanged();
-		this.notifyObservers();
+		if (count % tick == 0) {
+			this.setChanged();
+			this.notifyObservers();
+		}
 	}
 	
-	public double getPercent() {
-		return count / total;
+	public double getTicks() {
+		return count / tick;
 	}
 }
