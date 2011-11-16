@@ -10,6 +10,7 @@ import java.util.ServiceLoader;
 
 import org.apache.log4j.Logger;
 
+import bfx.ProgressCounter;
 import bfx.tools.Tool;
 
 import com.beust.jcommander.JCommander;
@@ -33,8 +34,12 @@ public class Main {
 	public static void run(Class<? extends Tool> klass,String... args) {
 		try {
 			log.info(String.format("Loading class '%s'",klass.getName()));
+			ProgressCounter pc = new ProgressCounter();
+			CLIProgressBar pb = new CLIProgressBar();
+			pc.addObserver(pb);
 			
 			Tool tool = klass.newInstance();
+			tool.setProgressCounter(pc);
 			
 			// Parse the other args
 			parseArgs(tool,Arrays.copyOfRange(args, 1, args.length));

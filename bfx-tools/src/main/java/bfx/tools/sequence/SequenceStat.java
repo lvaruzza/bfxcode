@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
@@ -87,9 +88,12 @@ public class SequenceStat extends Tool {
 		result.symbols = new TreeMap<Character,Long>();
 		result.minSequenceLength = Integer.MAX_VALUE;
 		result.maxSequenceLength = 0;
+		ProgressCounter pc = getProgressCounter();
 		
 		while (it.hasNext()) {
 			Sequence s = it.next();
+			pc.incr(1.0);
+			
 			result.seqCount++;
 			result.totalLen += s.length();
 			if (s.length() > result.maxSequenceLength)
