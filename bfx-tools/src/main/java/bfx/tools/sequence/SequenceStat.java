@@ -1,6 +1,7 @@
 package bfx.tools.sequence;
 
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -28,14 +29,16 @@ public class SequenceStat extends Tool {
 		public int maxSequenceLength;
 		public double averageQual;
 		
+		private static DecimalFormat df = new DecimalFormat();
+		
 		@Override
 		public void writeHuman(PrintWriter pr) {
 			pr.println(              "Sequences Length Information:");
-			pr.println(              "\tTotal Length       \t" + totalLen);
-			pr.println(              "\tNumber of sequences\t" + seqCount);
+			pr.println(              "\tTotal Length       \t" + df.format(totalLen));
+			pr.println(              "\tNumber of sequences\t" + df.format(seqCount));
 			pr.println(String.format("\tAverage Length     \t%.1f",averageLength));
-			pr.println(String.format("\tLarger sequence    \t%d",maxSequenceLength));
-			pr.println(String.format("\tSmaller sequence   \t%d",minSequenceLength));
+			pr.println(             ("\tLarger sequence    \t" + df.format(maxSequenceLength)));
+			pr.println(             ("\tSmaller sequence   \t"+ df.format(minSequenceLength)));
 			pr.println();
 			
 			pr.println(              "Sequences Quality Information:");
