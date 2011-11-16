@@ -55,7 +55,7 @@ public class SequenceStat extends Tool {
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
 
-	@Parameter(names = {"--qual","-q"}, description = "Qual file (only appliable for fasta foramt)",required=true)
+	@Parameter(names = {"--qual","-q"}, description = "Qual file (only appliable for fasta foramt)")
 	public String qual;
 	
 	@Parameter(names = {"--inputFormat","-if"}, description = "Input Format")
