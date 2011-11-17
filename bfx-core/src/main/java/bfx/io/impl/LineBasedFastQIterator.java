@@ -9,25 +9,24 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.log4j.Logger;
 
+import bfx.QualRepr;
 import bfx.Sequence;
-import bfx.impl.SequenceConstQualImpl;
+import bfx.impl.FastqRepr;
+import bfx.impl.SequenceQualImpl;
 
 public class LineBasedFastQIterator implements Iterator<Sequence> {
 	private static Logger log = Logger.getLogger(LineBasedFastQIterator.class);
 	private LineIterator li;
-	private byte defaultQuality;
+	private QualRepr qualrepr;
 	
-	private StringBuilder curseq;
-	private String line = "";
-	private String header = "";
-	private boolean first = true;
-	
-	public LineBasedFastQIterator(Reader fastaReader) {
+	public LineBasedFastQIterator(Reader fastaReader,FastqRepr.FastqEncoding encoding) {
 		li =  IOUtils.lineIterator(fastaReader);
+		qualrepr = new FastqRepr(encoding);
 	}
 
-	public LineBasedFastQIterator(InputStream fastaInput) throws IOException {
+	public LineBasedFastQIterator(InputStream fastaInput,FastqRepr.FastqEncoding encoding) throws IOException {
 		li =  IOUtils.lineIterator(fastaInput,"ASCII");
+		qualrepr = new FastqRepr(encoding);
 	}
 
 	
@@ -37,7 +36,16 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 
 	
 	public Sequence next() {
-		throw new RuntimeException("Not implemented yeat!!!");
+		if (!li.hasNext()) return null;
+		String header = li.next();
+		if (!li.hasNext()) return null;
+		String seq = li.next();
+		// throw separator
+		if (!li.hasNext()) return null;
+		li.next();
+		if (!li.hasNext()) return null;
+		String qual = li.next();
+		return new SequenceQualImpl(header.substring(1), seq.getBytes(), qualrepr.textToQual(qual));
 	}
 
 	public void remove() {

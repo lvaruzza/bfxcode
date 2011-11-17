@@ -15,7 +15,7 @@ public class SequenceFormats {
 	
 	private static Map<String,SequenceReader> extensionTable = new HashMap<String,SequenceReader>();
 			
-	public static void registerExtension(String ext,SequenceReader reader) {
+	private static void registerExtension(String ext,SequenceReader reader) {
 		extensionTable.put(ext,reader);
 	}
 
