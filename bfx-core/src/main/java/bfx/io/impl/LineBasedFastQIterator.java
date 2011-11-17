@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import bfx.QualRepr;
 import bfx.Sequence;
-import bfx.impl.FastqRepr;
+import bfx.impl.FastQRepr;
 import bfx.impl.SequenceQualImpl;
 
 public class LineBasedFastQIterator implements Iterator<Sequence> {
@@ -19,14 +19,14 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 	private LineIterator li;
 	private QualRepr qualrepr;
 	
-	public LineBasedFastQIterator(Reader fastaReader,FastqRepr.FastqEncoding encoding) {
+	public LineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding) {
 		li =  IOUtils.lineIterator(fastaReader);
-		qualrepr = new FastqRepr(encoding);
+		qualrepr = new FastQRepr(encoding);
 	}
 
-	public LineBasedFastQIterator(InputStream fastaInput,FastqRepr.FastqEncoding encoding) throws IOException {
+	public LineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding) throws IOException {
 		li =  IOUtils.lineIterator(fastaInput,"ASCII");
-		qualrepr = new FastqRepr(encoding);
+		qualrepr = new FastQRepr(encoding);
 	}
 
 	

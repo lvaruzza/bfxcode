@@ -6,15 +6,15 @@ import java.io.Reader;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.impl.FastqRepr;
-import bfx.impl.FastqRepr.FastqEncoding;
+import bfx.impl.FastQRepr;
+import bfx.impl.FastQRepr.FastqEncoding;
 import bfx.io.SequenceReader;
 import bfx.utils.io.BaseSingleAndDualReader;
 
 public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequence>> implements SequenceReader {
-	private FastqRepr.FastqEncoding encoding;
+	private FastQRepr.FastqEncoding encoding;
 
-	public FastQSequenceReader(FastqRepr.FastqEncoding qualEncoding) {
+	public FastQSequenceReader(FastQRepr.FastqEncoding qualEncoding) {
 		this.encoding=qualEncoding;
 	};
 
@@ -22,7 +22,7 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 		this(FastqEncoding.SANGER);
 	};
 	
-	public void setEncoding(FastqRepr.FastqEncoding qualEncoding) {
+	public void setEncoding(FastQRepr.FastqEncoding qualEncoding) {
 		this.encoding = qualEncoding;
 	}
 	
