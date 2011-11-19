@@ -64,7 +64,7 @@ public class TestLineBasedFastQIterator {
 	}	
 	
 	@Test
-	public void testReadCSFasta() throws IOException, NoSuchAlgorithmException {
+	public void testReadIonFastQ() throws IOException, NoSuchAlgorithmException {
 		testReadFromFile("data/test/ion.fastq.gz","data/test/ion.fastq.check.txt");
 	}
 }

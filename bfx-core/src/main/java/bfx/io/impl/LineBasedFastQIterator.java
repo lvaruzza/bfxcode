@@ -44,7 +44,7 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 		// throw separator
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String sep = li.next();
-		if (!header.startsWith("+")) throw new RuntimeException("Invalid fastQ sequence, quality separator does not start with '+': " + sep);
+		if (!sep.startsWith("+")) throw new RuntimeException("Invalid fastQ sequence, quality separator does not start with '+': " + sep);
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String qual = li.next();
 		return new SequenceQualImpl(header.substring(1), seq.getBytes(), qualrepr.textToQual(qual));
