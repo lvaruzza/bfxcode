@@ -36,14 +36,16 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 
 	
 	public Sequence next() {
-		if (!li.hasNext()) return null;
+		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String header = li.next();
-		if (!li.hasNext()) return null;
+		if (!header.startsWith("@")) throw new RuntimeException("Invalid fastQ sequence, header does not start with '@': " + header);
+		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String seq = li.next();
 		// throw separator
-		if (!li.hasNext()) return null;
-		li.next();
-		if (!li.hasNext()) return null;
+		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
+		String sep = li.next();
+		if (!header.startsWith("+")) throw new RuntimeException("Invalid fastQ sequence, quality separator does not start with '+': " + sep);
+		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String qual = li.next();
 		return new SequenceQualImpl(header.substring(1), seq.getBytes(), qualrepr.textToQual(qual));
 	}
