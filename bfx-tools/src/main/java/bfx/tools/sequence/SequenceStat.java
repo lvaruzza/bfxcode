@@ -68,7 +68,7 @@ public class SequenceStat extends Tool {
 	@Parameter(names = {"--output","-o"}, description = "Output Report File")
 	public String output;
 
-	@Parameter(names = {"--outputFormat","-of"}, description = "Output Report File")
+	@Parameter(names = {"--outputFormat","-of"}, description = "Output Report Format")
 	public String outputFormat;
 	
 	
@@ -114,6 +114,13 @@ public class SequenceStat extends Tool {
 					result.symbols.put((char)b, 1l);					
 				}
 			}
+			long qualSum = 0;
+			
+			byte[] qual = s.getQual();
+			for(byte q: qual) {
+				qualSum += q;
+			}			
+			result.averageQual = qualSum * 1.0 / result.seqCount;
 		}
 		
 		result.averageLength = ((double)result.totalLen) /  result.seqCount;

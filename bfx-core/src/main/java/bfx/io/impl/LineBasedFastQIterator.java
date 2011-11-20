@@ -9,25 +9,24 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.log4j.Logger;
 
+import bfx.QualRepr;
 import bfx.Sequence;
-import bfx.impl.SequenceConstQualImpl;
+import bfx.impl.FastQRepr;
+import bfx.impl.SequenceQualImpl;
 
 public class LineBasedFastQIterator implements Iterator<Sequence> {
 	private static Logger log = Logger.getLogger(LineBasedFastQIterator.class);
 	private LineIterator li;
-	private byte defaultQuality;
+	private QualRepr qualrepr;
 	
-	private StringBuilder curseq;
-	private String line = "";
-	private String header = "";
-	private boolean first = true;
-	
-	public LineBasedFastQIterator(Reader fastaReader) {
+	public LineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding) {
 		li =  IOUtils.lineIterator(fastaReader);
+		qualrepr = new FastQRepr(encoding);
 	}
 
-	public LineBasedFastQIterator(InputStream fastaInput) throws IOException {
+	public LineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding) throws IOException {
 		li =  IOUtils.lineIterator(fastaInput,"ASCII");
+		qualrepr = new FastQRepr(encoding);
 	}
 
 	
@@ -37,7 +36,18 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 
 	
 	public Sequence next() {
-		throw new RuntimeException("Not implemented yeat!!!");
+		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
+		String header = li.next();
+		if (!header.startsWith("@")) throw new RuntimeException("Invalid fastQ sequence, header does not start with '@': " + header);
+		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
+		String seq = li.next();
+		// throw separator
+		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
+		String sep = li.next();
+		if (!sep.startsWith("+")) throw new RuntimeException("Invalid fastQ sequence, quality separator does not start with '+': " + sep);
+		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
+		String qual = li.next();
+		return new SequenceQualImpl(header.substring(1), seq.getBytes(), qualrepr.textToQual(qual));
 	}
 
 	public void remove() {

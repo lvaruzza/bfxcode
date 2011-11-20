@@ -6,7 +6,7 @@ package bfx.impl;
  * Encode and decode quality values in FastQ
  * 
  */
-public class FastqRepr extends AbstractQualRepr {
+public class FastQRepr extends AbstractQualRepr {
 	public enum FastqEncoding  {
 		SANGER(33,0,93),
 		ILLUMINA10(59+5,-5,62),
@@ -29,11 +29,11 @@ public class FastqRepr extends AbstractQualRepr {
 
 	private FastqEncoding encoding = FastqEncoding.SANGER;
 
-	public FastqRepr() {
+	public FastQRepr() {
 		encoding = FastqEncoding.SANGER;
 	}
 
-	public FastqRepr(FastqEncoding encoding) {
+	public FastQRepr(FastqEncoding encoding) {
 		this.encoding = encoding;
 	}
 
@@ -53,7 +53,7 @@ public class FastqRepr extends AbstractQualRepr {
 	public byte[] textToQual(byte[] repr) {
 		byte[] qual = new byte[repr.length];
 		for(int i=0;i<qual.length;i++) {
-			qual[i] = (byte)(qual[i] - encoding.getEncodingStart());
+			qual[i] = (byte)(repr[i] - encoding.getEncodingStart());
 		}
 		return qual;		
 	}

@@ -6,30 +6,34 @@ import java.io.Reader;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.io.SequenceFormats;
+import bfx.impl.FastQRepr;
+import bfx.impl.FastQRepr.FastqEncoding;
 import bfx.io.SequenceReader;
 import bfx.utils.io.BaseSingleAndDualReader;
 
 public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequence>> implements SequenceReader {
-	static {
-		SequenceReader reader = new FastQSequenceReader();
-		
-		SequenceFormats.registerExtension("fastq", reader);
-		SequenceFormats.registerExtension("fq", reader);
-		SequenceFormats.registerExtension("fastaq", reader);
+	private FastQRepr.FastqEncoding encoding;
+
+	public FastQSequenceReader(FastQRepr.FastqEncoding qualEncoding) {
+		this.encoding=qualEncoding;
+	};
+
+	public FastQSequenceReader() {
+		this(FastqEncoding.SANGER);
+	};
+	
+	public void setEncoding(FastQRepr.FastqEncoding qualEncoding) {
+		this.encoding = qualEncoding;
 	}
-	
-	
-	public FastQSequenceReader() {};
 	
 	@Override
 	public Iterator<Sequence> read(InputStream fastaInput) throws IOException {
-		return new LineBasedFastQIterator(fastaInput);
+		return new LineBasedFastQIterator(fastaInput,encoding);
 	}
 
 	@Override
 	public Iterator<Sequence> read(Reader fastaReader) throws IOException {
-		return new LineBasedFastQIterator(fastaReader);
+		return new LineBasedFastQIterator(fastaReader,encoding);
 	}
 
 	@Override
