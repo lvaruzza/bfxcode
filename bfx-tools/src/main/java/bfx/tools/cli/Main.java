@@ -8,12 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import bfx.ProgressCounter;
 import bfx.tools.Tool;
+import bfx.utils.TextUtils;
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
 
 public class Main {
 	private static Logger log = Logger.getLogger(Main.class);
@@ -27,8 +30,26 @@ public class Main {
 		commands.put(name,klass);
 	}
 	
-	public static void parseArgs(Object tool,String... args) {
-		JCommander jc = new JCommander(tool, args);
+	public static void parseArgs(Tool tool,String... args) {
+		JCommander jc = new JCommander(tool);
+		jc.setProgramName("bfx");
+		try {
+			jc.parse(args);
+			Logger root = Logger.getRootLogger();
+			if (tool.verbose) {
+			      root.setLevel(Level.DEBUG);
+			 } else {
+			      root.setLevel(Level.WARN);				 
+			 }
+		} catch(ParameterException e) {
+			System.err.println(TextUtils.doubleLine());
+			System.err.print("Command Line error: ");
+			System.err.println(e.getMessage());
+			System.err.println(TextUtils.line());
+			jc.usage();			
+			System.err.println(TextUtils.doubleLine());
+			System.exit(-1);
+		}
 	}
 	
 	public static void run(Class<? extends Tool> klass,String... args) {
