@@ -7,6 +7,7 @@ import bfx.ProgressCounter;
 
 public class CLIProgressBar implements Observer {
 	private double rate;
+	private long start = -1;
 	
 	public void showProgress(ProgressCounter pc) {
 		double x = pc.getTicks();
@@ -21,9 +22,13 @@ public class CLIProgressBar implements Observer {
 	public void update(Observable o, Object arg) {		
 		ProgressCounter pc=(ProgressCounter)o;
 		long now = System.currentTimeMillis();
-		rate = pc.getCount() / now; 
-		pc.setTick((long)(10000.0/rate));
-		showProgress(pc);
+		if (start == -1) 
+			start = now;
+		else {
+			rate = pc.getCount() / (now-start); 
+			pc.setTick((long)(10000.0/rate));
+			showProgress(pc);
+		}
 	}
 
 }
