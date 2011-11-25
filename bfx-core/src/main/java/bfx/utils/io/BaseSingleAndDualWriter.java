@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import bfx.exceptions.FileProcessingException;
+import bfx.exceptions.FileProcessingIOException;
 import bfx.exceptions.MultipleFilesProcessingException;
 import bfx.utils.compression.CompressionUtils;
 
@@ -33,7 +33,7 @@ public abstract class BaseSingleAndDualWriter<T> implements AbstractWriter<T>,Ab
 		try {
 			write(new FileOutputStream(in),data);
 		} catch(java.lang.Exception e) {
-			throw new FileProcessingException(e,in);
+			throw new FileProcessingIOException(e,in);
 		}
 	}
 

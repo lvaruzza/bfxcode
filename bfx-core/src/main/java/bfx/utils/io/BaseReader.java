@@ -8,7 +8,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
 
-import bfx.exceptions.FileProcessingException;
+import bfx.exceptions.FileProcessingIOException;
 import bfx.exceptions.URLProcessingException;
 import bfx.utils.compression.CompressionUtils;
 
@@ -26,7 +26,7 @@ public abstract class BaseReader<T> implements AbstractReader<T> {
 		try {
 			return read(CompressionUtils.openInputStream(in));
 		} catch(java.lang.Exception e) {
-			throw new FileProcessingException(e,in);
+			throw new FileProcessingIOException(e,in);
 		}
 	}
 

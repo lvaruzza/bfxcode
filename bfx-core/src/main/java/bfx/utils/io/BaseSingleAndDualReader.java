@@ -8,7 +8,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
 
-import bfx.exceptions.FileProcessingException;
+import bfx.exceptions.FileProcessingIOException;
 import bfx.exceptions.MultipleFilesProcessingException;
 import bfx.exceptions.MultipleURLsProcessingException;
 import bfx.exceptions.URLProcessingException;
@@ -31,7 +31,7 @@ public abstract class BaseSingleAndDualReader<T> implements AbstractDualReader<T
 		try {
 			return read(new FileInputStream(in));
 		} catch(java.lang.Exception e) {
-			throw new FileProcessingException(e,in);
+			throw new FileProcessingIOException(e,in);
 		}
 	}
 

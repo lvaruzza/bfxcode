@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import bfx.exceptions.FileProcessingException;
+import bfx.exceptions.FileProcessingIOException;
 import bfx.utils.compression.CompressionUtils;
 
 /*
@@ -32,7 +32,7 @@ public abstract class BaseWriter<T> implements AbstractWriter<T> {
 		try {
 			write(CompressionUtils.openOutputStream(file),data);
 		} catch(java.lang.Exception e) {
-			throw new FileProcessingException(e,file);
+			throw new FileProcessingIOException(e,file);
 		}
 	}
 
