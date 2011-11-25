@@ -122,6 +122,7 @@ public class SequenceStat extends Tool {
 			}			
 			result.averageQual = qualSum * 1.0 / result.seqCount;
 		}
+		pc.finish();
 		
 		result.averageLength = ((double)result.totalLen) /  result.seqCount;
 		result.write(getStdOut(output), outputFormat);

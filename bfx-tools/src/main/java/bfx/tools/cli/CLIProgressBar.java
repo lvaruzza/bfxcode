@@ -10,9 +10,14 @@ public class CLIProgressBar implements Observer {
 	private long start = -1;
 	
 	public void showProgress(ProgressCounter pc) {
+		if (pc.isFinished()) {
+			System.out.println();
+			return;
+		}
+			
 		double x = pc.getTicks();
 		System.out.print('#');
-		if (((long)x)%60==0)
+		if (((long)(x+1))%60==0)
 			System.out.println(String.format(" count=%.0f ticks=%.0f rate=%.2e",
 					pc.getCount(),x,rate));
 		System.out.flush();
@@ -25,10 +30,12 @@ public class CLIProgressBar implements Observer {
 		if (start == -1) 
 			start = now;
 		else {
-			rate = pc.getCount() / (now-start); 
-			pc.setTick((long)(10000.0/rate));
-			showProgress(pc);
+			if (pc.getCount() > 10) {
+				rate = pc.getCount() / (now-start); 
+				pc.setTick((long)(10000.0/rate));
+			}
 		}
+		showProgress(pc);
 	}
 
 }
