@@ -92,7 +92,7 @@ public class SequenceStat extends Tool {
 		result.minSequenceLength = Integer.MAX_VALUE;
 		result.maxSequenceLength = 0;
 		ProgressCounter pc = getProgressCounter();
-		pc.setTick(1000*1000);
+		//pc.setTick(1000*1000);
 		
 		while (it.hasNext()) {
 			Sequence s = it.next();
