@@ -2,7 +2,9 @@ package bfx.impl;
 
 import java.util.Map;
 
-public class GFFAlign {	
+import bfx.GFF;
+
+public class GFFImpl implements GFF {	
 	private String seqid;
 	private String source;
 	private String type;
@@ -72,7 +74,7 @@ public class GFFAlign {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GFFAlign other = (GFFAlign) obj;
+		GFFImpl other = (GFFImpl) obj;
 		if (attributes == null) {
 			if (other.attributes != null)
 				return false;
@@ -111,7 +113,7 @@ public class GFFAlign {
 				+ strand + ", phase=" + phase + ", attributes=" + attributes
 				+ "]";
 	}
-	public GFFAlign(String seqid, String source, String type, long start,
+	public GFFImpl(String seqid, String source, String type, long start,
 			long end, char strand, byte phase, Map<String, String> attributes) {
 		super();
 		this.seqid = seqid;

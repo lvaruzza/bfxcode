@@ -1,6 +1,7 @@
 package bfx.io.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -10,37 +11,38 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
-import utils.exception.EmptyIteratorException;
-import bio.gff.GFF;
-import bio.gff.GFFAlign;
+import bfx.GFF;
+import bfx.exceptions.EmptyIteratorException;
+import bfx.utils.IteratorUtils;
+import bfx.utils.MapUtils;
 
-public class TestComIOGFFReader {
-	private static Logger log = Logger.getLogger(TestComIOGFFReader.class);
+public class TestGFFReader {
+	private static Logger log = Logger.getLogger(TestGFFReader.class);
 	
-	private ComIOGFFReader reader;
-	private Iterator<GFFAlign>  it;
+	private LineBasedGFFReader reader;
+	private Iterator<GFF>  it;
 	
 	@Before
 	public void setUp() throws IOException {
-		reader = new ComIOGFFReader();
-		it = reader.read("test/test1.gff");
+		reader = new LineBasedGFFReader();
+		it = reader.read("data/gff/test1.gff");
 	}
 	
 	@Test
 	public void testReadCount() throws IOException {
 		System.out.println();
-		assertEquals(180,utils.IteratorUtils.count(it));
+		assertEquals(180,IteratorUtils.count(it));
 	}
 	
 	@Test
-	public void testReadFirst() throws IOException, EmptyIteratorException {
+	public void testReadFirst() throws IOException, EmptyIteratorException, bfx.utils.EmptyIteratorException {
 		System.out.println();
-		GFFAlign align = utils.IteratorUtils.first(it);
+		GFF align = IteratorUtils.first(it);
 		log.debug(align);
 	}
 	private void testParseAttrs1(String line,String geneId,String transcriptId) {
-		Map<String,String> attr=GFF.parseAttrs(line);
-		log.debug(utils.MapUtils.toString(attr));
+		Map<String,String> attr=AbstractGFFReader.parseAttrs(line);
+		log.debug(MapUtils.toString(attr));
 		assertTrue(attr.containsKey("gene_id"));
 		assertEquals(geneId,attr.get("gene_id"));
 		assertTrue(attr.containsKey("transcript_id"));
