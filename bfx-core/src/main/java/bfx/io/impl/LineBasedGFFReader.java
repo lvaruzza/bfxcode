@@ -9,7 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import bfx.GFF;
-import bfx.impl.GFFImpl;
+import bfx.impl.GFFParser;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -24,7 +24,7 @@ public class LineBasedGFFReader extends AbstractGFFReader {
 	
 	private class GFFTransformer implements Function<String,GFF>  {
 		public GFF apply(String line) {
-			return parseGFF3(line);
+			return GFFParser.parseGFF3(line);
 		}
 	}
 	

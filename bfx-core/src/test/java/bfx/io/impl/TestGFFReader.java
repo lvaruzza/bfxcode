@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import bfx.GFF;
 import bfx.exceptions.EmptyIteratorException;
+import bfx.impl.GFFParser;
 import bfx.utils.IteratorUtils;
 import bfx.utils.MapUtils;
 
@@ -41,7 +42,7 @@ public class TestGFFReader {
 		log.debug(align);
 	}
 	private void testParseAttrs1(String line,String geneId,String transcriptId) {
-		Map<String,String> attr=AbstractGFFReader.parseAttrs(line);
+		Map<String,String> attr=GFFParser.parseAttrs(line);
 		log.debug(MapUtils.toString(attr));
 		assertTrue(attr.containsKey("gene_id"));
 		assertEquals(geneId,attr.get("gene_id"));
