@@ -21,10 +21,10 @@ public class CLIProgressBar implements Observer {
 		System.out.print('#');
 		if (((long)(x+1))%60==0) {
 			long now = System.currentTimeMillis();
-			long ticks  = (long) (10000.0 * (start - now) / pc.getCount());
-			System.out.println(String.format(" count=%.0f ticks=%.0f newticks=%d",
-					pc.getCount(),x,ticks));
-			pc.setTick(ticks);
+			long rate  = (long) (10000.0 * (start - now) / pc.getCount());
+			System.out.println(String.format(" count=%.0f ticks=%.0f rate=%d",
+					pc.getCount(),x,rate));
+			pc.setUpdateRate(rate);
 		}
 		System.out.flush();
 	}
