@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import bfx.exceptions.MultipleFilesProcessingException;
+import bfx.exceptions.MultipleFilesProcessingIOException;
 import bfx.utils.compression.CompressionUtils;
 
 /*
@@ -23,7 +23,7 @@ public abstract class BaseDualWriter<T> implements AbstractDualWriter<T> {
 			write(CompressionUtils.openOutputStream(file1),
 				  CompressionUtils.openOutputStream(file2),data);
 		} catch(Exception e) {
-			throw new MultipleFilesProcessingException(e,file1,file2);
+			throw new MultipleFilesProcessingIOException(e,file1,file2);
 		}
 	}
 	
@@ -32,7 +32,7 @@ public abstract class BaseDualWriter<T> implements AbstractDualWriter<T> {
 			write(CompressionUtils.openOutputStream(filename1),
 				  CompressionUtils.openOutputStream(filename2),data);
 		} catch(Exception e) {
-			throw new MultipleFilesProcessingException(e,filename1,filename2);
+			throw new MultipleFilesProcessingIOException(e,filename1,filename2);
 		}
 	}
 }

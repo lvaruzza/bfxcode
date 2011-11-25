@@ -8,8 +8,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
 
-import bfx.exceptions.MultipleFilesProcessingException;
-import bfx.exceptions.MultipleURLsProcessingException;
+import bfx.exceptions.MultipleFilesProcessingIOException;
+import bfx.exceptions.MultipleURLsProcessingIOException;
 import bfx.utils.compression.CompressionUtils;
 
 /*
@@ -30,14 +30,14 @@ public abstract class BaseDualReader<T> implements AbstractDualReader<T> {
 					    CompressionUtils.openInputStream(file2));
 
 		} catch(java.lang.Exception e) {
-			throw new MultipleFilesProcessingException(e,file1,file2);
+			throw new MultipleFilesProcessingIOException(e,file1,file2);
 		}
 	}
 	public T read(URL address1,URL address2) throws IOException {
 		try {
 			return read(address1.openStream(),address2.openStream());
 		} catch(java.lang.Exception e) {
-			throw new MultipleURLsProcessingException(e,address1,address2);
+			throw new MultipleURLsProcessingIOException(e,address1,address2);
 		}
 	}
 	public T read(String filename1,String filename2) throws IOException{
@@ -45,7 +45,7 @@ public abstract class BaseDualReader<T> implements AbstractDualReader<T> {
 			return read(CompressionUtils.openInputStream(filename1),
 						CompressionUtils.openInputStream(filename2));
 		} catch(java.lang.Exception e) {
-			throw new MultipleFilesProcessingException(e,filename1,filename2);
+			throw new MultipleFilesProcessingIOException(e,filename1,filename2);
 		}
 	}
 	public T readString(String buff1,String buff2) throws IOException{

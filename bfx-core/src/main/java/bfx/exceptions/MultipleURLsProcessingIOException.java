@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class MultipleURLsProcessingException extends IOException {
+public class MultipleURLsProcessingIOException extends IOException {
 	private static final long serialVersionUID = 1L;
 	private URL[] urls;
 	
-	public MultipleURLsProcessingException(java.lang.Exception e,URL... urls) {
+	public MultipleURLsProcessingIOException(java.lang.Exception e,URL... urls) {
 		super(e);
 		this.urls = urls;
 	}

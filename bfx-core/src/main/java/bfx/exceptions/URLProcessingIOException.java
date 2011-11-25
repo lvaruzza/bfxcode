@@ -3,11 +3,11 @@ package bfx.exceptions;
 import java.io.IOException;
 import java.net.URL;
 
-public class URLProcessingException extends IOException {
+public class URLProcessingIOException extends IOException {
 	private static final long serialVersionUID = 1L;
 	private URL url;
 	
-	public URLProcessingException(java.lang.Exception e,URL url) {
+	public URLProcessingIOException(java.lang.Exception e,URL url) {
 		super(e);
 		this.url = url;
 	}

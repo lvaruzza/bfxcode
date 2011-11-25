@@ -3,16 +3,16 @@ package bfx.exceptions;
 import java.io.File;
 import java.io.IOException;
 
-public class MultipleFilesProcessingException extends IOException {
+public class MultipleFilesProcessingIOException extends IOException {
 	private static final long serialVersionUID = 1L;
 	private File[] files;
 	
-	public MultipleFilesProcessingException(java.lang.Exception e,File... files){
+	public MultipleFilesProcessingIOException(java.lang.Exception e,File... files){
 		super(e);
 		this.files = files;
 	}
 
-	public MultipleFilesProcessingException(java.lang.Exception e,String... filenames){
+	public MultipleFilesProcessingIOException(java.lang.Exception e,String... filenames){
 		super(e);
 		files = new File[filenames.length];
 		for(int i=0;i<filenames.length;i++)
