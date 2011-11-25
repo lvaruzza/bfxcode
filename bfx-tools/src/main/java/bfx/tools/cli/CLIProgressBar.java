@@ -12,7 +12,7 @@ public class CLIProgressBar implements Observer {
 		double x = pc.getTicks();
 		System.out.print('#');
 		if (((long)x)%60==0)
-			System.out.println(String.format(" count=%d ticks=%.0f rate=%.2e tick=%e",pc.getCount(),x,rate));
+			System.out.println(String.format(" count=%.0f ticks=%.0f rate=%.2e tick=%e",pc.getCount(),x,rate));
 		System.out.flush();
 	}
 
