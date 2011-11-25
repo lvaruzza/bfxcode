@@ -3,7 +3,7 @@ package bfx;
 import java.util.Observable;
 
 public  class ProgressCounter extends Observable {
-	private long tick = 10;
+	private long updateRate = 10;
 	private long count = 0;
 	private boolean finish = false;
 	
@@ -14,8 +14,8 @@ public  class ProgressCounter extends Observable {
 		this.finish = false;
 	}
 	
-	public void setTick(long tick) {
-		this.tick = tick;
+	public void setUpdateRate(long updateRate) {
+		this.updateRate = updateRate;
 	}
 	
 	public double getCount() {
@@ -24,7 +24,7 @@ public  class ProgressCounter extends Observable {
 	
 	public void incr(long value) {
 		count += value;
-		if (count % tick == 0) {
+		if (count % updateRate == 0) {
 			this.setChanged();
 			this.notifyObservers();
 		}
@@ -37,7 +37,7 @@ public  class ProgressCounter extends Observable {
 	}
 	
 	public double getTicks() {
-		return count * 1.0 / tick;
+		return ((double)count) / updateRate;
 	}
 
 	public boolean isFinished() {
