@@ -1,4 +1,4 @@
-package bfx.util.io;
+package bfx.utils.io;
 
 import java.io.IOException;
 import java.util.Arrays;
