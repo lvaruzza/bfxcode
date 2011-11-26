@@ -9,8 +9,8 @@ public class TestByteBuffer {
 	public void test1() {
 		ByteBuffer bf = new ByteBuffer();
 		
-		bf.insert("marafo".getBytes());
-		bf.insert("42".getBytes());
+		bf.append("marafo".getBytes());
+		bf.append("42".getBytes());
 		System.out.println(new String(bf.get()));
 		assertEquals("marafo42",new String(bf.get()));
 	}

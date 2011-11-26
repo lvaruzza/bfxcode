@@ -10,8 +10,8 @@ import org.apache.commons.io.LineIterator;
 import org.apache.log4j.Logger;
 
 import bfx.Sequence;
-import bfx.impl.SequenceConstQualImpl;
 import bfx.impl.SequenceQualImpl;
+import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 	private static Logger log = Logger.getLogger(LineBasedFastaQualIterator.class);
@@ -19,8 +19,8 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 	private LineIterator liseq;
 	private LineIterator liqual;
 
-	private StringBuilder curseq;
-	private StringBuilder curqual;
+	private ByteBuffer curseq;
+	private ByteBuffer curqual;
 	private String seqline = "";
 	private String qualline = "";
 	private String header = "";
@@ -48,54 +48,56 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 				if (first) {
 					first = false;
 					header = seqline.substring(1);
-					curseq = new StringBuilder();
+					curseq = new ByteBuffer();
 					log.debug("Founded new sequence: '" + header +"'");
 					// Go to the first sequence in the qual file
 					while(liqual.hasNext()) {
 						qualline = liqual.next();
+						if(qualline.startsWith("#")) continue;
 						log.debug(String.format("1. qualline = %s'",qualline));
 						if(qualline.startsWith(">"))break;
 					}
 				} else {
 					log.debug("Reading qual");
-					curqual = new StringBuilder();
+					curqual = new ByteBuffer();
 					// Read the qual entry;
 					assert(header.equals(qualline.substring(1)));
 					
 					while(liqual.hasNext()) {
 						qualline = liqual.next();
+						if(qualline.startsWith("#")) continue;
 						if (qualline.startsWith(">")) break;
-						curqual.append(qualline);
-						curqual.append(' ');
+						curqual.append(qualline.getBytes());
+						curqual.append(" ".getBytes());
 					}
 					
-					log.debug(String.format("Qual = '%s'",curqual.toString()));
+					log.debug(String.format("Qual = '%s'",new String(curqual.get())));
 					
 					log.debug("Returning sequence: '" + header +"'");
 					Sequence seq = new SequenceQualImpl(header,
-														curseq.toString(),
-														curqual.toString());
+														curseq.get(),
+														curqual.get());
 					header = seqline.substring(1);
-					curseq = new StringBuilder();
-					curqual = new StringBuilder();
+					curseq = new ByteBuffer();
+					curqual = new ByteBuffer();
 					return seq;
 				}
 			} else {
-				if (!first) curseq.append(seqline.trim());
+				if (!first) curseq.append(seqline.trim().getBytes());
 			}
 		}
-		curqual = new StringBuilder();
-		//log.debug(String.format("curqual = '%s'",curqual.toString()));
+		curqual = new ByteBuffer();
+		//log.debug(String.format("curqual = '%s'",curqual.get()));
 		while(liqual.hasNext()) {
 			qualline = liqual.next();
 			if (qualline.startsWith(">")) break;
-			curqual.append(qualline);
-			curqual.append(' ');
+			curqual.append(qualline.getBytes());
+			curqual.append(" ".getBytes());
 		}
 		
 		return new SequenceQualImpl(header,
-				curseq.toString(),
-				curqual.toString());
+				curseq.get(),
+				curqual.get());
 	}
 
 	public void remove() {

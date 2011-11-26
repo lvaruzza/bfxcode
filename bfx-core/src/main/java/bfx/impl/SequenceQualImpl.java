@@ -22,7 +22,7 @@ public class SequenceQualImpl extends Sequence {
 	public SequenceQualImpl(String header,byte[] seq,byte[] qual) {
 		super(header);
 		this.seq = seq;
-		this.qual = qual;
+		this.qual = qualrepr.textToQual(qual);
 	}	
 	public SequenceQualImpl(String header,String seq,String repr) {
 		this(header, seq.getBytes(), qualrepr.textToQual(repr));

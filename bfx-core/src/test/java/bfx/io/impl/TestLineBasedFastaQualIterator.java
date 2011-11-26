@@ -85,7 +85,7 @@ public class TestLineBasedFastaQualIterator {
 			log.debug(seq.getId());
 			
 			
-			log.debug("=====> " + seq.getQualAsString());
+			log.debug(String.format("=====> '%s'",seq.getQualAsString()));
 			log.debug("=====> " + md5);
 			log.debug("=====> " + chk[1]);
 			assertEquals(chk[1],md5);

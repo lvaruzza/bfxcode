@@ -17,7 +17,7 @@ public class ByteBuffer {
 		size+=len;
 	}
 
-	public void insert(byte[] vec) {
+	public void append(byte[] vec) {
 		insert(vec,0,vec.length);
 	}
 	
