@@ -3,7 +3,7 @@ package bfx;
 import java.util.Observable;
 
 public  class ProgressCounter extends Observable {
-	private long updateRate = 10;
+	private long updateRate = 1;
 	private long count = 0;
 	private boolean finish = false;
 	

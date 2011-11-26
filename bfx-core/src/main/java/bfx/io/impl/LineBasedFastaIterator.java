@@ -59,6 +59,7 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 					return seq;
 				}
 			} else {
+				//System.out.println(line.trim());
 				if (!first) curseq.append(line.trim());
 			}
 		}
