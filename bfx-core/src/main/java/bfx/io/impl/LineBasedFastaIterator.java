@@ -11,13 +11,14 @@ import org.apache.log4j.Logger;
 
 import bfx.Sequence;
 import bfx.impl.SequenceConstQualImpl;
+import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaIterator implements Iterator<Sequence> {
 	private static Logger log = Logger.getLogger(LineBasedFastaIterator.class);
 	private LineIterator li;
 	private byte defaultQuality;
 	
-	private StringBuilder curseq;
+	private ByteBuffer curseq;
 	private String line = "";
 	private String header = "";
 	private boolean first = true;
@@ -49,22 +50,22 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 				if (first) {
 					first = false;
 					header = line.substring(1);
-					curseq = new StringBuilder();
+					curseq = new ByteBuffer();
 				} else {
 					Sequence seq = new SequenceConstQualImpl(header,
-														curseq.toString(),
+														curseq.get(),
 														defaultQuality);
 					header = line.substring(1);
-					curseq = new StringBuilder();
+					curseq = new ByteBuffer();
 					return seq;
 				}
 			} else {
 				//System.out.println(line.trim());
-				if (!first) curseq.append(line.trim());
+				if (!first) curseq.append(line.trim().getBytes());
 			}
 		}
 		return new SequenceConstQualImpl(header,
-				curseq.toString(),
+				curseq.get(),
 				defaultQuality);
 	}
 
