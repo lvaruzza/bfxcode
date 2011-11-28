@@ -29,6 +29,12 @@ public class SequenceStat extends Tool {
 		
 		private static DecimalFormat df = new DecimalFormat();
 		
+		public StatReport() {
+			symbols = new TreeMap<Character,Long>();
+			minSequenceLength = Integer.MAX_VALUE;
+			maxSequenceLength = 0;			
+		}
+		
 		@Override
 		public void writeHuman(PrintWriter pr) {
 			pr.println(              "Sequences Length Information:");
@@ -72,23 +78,10 @@ public class SequenceStat extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		
-		if (qual != null && inputFormat != null && !inputFormat.equals("fasta")) {
-			throw new RuntimeException("You can only use specify a qual file for fasta format");
-		}
-		
-		SequenceSet sequences;
+		SequenceSet sequences = SequenceSet.fromFile(inputFormat,input,qual);
 
-		if (qual != null) {
-			sequences =  SequenceSet.fromFile(inputFormat,input,qual);
-		} else {
-			sequences =  SequenceSet.fromFile(inputFormat,input);
-		}
-		
 		StatReport result = new StatReport();
-		result.symbols = new TreeMap<Character,Long>();
-		result.minSequenceLength = Integer.MAX_VALUE;
-		result.maxSequenceLength = 0;
+		
 		ProgressCounter pc = getProgressCounter();
 		//pc.setTick(1000*1000);
 		
