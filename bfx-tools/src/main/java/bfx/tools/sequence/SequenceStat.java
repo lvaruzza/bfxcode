@@ -2,15 +2,13 @@ package bfx.tools.sequence;
 
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import bfx.ProgressCounter;
 import bfx.Sequence;
-import bfx.io.SequenceFormats;
-import bfx.io.SequenceReader;
+import bfx.SequenceSet;
 import bfx.tools.Report;
 import bfx.tools.Tool;
 
@@ -74,17 +72,17 @@ public class SequenceStat extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SequenceReader reader = SequenceFormats.getReader(input,inputFormat);
-		Iterator<Sequence> it;
 		
 		if (qual != null && inputFormat != null && !inputFormat.equals("fasta")) {
 			throw new RuntimeException("You can only use specify a qual file for fasta format");
 		}
 		
+		SequenceSet sequences;
+
 		if (qual != null) {
-			it = reader.read(input,qual);
+			sequences =  SequenceSet.fromFile(inputFormat,input,qual);
 		} else {
-			it = reader.read(input);
+			sequences =  SequenceSet.fromFile(inputFormat,input);
 		}
 		
 		StatReport result = new StatReport();
@@ -94,8 +92,7 @@ public class SequenceStat extends Tool {
 		ProgressCounter pc = getProgressCounter();
 		//pc.setTick(1000*1000);
 		
-		while (it.hasNext()) {
-			Sequence s = it.next();
+		for (Sequence s: sequences) {
 			pc.incr(1);
 			
 			result.seqCount++;
