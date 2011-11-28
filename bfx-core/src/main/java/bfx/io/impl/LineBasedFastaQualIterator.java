@@ -9,12 +9,15 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.log4j.Logger;
 
+import bfx.QualRepr;
 import bfx.Sequence;
+import bfx.impl.FastaQualRepr;
 import bfx.impl.SequenceQualImpl;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 	private static Logger log = Logger.getLogger(LineBasedFastaQualIterator.class);
+	private static QualRepr qualrepr = new FastaQualRepr();
 	
 	private LineIterator liseq;
 	private LineIterator liqual;
@@ -76,7 +79,7 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 					log.debug("Returning sequence: '" + header +"'");
 					Sequence seq = new SequenceQualImpl(header,
 														curseq.get(),
-														curqual.get());
+														qualrepr.textToQual(curqual.get()));
 					header = seqline.substring(1);
 					curseq = new ByteBuffer();
 					curqual = new ByteBuffer();
@@ -97,7 +100,7 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 		
 		return new SequenceQualImpl(header,
 				curseq.get(),
-				curqual.get());
+				qualrepr.textToQual(curqual.get()));
 	}
 
 	public void remove() {
