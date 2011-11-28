@@ -20,25 +20,26 @@ public class FileSequenceSet extends SequenceSet {
 	
 	public FileSequenceSet(File file1,File file2) {
 		this.file1 = file1;
-		this.file1 = file2;
+		this.file2 = file2;
 		reader = SequenceFormats.getReader(file1.getName());
 	}
 
 	public FileSequenceSet(String format,File file1,File file2) {
 		this.file1 = file1;
-		this.file1 = file2;
+		this.file2 = file2;
 		reader = SequenceFormats.getReader(file1.getName(),format);
 	}
 	
 	public FileSequenceSet(File file1) {
 		this.file1 = file1;
-		this.file1 = null;
+		this.file2 = null;
 		reader = SequenceFormats.getReader(file1.getName());
 	}
 
+	
 	public FileSequenceSet(String format,File file1) {
 		this.file1 = file1;
-		this.file1 = null;
+		this.file2 = null;
 		reader = SequenceFormats.getReader(file1.getName(),format);
 	}
 	

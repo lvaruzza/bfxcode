@@ -24,10 +24,18 @@ public abstract class SequenceSet implements Iterable<Sequence> {
 	}	
 	
 	public static SequenceSet fromFile(String format,File file1,File file2) {
-		return new FileSequenceSet(format,file1,file2);
+		
+		if (file2 != null && format != null && !format.equals("fasta")) {
+			throw new RuntimeException("You can only use specify a qual file for fasta format");
+		}
+		
+		if (file2==null)
+			return new FileSequenceSet(format,file1);
+		else
+			return new FileSequenceSet(format,file1,file2);
 	}		
 
 	public static SequenceSet fromFile(String format,String filename1,String filename2) {
-		return new FileSequenceSet(format,new File(filename1),new File(filename2));
+		return new FileSequenceSet(format,new File(filename1),filename2 == null ? null : new File(filename2));
 	}		
 }
