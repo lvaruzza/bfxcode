@@ -49,4 +49,9 @@ public class SequenceBuilderListImpl implements SequenceBuilder {
 		return new SequenceQualImpl(name,rs,rq);
 	}
 
+	@Override
+	public int getPosition() {
+		return size;
+	}
+
 }
