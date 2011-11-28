@@ -1,18 +1,17 @@
 package bfx.io.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
 import bfx.Sequence;
 import bfx.io.SequenceReader;
-import bfx.io.impl.FastaSequenceReader;
 import bfx.utils.io.TableReader;
 
 public class TestLineBasedFastaIterator {

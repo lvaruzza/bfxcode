@@ -1,7 +1,5 @@
 package bfx.exceptions;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
 public class MultipleURLsProcessingRuntimeException extends RuntimeException {

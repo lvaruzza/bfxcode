@@ -1,11 +1,9 @@
 package bfx.impl;
 
-import org.apache.log4j.Logger;
-
 import bfx.Sequence;
 
 public class SequenceQualImpl extends Sequence {
-	private static Logger log = Logger.getLogger(SequenceQualImpl.class);
+	//private static Logger log = Logger.getLogger(SequenceQualImpl.class);
 	
 	private static FastaQualRepr qualrepr = new FastaQualRepr();
 	

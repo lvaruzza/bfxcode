@@ -1,6 +1,5 @@
 package bfx.exceptions;
 
-import java.io.IOException;
 import java.net.URL;
 
 public class URLProcessingRuntimeException extends RuntimeException {

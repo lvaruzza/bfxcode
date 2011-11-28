@@ -2,13 +2,12 @@ package bfx.io.impl;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import bfx.impl.FastaQualRepr;
 
 public class TestFastaQualRepr {
-	private static Logger log = Logger.getLogger(TestFastaQualRepr.class);
+	//private static Logger log = Logger.getLogger(TestFastaQualRepr.class);
 	private static FastaQualRepr repr = new FastaQualRepr();
 	
 	private void testStringToQual0(String in) {

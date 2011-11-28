@@ -5,15 +5,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
-
 import bfx.GFF;
-import bfx.io.impl.AbstractGFFReader;
 
 public class GFFParser {
-
-	
-	static private Logger log = Logger.getLogger(AbstractGFFReader.class);
+	//static private Logger log = Logger.getLogger(AbstractGFFReader.class);
 	
 	static public GFF parseGFF3(String line) throws InvalidFormatException {
 		Map<String,String> attrs;

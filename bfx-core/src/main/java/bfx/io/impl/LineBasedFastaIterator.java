@@ -7,14 +7,13 @@ import java.util.Iterator;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
-import org.apache.log4j.Logger;
 
 import bfx.Sequence;
 import bfx.impl.SequenceConstQualImpl;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaIterator implements Iterator<Sequence> {
-	private static Logger log = Logger.getLogger(LineBasedFastaIterator.class);
+	//private static Logger log = Logger.getLogger(LineBasedFastaIterator.class);
 	private LineIterator li;
 	private byte defaultQuality;
 	

@@ -6,7 +6,6 @@ import java.io.Reader;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 import bfx.utils.io.BaseSingleAndDualReader;
 

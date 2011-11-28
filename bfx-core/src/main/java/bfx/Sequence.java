@@ -5,12 +5,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
-
 import bfx.impl.FastaQualRepr;
 
 public abstract class Sequence {
-	private static Logger log = Logger.getLogger(Sequence.class);
+	//private static Logger log = Logger.getLogger(Sequence.class);
 	
 	private String id;
 	private String comments;
