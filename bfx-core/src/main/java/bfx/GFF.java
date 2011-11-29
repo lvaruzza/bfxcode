@@ -9,6 +9,7 @@ public class GFF {
 	
 	private long start;
 	private long end;
+	private double score;
 	
 	private char strand;
 	private byte phase;	
@@ -39,16 +40,22 @@ public class GFF {
 	public Map<String, String> getAttributes() {
 		return attributes;
 	}
+
+	public double getScore() {
+		return score;
+	}
 	
-	private int cachedHash = 0;
-	
-	private int innerHashCode() {
+	@Override
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
 				+ ((attributes == null) ? 0 : attributes.hashCode());
 		result = prime * result + (int) (end ^ (end >>> 32));
 		result = prime * result + phase;
+		long temp;
+		temp = Double.doubleToLongBits(score);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((seqid == null) ? 0 : seqid.hashCode());
 		result = prime * result + ((source == null) ? 0 : source.hashCode());
 		result = prime * result + (int) (start ^ (start >>> 32));
@@ -56,16 +63,6 @@ public class GFF {
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
-	
-
-	@Override
-	public int hashCode() {
-			if (cachedHash == 0) {
-				cachedHash = innerHashCode();
-			}
-			return cachedHash;
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,6 +80,9 @@ public class GFF {
 		if (end != other.end)
 			return false;
 		if (phase != other.phase)
+			return false;
+		if (Double.doubleToLongBits(score) != Double
+				.doubleToLongBits(other.score))
 			return false;
 		if (seqid == null) {
 			if (other.seqid != null)
@@ -105,23 +105,15 @@ public class GFF {
 			return false;
 		return true;
 	}
-	
-	@Override
-	public String toString() {
-		return "GFF [seqid=" + seqid + ", source=" + source + ", type="
-				+ type + ", start=" + start + ", end=" + end + ", strand="
-				+ strand + ", phase=" + phase + ", attributes=" + attributes
-				+ "]";
-	}
-	
 	public GFF(String seqid, String source, String type, long start,
-			long end, char strand, byte phase, Map<String, String> attributes) {
+			long end, double score,char strand, byte phase, Map<String, String> attributes) {
 		super();
 		this.seqid = seqid;
 		this.source = source;
 		this.type = type;
 		this.start = start;
 		this.end = end;
+		this.score = score;
 		this.strand = strand;
 		this.phase = phase;
 		this.attributes = attributes;

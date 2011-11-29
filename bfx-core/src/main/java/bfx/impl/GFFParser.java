@@ -16,7 +16,8 @@ public class GFFParser {
 		long start;
 		long end;
 		byte phase;
-
+		double score;
+		
 		String[] fields = line.split("\t");
 
 		// Trim all fields
@@ -55,6 +56,13 @@ public class GFFParser {
 			throw new InvalidFormatException("Invaid number format in end field: '%s' is not a number",fields[4]);
 		}
 
+		// Parse Score
+		try {
+			score = Double.parseDouble(fields[5]);
+		} catch(NumberFormatException e) {
+			throw new InvalidFormatException("Invaid number format in score field: '%s' is not a number",fields[5]);
+		}
+		
 		// Parse phase
 		try {
 			if (fields[7].charAt(0) == '.') {
@@ -69,7 +77,7 @@ public class GFFParser {
 		}
 		
 		return new GFF(fields[0], 
-				fields[1], fields[2], start, end, strand, phase, attrs);
+				fields[1], fields[2], start, end, score,strand, phase, attrs);
 	}
 
 	private static Pattern quoted = Pattern.compile("^\"(.*?)\"$");

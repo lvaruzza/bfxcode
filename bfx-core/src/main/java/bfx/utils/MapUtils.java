@@ -53,4 +53,14 @@ public class MapUtils {
 		}
 		return map;
 	}
+	
+	public static Map<String,String> build(String... args) {
+		Map<String,String> r = new HashMap<String,String>();
+		if (args.length % 2 != 0)
+			throw new RuntimeException(String.format("Invalid number of arguments: %d. The number of arguments should be even.",args.length));
+		for(int i=0;i<args.length;i+=2) {
+			r.put(args[i], args[i+1]);
+		}
+		return r;
+	}
 }

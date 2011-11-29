@@ -14,6 +14,7 @@ import org.junit.Test;
 import bfx.GFF;
 import bfx.exceptions.EmptyIteratorException;
 import bfx.impl.GFFParser;
+import bfx.io.GFFWriter;
 import bfx.utils.IteratorUtils;
 import bfx.utils.MapUtils;
 
@@ -41,6 +42,7 @@ public class TestGFFReader {
 		GFF align = IteratorUtils.first(it);
 		log.debug(align);
 	}
+	
 	private void testParseAttrs1(String line,String geneId,String transcriptId) {
 		Map<String,String> attr=GFFParser.parseAttrs(line);
 		log.debug(MapUtils.toString(attr));
@@ -57,4 +59,10 @@ public class TestGFFReader {
 		testParseAttrs1("gene_id; transcript_id \"NM_032129\";","","NM_032129");
 	}
 	
+	@Test
+	public void testReadWrite() throws IOException {
+		GFFWriter gw = new GFFWriterImpl();
+		
+		gw.write(System.out,it);
+	}
 }
