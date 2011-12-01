@@ -48,11 +48,11 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 		throw new RuntimeException("Not applicable for fastq file");
 	}
 
-	private static String[] exts = {"fastq","fq","csfastq"};
+	public static String[] fastQExtensions = {"fastq","fq","csfastq"};
 
 	@Override
 	public String[] getPreferedExtensions() {
-		return exts;
+		return fastQExtensions;
 	}
 
 	

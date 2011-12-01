@@ -7,25 +7,26 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Iterator;
 
+import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.exceptions.FileProcessingIOException;
-import bfx.exceptions.MultipleFilesProcessingIOException;
+import bfx.impl.FastQRepr;
 import bfx.io.SequenceWriter;
 import bfx.utils.io.BaseSingleAndDualWriter;
 
-public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequence>> implements SequenceWriter {
-	private int lineWidth;
-
-	public FastaSequenceWriter(int lineWidth) {
-		this.lineWidth = lineWidth;
+public class FastQSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequence>> implements SequenceWriter {
+	private QualRepr qualrepr;
+	
+	public FastQSequenceWriter(QualRepr qualrepr) {
+		this.qualrepr = qualrepr;
 	}
 
-	public FastaSequenceWriter() {
-		this(80);
+	public FastQSequenceWriter() {
+		this(new FastQRepr(FastQRepr.FastqEncoding.SANGER));
 	}
 	
 	private void writeHeader(OutputStream out,Sequence seq) throws IOException {
-		out.write('>');
+		out.write('@');
 		out.write(seq.getId().getBytes());
 		if(seq.getComments().length() != 0) {
 			out.write(' ');
@@ -35,7 +36,7 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	}
 
 	private void writeHeader(Writer out,Sequence seq) throws IOException {
-		out.write('>');
+		out.write('@');
 		out.write(seq.getId());
 		if(seq.getComments().length() != 0) {
 			out.write(' ');
@@ -46,49 +47,25 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	
 	public void write(OutputStream out,Sequence seq) throws IOException {
 		writeHeader(out,seq);
-		byte[] bs = seq.getSeq();
-		
-		for(int i=0;i<bs.length;i+=lineWidth) {
-			out.write(bs, i, Math.min(lineWidth,bs.length-i));
-			out.write('\n');
-		}		
+		out.write(seq.getSeq());
+		out.write('\n');
+		out.write("+\n".getBytes());
+		out.write(qualrepr.qualToTextBytes(seq.getQual()));
+		out.write('\n');		
 	}
 
 	@Override
 	public void write(Writer out, Sequence seq) throws IOException {
 		writeHeader(out,seq);
-		String bs = new String(seq.getSeq());
-		
-		for(int i=0;i<bs.length();i+=lineWidth) {
-			out.write(bs, i, Math.min(lineWidth,bs.length()-i));
-			out.write('\n');
-		}				
-	}
-	
-	public void writeQual(OutputStream out,Sequence seq) throws IOException {
-		writeHeader(out,seq);
-		byte[] bs = seq.getQual();
-		
-		for(int i=0;i<bs.length;i+=lineWidth) {
-			//TODO
-			//out.write(bs, i, Math.min(lineWidth,bs.length-i));
-			out.write('\n');
-		}		
-	}
-
-	public void writeQual(Writer out,Sequence seq) throws IOException {
-		writeHeader(out,seq);
-		byte[] bs = seq.getQual();
-		
-		for(int i=0;i<bs.length;i+=lineWidth) {
-			//TODO
-			//out.write(bs, i, Math.min(lineWidth,bs.length-i));
-			out.write('\n');
-		}		
+		out.write(new String(seq.getSeq()));
+		out.write('\n');
+		out.write("+\n");
+		out.write(qualrepr.qualToTextString(seq.getQual()));
+		out.write('\n');				
 	}
 	
 	/* 
-	 * Write only the sequence to a fasta file
+	 * Write only the sequence to a fastQ file
 	 */
 	@Override
 	public void write(OutputStream out, Iterator<Sequence> data)
@@ -100,7 +77,7 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	}
 
 	/*
-	 * Write only the sequence to a fasta file
+	 * Write only the sequence to a fastQ file
 	 */
 	@Override
 	public void write(Writer out, Iterator<Sequence> data) throws IOException {
@@ -109,26 +86,22 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	}
 
 	/*
-	 * Write the sequence and qual to a fasta/qual files
+	 * Invalid Method
 	 */
 	@Override
 	public void write(OutputStream outseq, OutputStream outqual,
 			Iterator<Sequence> data) throws IOException {
 
-		while(data.hasNext()) {
-			write(outseq,outqual,data.next());
-		}
+		throw new RuntimeException("This method does not work with fastQ format.");
 	}
 
 	/*
-	 * Write the sequence and qual to a fasta/qual files
+	 * Invalid Method
 	 */
 	@Override
-	public void write(Writer outseq, Writer outqual, Iterator<Sequence> data)
+	public void write(Writer writer1, Writer writer2, Iterator<Sequence> data)
 			throws IOException {
-		while(data.hasNext()) {
-			write(outseq,outqual,data.next());
-		}
+		throw new RuntimeException("This method does not work with fastQ format.");
 	}
 
 	@Override
@@ -142,30 +115,24 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 
 	@Override
 	public void write(File file1, File file2, Sequence seq) throws IOException{
-		try {
-			write(new FileOutputStream(file1),new FileOutputStream(file2),seq);
-		} catch(IOException e) {
-			throw new MultipleFilesProcessingIOException(e,file1,file2);
-		}
+		throw new RuntimeException("This method does not work with fastQ format.");
 	}
 
 	@Override
 	public void write(OutputStream out1, OutputStream out2, Sequence seq) throws IOException {
-		write(out1,seq);		
-		writeQual(out2,seq);	
+		throw new RuntimeException("This method does not work with fastQ format.");
 	}
 
 	@Override
 	public String[] getPreferedExtensions() {
-		return FastaSequenceReader.fastaExtensions;
+		return FastQSequenceReader.fastQExtensions;
 	}
 
 
 	@Override
 	public void write(Writer out1, Writer out2, Sequence seq)
 			throws IOException {
-		write(out1,seq);
-		writeQual(out2,seq);
+		throw new RuntimeException("This method does not work with fastQ format.");
 	}
 
 }

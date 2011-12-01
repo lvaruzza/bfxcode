@@ -39,11 +39,11 @@ public class FastaSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 		return new LineBasedFastaQualIterator(fastaReader,qualReader);
 	}
 	
-	private static String[] exts = {"fasta","fa","csfasta"};
 
+	public static String[] fastaExtensions = {"fasta","fa","csfasta"};
 	@Override
 	public String[] getPreferedExtensions() {
-		return exts;
+		return fastaExtensions;
 	}
 
 }
