@@ -37,7 +37,7 @@ public class PseudoGenome extends Tool {
 	public String name;
 
 	@Parameter(names = {"--annotationType","-type"}, description = "Annotation Type in GFF")
-	public String annotationType = "CDS";
+	public String annotationType = "CDS".intern();
 	
 	@Parameter(names = {"--spacerSize","-ss"}, description = "Number of N's to be put between each sequence")
 	public int spacerSize = 100;
