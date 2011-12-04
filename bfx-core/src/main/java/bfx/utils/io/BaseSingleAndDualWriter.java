@@ -49,6 +49,10 @@ public abstract class BaseSingleAndDualWriter<T> implements AbstractWriter<T>,Ab
 	public abstract void write(Writer writer1,Writer writer2, T data) throws IOException;
 
 	public void write(File file1,File file2, T data) throws IOException {
+		if(file2 == null) {
+			write(file1,data);
+			return;
+		}
 		try {
 
 			write(CompressionUtils.openOutputStream(file1),
@@ -60,6 +64,10 @@ public abstract class BaseSingleAndDualWriter<T> implements AbstractWriter<T>,Ab
 	}
 	
 	public void write(String filename1,String filename2, T data) throws IOException {
+		if(filename2 == null) { 
+			write(filename1,data);
+			return;
+		}
 		try {
 			write(CompressionUtils.openOutputStream(filename1),
 				  CompressionUtils.openOutputStream(filename2),data);

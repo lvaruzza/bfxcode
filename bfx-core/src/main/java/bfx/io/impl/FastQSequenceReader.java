@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
 
+import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.impl.FastQRepr;
 import bfx.impl.FastQRepr.FastqEncoding;
@@ -37,15 +38,15 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 	}
 
 	@Override
-	public Iterator<Sequence> read(InputStream fastaInput, InputStream qualInput)
+	public Iterator<Sequence> read(InputStream fastqInput, InputStream ignored)
 			throws IOException {
-		throw new RuntimeException("Not applicable for fastq file");
+		return read(fastqInput);
 	}
 
 	@Override
-	public Iterator<Sequence> read(Reader fastaReader, Reader qualReader)
+	public Iterator<Sequence> read(Reader fastqReader, Reader ignored)
 			throws IOException {
-		throw new RuntimeException("Not applicable for fastq file");
+		return read(fastqReader);
 	}
 
 	public static String[] fastQExtensions = {"fastq","fq","csfastq"};
@@ -55,5 +56,16 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 		return fastQExtensions;
 	}
 
+	private ProgressCounter pc;
+	
+	@Override
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
+	}
+
+	@Override
+	public String getFormatName() {
+		return "fastQ";
+	}
 	
 }
