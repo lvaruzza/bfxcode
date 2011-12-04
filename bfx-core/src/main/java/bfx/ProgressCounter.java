@@ -5,6 +5,9 @@ import java.util.Observable;
 public  class ProgressCounter extends Observable {
 	private long updateRate = 1;
 	private long count = 0;
+	private long count2 = 0;
+	private long ticks = 0;
+	
 	private boolean finish = false;
 	
 	public void reset() {
@@ -18,13 +21,16 @@ public  class ProgressCounter extends Observable {
 		this.updateRate = updateRate;
 	}
 	
-	public double getCount() {
+	public long getCount() {
 		return count;
 	}
 	
 	public void incr(long value) {
 		count += value;
-		if (count % updateRate == 0) {
+		count2 += value;
+		if (count2 >=  updateRate) {
+			count2 = 0;
+			ticks ++;
 			this.setChanged();
 			this.notifyObservers();
 		}
@@ -36,8 +42,8 @@ public  class ProgressCounter extends Observable {
 		this.notifyObservers();		
 	}
 	
-	public double getTicks() {
-		return ((double)count) / updateRate;
+	public long getTicks() {
+		return ticks;
 	}
 
 	public boolean isFinished() {
