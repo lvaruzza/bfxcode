@@ -69,13 +69,6 @@ public class FastaQualRepr extends AbstractQualRepr {
 	
 	@Override
 	public byte[] textToQual(String qual) {
-		String[] vals=qual.trim().split("\\s+");
-		byte[] out = new byte[vals.length];
-		
-		for(int i=0;i<vals.length;i++) {
-			out[i] = Byte.parseByte(vals[i]);
- 		}
-		
-		return out;
+		return textToQual(qual.getBytes());
 	}
 }
