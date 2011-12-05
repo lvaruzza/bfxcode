@@ -11,7 +11,7 @@ public class TestFastaQualRepr {
 	private static FastaQualRepr repr = new FastaQualRepr();
 	
 	private void testStringToQual0(String in) {
-		byte[] b = repr.textToQual(in);
+		byte[] b = repr.textToQual(in.getBytes());
 		for (byte i=0;i<b.length;i++) {
 			assertEquals(i,b[i]);
 		}
