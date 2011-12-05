@@ -2,6 +2,8 @@ package bfx.io.impl;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import bfx.impl.FastaQualRepr;
@@ -16,9 +18,16 @@ public class TestFastaQualRepr {
 			assertEquals(i,b[i]);
 		}
 	}
-	
+
+	@Test 
+	public void testStringToQual2() {
+		byte[] b = repr.textToQual("1 2".getBytes());
+		System.out.println(Arrays.toString(b));
+		assertEquals(2,b.length);
+	}
+
 	@Test
-	public void testStringToQual() {
+	public void testStringToQual20() {
 		testStringToQual0("0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20");
 		testStringToQual0("   0 1 2 3 4 5 6 7\n 8 9 10 11 12 13 14 15 16 17 18 19 20");
 		testStringToQual0("0 1 2 3 4 5 6 7 8              9 10 11 12 13 14 15 16 17 18 19 20        ");
