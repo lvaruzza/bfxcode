@@ -1,4 +1,4 @@
-package bfx.io.impl;
+package bfx.impl;
 
 import static org.junit.Assert.assertEquals;
 

@@ -28,54 +28,23 @@ public class FastaQualRepr extends AbstractQualRepr {
 	
 	@Override
 	public byte[] textToQual(byte[] repr) {
-		byte [] tmp=new byte[3];
 		byte[] r = new byte[repr.length/2+1];
 		int k=0;
-		int j=0;
+		boolean hasVal = false;
 		for(int i=0;i<repr.length;i++) {
 			if(repr[i] == ' ' || repr[i] == '\t' || repr[i] == '\n') {
-				switch(j) {
-				case 0:
-					continue;
-				case 1:
-					r[k++] = tmp[0];
-					break;
-				case 2:
-					r[k++]=(byte)(tmp[0]*10 + tmp[1]);
-					tmp[1] = (byte)0;
-					break;
-				case 3:
-					r[k++]=(byte)(tmp[0]*100 + tmp[1]*10 + tmp[2]);
-					tmp[1] = (byte)0;
-					tmp[2] = (byte)0;
-					break;
-				default:
-					throw new RuntimeException("j="+j);
-				}
 				//if (k!=0) System.out.println(String.format("# i=%d, k=%d, tmp='%s', r[k]=%d",i,k,Arrays.toString(tmp),r[k-1]));
-				j=0;
+				if (hasVal) { 
+					k++;
+					hasVal = false;
+				}
 			} else if (repr[i] >= '0' && repr[i] <= '9'){
-				tmp[j++] = (byte)(repr[i]-'0');
+				r[k] = (byte)(r[k] * 10 + (repr[i]-'0'));
+				hasVal = true;
 				//System.out.println(String.format("i=%d, repr[i]='%d', tmp='%s'",i,repr[i],Arrays.toString(tmp)));
 			}
 		}
-		switch(j) {
-		case 0: break;
-		case 1:
-			r[k++] = tmp[0];
-			break;
-		case 2:
-			r[k++]=(byte)(tmp[0]*10 + tmp[1]);
-			tmp[1] = (byte)0;
-			break;
-		case 3:
-			r[k++]=(byte)(tmp[0]*100 + tmp[1]*10 + tmp[2]);
-			tmp[1] = (byte)0;
-			tmp[2] = (byte)0;
-			break;
-		default:
-			throw new RuntimeException("j="+j);
-		}
+		if (hasVal) k++;
 		return Arrays.copyOfRange(r, 0, k);
 	}
 
