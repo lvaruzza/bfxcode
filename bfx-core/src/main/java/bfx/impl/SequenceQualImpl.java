@@ -22,7 +22,19 @@ public class SequenceQualImpl extends Sequence {
 		this.seq = seq;
 		this.qual = qual;
 	}	
+
+	public SequenceQualImpl(String id,String comment,byte[] seq,byte[] qual) {
+		super(id,comment);
+		this.seq = seq;
+		this.qual = qual;
+	}	
+	
 	public SequenceQualImpl(String header,String seq,String repr) {
 		this(header, seq.getBytes(), qualrepr.textToQual(repr));
 	}
+
+	@Override
+	public Sequence changeSeq(byte[] newseq) {
+		return new SequenceQualImpl(this.getId(),this.getComments(),newseq,getQual());
+	}	
 }

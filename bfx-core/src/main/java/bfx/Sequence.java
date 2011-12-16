@@ -98,4 +98,6 @@ public abstract class Sequence {
 	public String getQualAsString() {
 		return qrepr.qualToTextString(getQual());
 	}
+	
+	public abstract Sequence changeSeq(byte[] seq);
 }
