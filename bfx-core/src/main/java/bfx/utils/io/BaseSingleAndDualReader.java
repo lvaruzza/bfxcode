@@ -57,6 +57,8 @@ public abstract class BaseSingleAndDualReader<T> implements AbstractDualReader<T
 	abstract public T read(Reader reader1,Reader reader2) throws IOException;
 	
 	public T read(File file1,File file2) throws IOException {
+		if (file2 == null) return read(file1);
+
 		try {
 
 			return read(CompressionUtils.openInputStream(file1),
@@ -67,6 +69,7 @@ public abstract class BaseSingleAndDualReader<T> implements AbstractDualReader<T
 		}
 	}
 	public T read(URL address1,URL address2) throws IOException {
+		if (address2 == null) return read(address1);
 		try {
 			return read(address1.openStream(),address2.openStream());
 		} catch(java.lang.Exception e) {
@@ -74,6 +77,7 @@ public abstract class BaseSingleAndDualReader<T> implements AbstractDualReader<T
 		}
 	}
 	public T read(String filename1,String filename2) throws IOException{
+		if (filename2 == null) return read(filename1);
 		try {
 			return read(CompressionUtils.openInputStream(filename1),
 						CompressionUtils.openInputStream(filename2));
@@ -82,6 +86,7 @@ public abstract class BaseSingleAndDualReader<T> implements AbstractDualReader<T
 		}
 	}
 	public T readString(String buff1,String buff2) throws IOException{
+		if (buff2 == null) return readString(buff1);
 		return read(new StringReader(buff1),new StringReader(buff2));
 	}
 }

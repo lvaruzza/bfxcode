@@ -3,10 +3,30 @@ package bfx.tools.cli;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
 import bfx.ProgressCounter;
 
 public class CLIProgressBar implements Observer {
 	private long start = -1;
+	private static PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
+															.printZeroNever()
+															.appendDays()
+															.appendSuffix(" day"," days")
+															.appendSeparator(" ")
+															.appendHours()
+															.appendSuffix("h")
+															.appendMinutes()
+															.appendSuffix("m")
+                                                            .printZeroAlways()															
+															.appendSeconds()
+															.appendSeparator(".")
+															.appendMillis3Digit()
+															.appendSuffix("s")
+															.toFormatter();
+															
 	
 	public void showProgress(ProgressCounter pc) {
 		if (start==-1)
@@ -17,14 +37,17 @@ public class CLIProgressBar implements Observer {
 			return;
 		}
 			
-		double x = pc.getTicks();
-		System.out.print('#');
-		if (((long)(x+1))%60==0) {
+		long ticks = pc.getTicks();
+		System.out.print('.');
+		if (ticks%60==0) {
 			long now = System.currentTimeMillis();
-			long rate  = (long) (10000.0 * (start - now) / pc.getCount());
-			System.out.println(String.format(" count=%.0f ticks=%.0f rate=%d",
-					pc.getCount(),x,rate));
-			pc.setUpdateRate(rate);
+			long elapsed = now - start;
+			Period period = new Period(elapsed);
+			double rate  = (1000.0 * pc.getCount()) / elapsed;
+			System.out.println(String.format(" [%,d recs in %s: %,.0f recs/s]",
+					pc.getCount(), periodFormatter.print(period),rate));
+			
+			pc.setUpdateRate((long)(rate));
 		}
 		System.out.flush();
 	}

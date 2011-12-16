@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Iterator;
 
+import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.utils.io.AbstractDualWriter;
 import bfx.utils.io.AbstractWriter;
@@ -20,6 +21,9 @@ public interface SequenceWriter extends AbstractWriter<Iterator<Sequence>>,Abstr
 
 	public void write(Writer out1,Sequence seq) throws IOException;
 	public void write(Writer out1,Writer out2,Sequence seq) throws IOException;
+
+	public void setProgressCounter(ProgressCounter pc);		
+	public String[] getPreferedExtensions();
 	
-	String[] getPreferedExtensions();	
+	public String getFormatName();
 }

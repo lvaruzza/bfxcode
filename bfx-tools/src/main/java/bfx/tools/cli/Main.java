@@ -26,7 +26,7 @@ public class Main {
 	private static Map<String,Class<? extends Tool>> commands = new HashMap<String,Class<? extends Tool>>();;
 	
 	public static void addCommand(String name,Class<? extends Tool> klass) {
-		log.debug(String.format("Registering command '%s' to class '%s'",name,klass.getName()));
+		System.out.println(String.format("Registering command '%s' to class '%s'",name,klass.getName()));
 		commands.put(name,klass);
 	}
 	
@@ -39,7 +39,7 @@ public class Main {
 			if (tool.verbose) {
 			      root.setLevel(Level.DEBUG);
 			 } else {
-			      root.setLevel(Level.WARN);				 
+			      root.setLevel(Level.INFO);				 
 			 }
 		} catch(ParameterException e) {
 			System.err.println(TextUtils.doubleLine());

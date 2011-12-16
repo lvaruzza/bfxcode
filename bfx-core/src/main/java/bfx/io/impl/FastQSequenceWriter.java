@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Iterator;
 
+import bfx.ProgressCounter;
 import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.exceptions.FileProcessingIOException;
@@ -72,6 +73,7 @@ public class FastQSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 			throws IOException {
 
 		while(data.hasNext()) {
+			pc.incr(1);
 			write(out,data.next());
 		}
 	}
@@ -81,46 +83,48 @@ public class FastQSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	 */
 	@Override
 	public void write(Writer out, Iterator<Sequence> data) throws IOException {
-		while(data.hasNext())
+		while(data.hasNext()) {
+			pc.incr(1);
 			write(out,data.next());
+		}
 	}
 
 	/*
 	 * Invalid Method
 	 */
 	@Override
-	public void write(OutputStream outseq, OutputStream outqual,
+	public void write(OutputStream fastqOut, OutputStream ignored,
 			Iterator<Sequence> data) throws IOException {
 
-		throw new RuntimeException("This method does not work with fastQ format.");
+			write(fastqOut,data);
 	}
 
 	/*
 	 * Invalid Method
 	 */
 	@Override
-	public void write(Writer writer1, Writer writer2, Iterator<Sequence> data)
+	public void write(Writer fastqWriter, Writer ignored, Iterator<Sequence> data)
 			throws IOException {
-		throw new RuntimeException("This method does not work with fastQ format.");
+		write(fastqWriter,data);
 	}
 
 	@Override
-	public void write(File file1, Sequence seq) throws IOException{
+	public void write(File fastqFile, Sequence seq) throws IOException{
 		try {
-			write(new FileOutputStream(file1),seq);
+			write(new FileOutputStream(fastqFile),seq);
 		} catch(IOException e) {
-			throw new FileProcessingIOException(e,file1);
+			throw new FileProcessingIOException(e,fastqFile);
 		}
 	}
 
 	@Override
-	public void write(File file1, File file2, Sequence seq) throws IOException{
-		throw new RuntimeException("This method does not work with fastQ format.");
+	public void write(File fastqFile, File ignored, Sequence seq) throws IOException{
+		write(fastqFile,seq);
 	}
 
 	@Override
-	public void write(OutputStream out1, OutputStream out2, Sequence seq) throws IOException {
-		throw new RuntimeException("This method does not work with fastQ format.");
+	public void write(OutputStream fastqOut, OutputStream ignore, Sequence seq) throws IOException {
+		write(fastqOut,seq);
 	}
 
 	@Override
@@ -130,9 +134,20 @@ public class FastQSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 
 
 	@Override
-	public void write(Writer out1, Writer out2, Sequence seq)
+	public void write(Writer fastqWriter, Writer ignored, Sequence seq)
 			throws IOException {
-		throw new RuntimeException("This method does not work with fastQ format.");
+		write(fastqWriter,seq);
 	}
 
+	private ProgressCounter pc;
+	
+	@Override
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
+	}
+	
+	@Override
+	public String getFormatName() {
+		return "fastQ";
+	}
 }

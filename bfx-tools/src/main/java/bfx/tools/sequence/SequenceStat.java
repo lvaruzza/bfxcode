@@ -81,7 +81,6 @@ public class SequenceStat extends Tool {
 		SequenceSet sequences = SequenceSet.fromFile(inputFormat,input,qual);
 
 		StatReport result = new StatReport();
-		
 		ProgressCounter pc = getProgressCounter();
 		//pc.setTick(1000*1000);
 		

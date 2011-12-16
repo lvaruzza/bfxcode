@@ -28,7 +28,24 @@ public class FastaQualRepr extends AbstractQualRepr {
 	
 	@Override
 	public byte[] textToQual(byte[] repr) {
-		return textToQual(new String(repr));
+		byte[] r = new byte[repr.length/2+1];
+		int k=0;
+		boolean hasVal = false;
+		for(int i=0;i<repr.length;i++) {
+			if(repr[i] == ' ' || repr[i] == '\t' || repr[i] == '\n') {
+				//if (k!=0) System.out.println(String.format("# i=%d, k=%d, tmp='%s', r[k]=%d",i,k,Arrays.toString(tmp),r[k-1]));
+				if (hasVal) { 
+					k++;
+					hasVal = false;
+				}
+			} else if (repr[i] >= '0' && repr[i] <= '9'){
+				r[k] = (byte)(r[k] * 10 + (repr[i]-'0'));
+				hasVal = true;
+				//System.out.println(String.format("i=%d, repr[i]='%d', tmp='%s'",i,repr[i],Arrays.toString(tmp)));
+			}
+		}
+		if (hasVal) k++;
+		return Arrays.copyOfRange(r, 0, k);
 	}
 
 
@@ -39,13 +56,6 @@ public class FastaQualRepr extends AbstractQualRepr {
 	
 	@Override
 	public byte[] textToQual(String qual) {
-		String[] vals=qual.trim().split("\\s+");
-		byte[] out = new byte[vals.length];
-		
-		for(int i=0;i<vals.length;i++) {
-			out[i] = Byte.parseByte(vals[i]);
- 		}
-		
-		return out;
+		return textToQual(qual.getBytes());
 	}
 }

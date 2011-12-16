@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
 
+import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.SequenceReader;
 import bfx.utils.io.BaseSingleAndDualReader;
@@ -30,13 +31,19 @@ public class FastaSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 	@Override
 	public Iterator<Sequence> read(InputStream fastaInput, InputStream qualInput)
 			throws IOException {
-		return new LineBasedFastaQualIterator(fastaInput,qualInput);
+		if (qualInput != null)
+			return new LineBasedFastaQualIterator(fastaInput,qualInput);
+		else
+			return read(fastaInput);
 	}
 
 	@Override
 	public Iterator<Sequence> read(Reader fastaReader, Reader qualReader)
 			throws IOException {
-		return new LineBasedFastaQualIterator(fastaReader,qualReader);
+		if (qualReader != null)
+			return new LineBasedFastaQualIterator(fastaReader,qualReader);
+		else
+			return read(fastaReader);
 	}
 	
 
@@ -46,4 +53,15 @@ public class FastaSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 		return fastaExtensions;
 	}
 
+	private ProgressCounter pc;
+	
+	@Override
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
+	}
+	
+	@Override
+	public String getFormatName() {
+		return "fasta";
+	}
 }

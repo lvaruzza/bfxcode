@@ -47,21 +47,21 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 		while(liseq.hasNext()) {
 			seqline = liseq.next();
 			if (seqline.startsWith(">")) {
-				log.debug(String.format("line=%s first=%s ",seqline,first));
+				//log.debug(String.format("line=%s first=%s ",seqline,first));
 				if (first) {
 					first = false;
 					header = seqline.substring(1);
 					curseq = new ByteBuffer();
-					log.debug("Founded new sequence: '" + header +"'");
+					//log.debug("Founded new sequence: '" + header +"'");
 					// Go to the first sequence in the qual file
 					while(liqual.hasNext()) {
 						qualline = liqual.next();
 						if(qualline.startsWith("#")) continue;
-						log.debug(String.format("1. qualline = %s'",qualline));
+						//log.debug(String.format("1. qualline = %s'",qualline));
 						if(qualline.startsWith(">"))break;
 					}
 				} else {
-					log.debug("Reading qual");
+					//log.debug("Reading qual");
 					curqual = new ByteBuffer();
 					// Read the qual entry;
 					assert(header.equals(qualline.substring(1)));
@@ -74,9 +74,9 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 						curqual.append(" ".getBytes());
 					}
 					
-					log.debug(String.format("Qual = '%s'",new String(curqual.get())));
+					//log.debug(String.format("Qual = '%s'",new String(curqual.get())));
 					
-					log.debug("Returning sequence: '" + header +"'");
+					//log.debug("Returning sequence: '" + header +"'");
 					Sequence seq = new SequenceQualImpl(header,
 														curseq.get(),
 														qualrepr.textToQual(curqual.get()));

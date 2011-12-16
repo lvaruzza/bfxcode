@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Iterator;
 
+import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.exceptions.FileProcessingIOException;
 import bfx.exceptions.MultipleFilesProcessingIOException;
@@ -81,7 +82,7 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 		byte[] bs = seq.getQual();
 		
 		for(int i=0;i<bs.length;i+=lineWidth) {
-			//TODO
+			//TODO!!!!!!!!!!!!!!
 			//out.write(bs, i, Math.min(lineWidth,bs.length-i));
 			out.write('\n');
 		}		
@@ -95,6 +96,7 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 			throws IOException {
 
 		while(data.hasNext()) {
+			pc.incr(1);
 			write(out,data.next());
 		}
 	}
@@ -104,8 +106,10 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	 */
 	@Override
 	public void write(Writer out, Iterator<Sequence> data) throws IOException {
-		while(data.hasNext())
+		while(data.hasNext()) {
+			pc.incr(1);
 			write(out,data.next());
+		}
 	}
 
 	/*
@@ -116,6 +120,7 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 			Iterator<Sequence> data) throws IOException {
 
 		while(data.hasNext()) {
+			pc.incr(1);
 			write(outseq,outqual,data.next());
 		}
 	}
@@ -127,6 +132,7 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	public void write(Writer outseq, Writer outqual, Iterator<Sequence> data)
 			throws IOException {
 		while(data.hasNext()) {
+			pc.incr(1);
 			write(outseq,outqual,data.next());
 		}
 	}
@@ -167,5 +173,16 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 		write(out1,seq);
 		writeQual(out2,seq);
 	}
+	
+	private ProgressCounter pc;	
+	@Override
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
+	}
 
+	@Override
+	public String getFormatName() {
+		return "fasta";
+	}
+	
 }
