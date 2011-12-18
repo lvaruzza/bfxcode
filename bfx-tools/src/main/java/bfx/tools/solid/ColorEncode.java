@@ -1,8 +1,11 @@
-package bfx.tools.sequence;
+package bfx.tools.solid;
+
+import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
 import bfx.ProgressCounter;
+import bfx.Sequence;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceWriter;
@@ -11,15 +14,12 @@ import bfx.utils.TextUtils;
 
 import com.beust.jcommander.Parameter;
 
-public class Convert extends Tool {
-	private static Logger log = Logger.getLogger(Convert.class);
+public class ColorEncode extends Tool {
+	private static Logger log = Logger.getLogger(ColorEncode.class);
 	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
 
-	@Parameter(names = {"--qual","-q"}, description = "Qual file (only applicable for fasta format)")
-	public String qual;
-	
 	@Parameter(names = {"--inputFormat","-if"}, description = "Input Format")
 	public String inputFormat;
 	
@@ -47,7 +47,11 @@ public class Convert extends Tool {
 		
 		ProgressCounter pc = getProgressCounter();
 		sw.setProgressCounter(pc);
-		sw.write(output,outputQual,sr.read(input,qual));
+		Iterator<Sequence> it = sr.read(input);
+		while(it.hasNext()) {
+			Sequence seq = it.next();
+			//sw.write(output,outputQual,sr.read(input));
+		}
 		pc.finish();
 		
 		log.info(TextUtils.doubleLine());
