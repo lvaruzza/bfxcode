@@ -12,8 +12,9 @@ import bfx.Sequence;
 // T 3 2 1 0
 
 public class Color {
-	private static Logger log = Logger.getLogger(Color.class);
+	//private static Logger log = Logger.getLogger(Color.class);
 	
+	// Convert byte to index in [0,4] range
 	private static byte[] enc = new byte[] {
 		4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
@@ -29,16 +30,14 @@ public class Color {
         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
 
+	// convert index to bases
 	static byte[] bases = new byte[] {'A','C','G','T','N'};
+	// convert index to colors
 	static byte[] colors = new byte[] {'0','1','2','3','.'};
 	
-/*	{{0,1,2,3,4},
-   	 {1,0,3,2,4},
-   	 {2,3,0,1,4},
-   	 {3,2,1,0,4},
-   	 {4,4,4,4,4}};
-*/
-	
+	/*
+	 * Color encoding matrix (is the same for encoding and decoding
+	 */
 	static byte[][] mat = new byte[][] 
 							{{0,1,2,3,4},
 				        	 {1,0,3,2,4},
@@ -77,9 +76,18 @@ public class Color {
 		return naiveColorDecode(seq,0,seq.length);
 	}
 
+	public static byte[] colorDecode(byte[] seq,int start,int length) {
+		return naiveColorDecode(seq,start,length);
+	}
+	
 	public static byte[] colorEncode(byte[] seq) {
 		return naiveColorEncode(seq,0,seq.length);
 	}
+
+	public static byte[] colorEncode(byte[] seq,int start,int length) {
+		return naiveColorEncode(seq,start,length);
+	}
+	
 	
 	public static Sequence colorDecode(Sequence seq) {
 		byte[] s = seq.getSeq();
