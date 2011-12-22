@@ -5,49 +5,49 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.SequenceSet;
+import bfx.SequenceSource;
 import bfx.exceptions.FileProcessingRuntimeException;
 import bfx.exceptions.MultipleFilesProcessingRuntimeException;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 
-public class FileSequenceSet extends SequenceSet {
+public class FileSequenceSource extends SequenceSource {
 
 	private File file1 = null;
 	private File file2 = null;
 	
 	private SequenceReader reader;
 	
-	public FileSequenceSet(File file1,File file2) {
+	public FileSequenceSource(File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
 		reader = SequenceFormats.getReader(file1.getName());
 	}
 
-	public FileSequenceSet(String format,File file1,File file2) {
+	public FileSequenceSource(String format,File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
 		reader = SequenceFormats.getReader(file1.getName(),format);
 	}
 	
-	public FileSequenceSet(File file1) {
+	public FileSequenceSource(File file1) {
 		this.file1 = file1;
 		this.file2 = null;
 		reader = SequenceFormats.getReader(file1.getName());
 	}
 
 	
-	public FileSequenceSet(String format,File file1) {
+	public FileSequenceSource(String format,File file1) {
 		this.file1 = file1;
 		this.file2 = null;
 		reader = SequenceFormats.getReader(file1.getName(),format);
 	}
 	
-	public FileSequenceSet(String filename) {
+	public FileSequenceSource(String filename) {
 		this(new File(filename));
 	}
 
-	public FileSequenceSet(String filename1,String filename2) {
+	public FileSequenceSource(String filename1,String filename2) {
 		this(new File(filename1),new File(filename2));
 	}
 	

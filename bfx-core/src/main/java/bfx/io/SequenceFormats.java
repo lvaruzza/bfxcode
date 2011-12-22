@@ -56,6 +56,11 @@ public class SequenceFormats {
 		return reader;
 	}
 
+	public static SequenceWriter getWriter(String filename) {
+		String ext = FilenameUtils.getExtension(CompressionUtils.uncompressedFilename(filename));
+		return getWriter(filename,ext);
+	}
+	
 	public static SequenceWriter getWriter(String filename, String format) {
 		log.debug("Getting writer for file: " + filename);
 		String ext = FilenameUtils.getExtension(CompressionUtils.uncompressedFilename(filename));
