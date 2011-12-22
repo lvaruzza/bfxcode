@@ -54,10 +54,12 @@ public class FileSequenceSource extends SequenceSource {
 	@Override
 	public Iterator<Sequence> iterator() {
 		try {
-			if (file2 == null)
+			pc.incr(1);
+			if (file2 == null) {
 				return reader.read(file1);
-			else
-				return reader.read(file2);				
+			} else { 
+				return reader.read(file2);
+			}
 		} catch(IOException e) {
 			if (file2 == null)
 				throw new FileProcessingRuntimeException(e,file1);

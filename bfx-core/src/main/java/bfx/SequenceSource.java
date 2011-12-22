@@ -7,6 +7,11 @@ import bfx.io.impl.FileSequenceSource;
 import bfx.utils.IteratorUtils;
 
 public abstract class SequenceSource implements Iterable<Sequence> {
+	protected ProgressCounter pc;
+	
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
+	}
 
 	@Override
 	abstract public Iterator<Sequence> iterator();
