@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 import bfx.ProgressCounter;
 import bfx.Sequence;
-import bfx.SequenceSet;
+import bfx.SequenceSource;
 import bfx.tools.Report;
 import bfx.tools.Tool;
 
@@ -78,7 +78,7 @@ public class SequenceStat extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SequenceSet sequences = SequenceSet.fromFile(inputFormat,input,qual);
+		SequenceSource sequences = SequenceSource.fromFile(inputFormat,input,qual);
 
 		StatReport result = new StatReport();
 		ProgressCounter pc = getProgressCounter();

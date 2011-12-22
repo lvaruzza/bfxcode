@@ -1,14 +1,13 @@
 package bfx.tools.solid;
 
-import java.util.Iterator;
-
 import org.apache.log4j.Logger;
 
 import bfx.ProgressCounter;
 import bfx.Sequence;
-import bfx.io.SequenceFormats;
-import bfx.io.SequenceReader;
-import bfx.io.SequenceWriter;
+import bfx.SequenceSink;
+import bfx.SequenceSource;
+import bfx.io.impl.FileSequenceSink;
+import bfx.io.impl.FileSequenceSource;
 import bfx.tools.Tool;
 import bfx.utils.TextUtils;
 
@@ -34,23 +33,17 @@ public class ColorEncode extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SequenceReader sr = SequenceFormats.getReader(input,inputFormat);
-		SequenceWriter sw = SequenceFormats.getWriter(output,outputFormat);
+		SequenceSource src = new FileSequenceSource(input,inputFormat);
+		SequenceSink sink =  new FileSequenceSink(output,outputFormat);
 
-		inputFormat = sr.getFormatName();
-		outputFormat = sw.getFormatName();
-		
-		
 		log.info(TextUtils.doubleLine());
-		log.info(String.format("Started sequences conversion from %s format to %s format",inputFormat,outputFormat));
+		log.info(String.format("Started sequences conversion from base space to color space"));
 		log.info(TextUtils.doubleLine());
 		
 		ProgressCounter pc = getProgressCounter();
-		sw.setProgressCounter(pc);
-		Iterator<Sequence> it = sr.read(input);
-		while(it.hasNext()) {
-			Sequence seq = it.next();
-			//sw.write(output,outputQual,sr.read(input));
+		src.setProgressCounter(pc);
+		for(Sequence seq: src) {
+			sink.write(seq);
 		}
 		pc.finish();
 		
