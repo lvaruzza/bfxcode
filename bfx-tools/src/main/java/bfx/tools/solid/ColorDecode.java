@@ -13,8 +13,8 @@ import bfx.utils.TextUtils;
 
 import com.beust.jcommander.Parameter;
 
-public class ColorEncode extends Tool {
-	private static Logger log = Logger.getLogger(ColorEncode.class);
+public class ColorDecode extends Tool {
+	private static Logger log = Logger.getLogger(ColorDecode.class);
 	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
@@ -37,14 +37,14 @@ public class ColorEncode extends Tool {
 		SequenceSink sink =  new FileSequenceSink(output,outputFormat);
 
 		log.info(TextUtils.doubleLine());
-		log.info(String.format("Started sequences conversion from Base Space to Color Space"));
+		log.info(String.format("Started sequences conversion from Color Space to Base Space"));
 		log.info(TextUtils.doubleLine());
 		
 		ProgressCounter pc = getProgressCounter();
 		src.setProgressCounter(pc);
 		for(Sequence seq: src) {
-			Sequence colorSeq = bfx.seqenc.Color.colorEncode(seq);
-			sink.write(colorSeq);
+			Sequence baseSeq = bfx.seqenc.Color.colorDecode(seq);
+			sink.write(baseSeq);
 		}
 		pc.finish();
 		
@@ -55,7 +55,7 @@ public class ColorEncode extends Tool {
 
 	@Override
 	public String getName() {
-		return "colorEncode";
+		return "colorDecode";
 	}
 
 }
