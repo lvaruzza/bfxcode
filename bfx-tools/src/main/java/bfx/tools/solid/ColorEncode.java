@@ -4,8 +4,8 @@ import org.apache.log4j.Logger;
 
 import bfx.ProgressCounter;
 import bfx.Sequence;
-import bfx.SequenceSink;
-import bfx.SequenceSource;
+import bfx.io.SequenceSink;
+import bfx.io.SequenceSource;
 import bfx.io.impl.FileSequenceSink;
 import bfx.io.impl.FileSequenceSource;
 import bfx.tools.Tool;
@@ -18,6 +18,9 @@ public class ColorEncode extends Tool {
 	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
+
+	@Parameter(names = {"--qual","-q"}, description = "Qual File (only appliable for fasta format)")
+	public String qual;
 
 	@Parameter(names = {"--inputFormat","-if"}, description = "Input Format")
 	public String inputFormat;
@@ -33,8 +36,8 @@ public class ColorEncode extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SequenceSource src = new FileSequenceSource(input,inputFormat);
-		SequenceSink sink =  new FileSequenceSink(output,outputFormat);
+		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
+		SequenceSink sink =  new FileSequenceSink(outputFormat,output,outputQual);
 
 		log.info(TextUtils.doubleLine());
 		log.info(String.format("Started sequences conversion from Base Space to Color Space"));

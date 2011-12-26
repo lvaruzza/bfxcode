@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 import bfx.ProgressCounter;
 import bfx.Sequence;
-import bfx.SequenceSource;
+import bfx.io.SequenceSource;
 import bfx.tools.Report;
 import bfx.tools.Tool;
 
