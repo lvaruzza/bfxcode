@@ -1,7 +1,11 @@
 package bfx.seqenc;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import bfx.Sequence;
+import bfx.impl.SequenceQualImpl;
 
 public class TestColor {
 
@@ -57,5 +61,13 @@ public class TestColor {
 			}
 			System.out.println();
 		}
+	}
+	
+	@Test
+	public void testSeqDecode() {
+		Sequence seq = new SequenceQualImpl("a","A0123","1 2 3 4 5");
+		System.out.println(seq);
+		Sequence decoded = Color.colorDecode(seq);
+		System.out.println(decoded);
 	}	
 }

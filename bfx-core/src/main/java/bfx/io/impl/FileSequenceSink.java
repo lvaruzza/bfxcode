@@ -64,11 +64,11 @@ public class FileSequenceSink extends SequenceSink {
 		setup(new File(filename));
 	}
 
-	public FileSequenceSink(String filename1,String filename2) {
+	public FileSequenceSink(String format,String filename1,String filename2) {
 		if (filename2 == null)
-			setup(new File(filename1));
+			setup(new File(format,filename1));
 		else
-			setup(new File(filename1),new File(filename2));
+			setup(format,new File(filename1),new File(filename2));
 	}
 
 	private void openFiles() throws FileNotFoundException {

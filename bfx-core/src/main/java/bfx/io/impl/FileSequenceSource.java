@@ -63,11 +63,11 @@ public class FileSequenceSource extends SequenceSource {
 		setup(new File(filename));
 	}
 
-	public FileSequenceSource(String filename1,String filename2) {
+	public FileSequenceSource(String format,String filename1,String filename2) {
 		if (filename2 == null)
-			setup(new File(filename1));
+			setup(format,new File(filename1));
 		else
-			setup(new File(filename1),new File(filename2));
+			setup(format,new File(filename1),new File(filename2));
 	}
 	
 	@Override
@@ -77,7 +77,7 @@ public class FileSequenceSource extends SequenceSource {
 			if (file2 == null) {
 				return reader.read(file1);
 			} else { 
-				return reader.read(file2);
+				return reader.read(file1,file2);
 			}
 		} catch(IOException e) {
 			if (file2 == null)
