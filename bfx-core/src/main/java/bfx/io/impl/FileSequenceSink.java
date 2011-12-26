@@ -6,8 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import bfx.Sequence;
-import bfx.SequenceSink;
 import bfx.io.SequenceFormats;
+import bfx.io.SequenceSink;
 import bfx.io.SequenceWriter;
 
 public class FileSequenceSink extends SequenceSink {
@@ -20,18 +20,30 @@ public class FileSequenceSink extends SequenceSink {
 	private SequenceWriter writer;
 	
 	public FileSequenceSink(File file1,File file2) {
+		setup(file1,file2);
+	}
+	
+	public void setup(File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
 		writer = SequenceFormats.getWriter(file1.getName());
 	}
 
 	public FileSequenceSink(String format,File file1,File file2) {
+		setup(format,file1,file2);
+	}
+	
+	public void setup(String format,File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
 		writer = SequenceFormats.getWriter(file1.getName(),format);
 	}
 	
 	public FileSequenceSink(File file1) {
+		setup(file1);
+	}
+	
+	public void setup(File file1) {
 		this.file1 = file1;
 		this.file2 = null;
 		writer = SequenceFormats.getWriter(file1.getName());
@@ -39,17 +51,24 @@ public class FileSequenceSink extends SequenceSink {
 
 	
 	public FileSequenceSink(String format,File file1) {
+		setup(format,file1);
+	}
+	
+	public void setup(String format,File file1) {
 		this.file1 = file1;
 		this.file2 = null;
 		writer = SequenceFormats.getWriter(file1.getName(),format);
 	}
 	
 	public FileSequenceSink(String filename) {
-		this(new File(filename));
+		setup(new File(filename));
 	}
 
 	public FileSequenceSink(String filename1,String filename2) {
-		this(new File(filename1),new File(filename2));
+		if (filename2 == null)
+			setup(new File(filename1));
+		else
+			setup(new File(filename1),new File(filename2));
 	}
 
 	private void openFiles() throws FileNotFoundException {

@@ -1,8 +1,9 @@
-package bfx;
+package bfx.io;
 
 import java.io.File;
 import java.io.IOException;
 
+import bfx.Sequence;
 import bfx.io.impl.FileSequenceSink;
 
 public abstract class SequenceSink {

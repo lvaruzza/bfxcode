@@ -6,11 +6,11 @@ import java.net.URL;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.SequenceSource;
 import bfx.exceptions.MultipleURLsProcessingRuntimeException;
 import bfx.exceptions.URLProcessingRuntimeException;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
+import bfx.io.SequenceSource;
 
 public class URLSequenceSource extends SequenceSource {
 

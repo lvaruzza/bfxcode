@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.SequenceSource;
 import bfx.exceptions.FileProcessingRuntimeException;
 import bfx.exceptions.MultipleFilesProcessingRuntimeException;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
+import bfx.io.SequenceSource;
 
 public class FileSequenceSource extends SequenceSource {
 
@@ -17,20 +17,32 @@ public class FileSequenceSource extends SequenceSource {
 	private File file2 = null;
 	
 	private SequenceReader reader;
-	
+
 	public FileSequenceSource(File file1,File file2) {
+		setup(file1,file1);
+	}
+	
+	private void setup(File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
 		reader = SequenceFormats.getReader(file1.getName());
 	}
 
 	public FileSequenceSource(String format,File file1,File file2) {
+		setup(format,file1,file2);
+	}
+	
+	public void setup(String format,File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
 		reader = SequenceFormats.getReader(file1.getName(),format);
 	}
 	
 	public FileSequenceSource(File file1) {
+		setup(file1);
+	}
+		
+	public void setup(File file1) {
 		this.file1 = file1;
 		this.file2 = null;
 		reader = SequenceFormats.getReader(file1.getName());
@@ -38,23 +50,30 @@ public class FileSequenceSource extends SequenceSource {
 
 	
 	public FileSequenceSource(String format,File file1) {
+		setup(format,file1);
+	}
+	
+	public void setup(String format,File file1) {
 		this.file1 = file1;
 		this.file2 = null;
 		reader = SequenceFormats.getReader(file1.getName(),format);
 	}
 	
 	public FileSequenceSource(String filename) {
-		this(new File(filename));
+		setup(new File(filename));
 	}
 
 	public FileSequenceSource(String filename1,String filename2) {
-		this(new File(filename1),new File(filename2));
+		if (filename2 == null)
+			setup(new File(filename1));
+		else
+			setup(new File(filename1),new File(filename2));
 	}
 	
 	@Override
 	public Iterator<Sequence> iterator() {
 		try {
-			pc.incr(1);
+			if (pc != null) pc.incr(1);
 			if (file2 == null) {
 				return reader.read(file1);
 			} else { 

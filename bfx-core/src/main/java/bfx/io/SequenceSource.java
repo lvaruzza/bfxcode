@@ -1,8 +1,10 @@
-package bfx;
+package bfx.io;
 
 import java.io.File;
 import java.util.Iterator;
 
+import bfx.ProgressCounter;
+import bfx.Sequence;
 import bfx.io.impl.FileSequenceSource;
 import bfx.utils.IteratorUtils;
 
