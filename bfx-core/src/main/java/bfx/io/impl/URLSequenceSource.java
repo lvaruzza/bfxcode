@@ -6,43 +6,43 @@ import java.net.URL;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.SequenceSet;
 import bfx.exceptions.MultipleURLsProcessingRuntimeException;
 import bfx.exceptions.URLProcessingRuntimeException;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
+import bfx.io.SequenceSource;
 
-public class URLSequenceSet extends SequenceSet {
+public class URLSequenceSource extends SequenceSource {
 
 	private URL url1;
 	private URL url2;
 	private SequenceReader reader;
 	
-	public URLSequenceSet(String format,URL url1) {
+	public URLSequenceSource(String format,URL url1) {
 		this.url1 = url1;
 		this.url2 = null;
 		reader = SequenceFormats.getReader(url1.getPath(), format);
 	}
 
-	public URLSequenceSet(String format,URL url1,URL url2) {
+	public URLSequenceSource(String format,URL url1,URL url2) {
 		this.url1 = url1;
 		this.url2 = url2;
 		reader = SequenceFormats.getReader(url1.getPath(), format);
 	}
 
-	public URLSequenceSet(URL url1,URL url2) {
+	public URLSequenceSource(URL url1,URL url2) {
 		this.url1 = url1;
 		this.url2 = url2;
 		reader = SequenceFormats.getReader(url1.getPath());
 	}
 
-	public URLSequenceSet(URL url1) {
+	public URLSequenceSource(URL url1) {
 		this.url1 = url1;
 		this.url2 = null;
 		reader = SequenceFormats.getReader(url1.getPath());
 	}
 	
-	public URLSequenceSet(String url1,String url2) throws MalformedURLException {
+	public URLSequenceSource(String url1,String url2) throws MalformedURLException {
 		this(new URL(url1),new URL(url2));
 	}
 	

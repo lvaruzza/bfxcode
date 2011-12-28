@@ -1,32 +1,34 @@
-package bfx.tools.sequence;
+package bfx.tools.solid;
 
 import org.apache.log4j.Logger;
 
 import bfx.ProgressCounter;
-import bfx.io.SequenceFormats;
-import bfx.io.SequenceReader;
-import bfx.io.SequenceWriter;
+import bfx.Sequence;
+import bfx.io.SequenceSink;
+import bfx.io.SequenceSource;
+import bfx.io.impl.FileSequenceSink;
+import bfx.io.impl.FileSequenceSource;
 import bfx.tools.Tool;
 import bfx.utils.TextUtils;
 
 import com.beust.jcommander.Parameter;
 
-public class Convert extends Tool {
-	private static Logger log = Logger.getLogger(Convert.class);
+public class ColorEncode extends Tool {
+	private static Logger log = Logger.getLogger(ColorEncode.class);
 	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
 
-	@Parameter(names = {"--qual","-q"}, description = "Qual file (only applicable for fasta format)")
+	@Parameter(names = {"--qual","-q"}, description = "Qual File (only appliable for fasta format)")
 	public String qual;
-	
+
 	@Parameter(names = {"--inputFormat","-if"}, description = "Input Format")
 	public String inputFormat;
 	
 	@Parameter(names = {"--output","-o"}, description = "Output File")
 	public String output;
 
-	@Parameter(names = {"--outputQual","-oq"}, description = "Output Qaul File (only appliable for fasta format)")
+	@Parameter(names = {"--outputQual","-oq"}, description = "Output Qual File (only appliable for fasta format)")
 	public String outputQual;
 	
 	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")
@@ -34,20 +36,19 @@ public class Convert extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SequenceReader sr = SequenceFormats.getReader(input,inputFormat);
-		SequenceWriter sw = SequenceFormats.getWriter(output,outputFormat);
+		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
+		SequenceSink sink =  new FileSequenceSink(outputFormat,output,outputQual);
 
-		inputFormat = sr.getFormatName();
-		outputFormat = sw.getFormatName();
-		
-		
 		log.info(TextUtils.doubleLine());
-		log.info(String.format("Started sequences conversion from %s format to %s format",inputFormat,outputFormat));
+		log.info(String.format("Started sequences conversion from Base Space to Color Space"));
 		log.info(TextUtils.doubleLine());
 		
 		ProgressCounter pc = getProgressCounter();
-		sw.setProgressCounter(pc);
-		sw.write(output,outputQual,sr.read(input,qual));
+		src.setProgressCounter(pc);
+		for(Sequence seq: src) {
+			Sequence colorSeq = bfx.seqenc.Color.colorEncode(seq);
+			sink.write(colorSeq);
+		}
 		pc.finish();
 		
 		log.info(TextUtils.doubleLine());
@@ -57,7 +58,7 @@ public class Convert extends Tool {
 
 	@Override
 	public String getName() {
-		return "convert";
+		return "colorEncode";
 	}
 
 }

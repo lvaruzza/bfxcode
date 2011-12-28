@@ -27,6 +27,7 @@ public class SequenceQualImpl extends Sequence {
 		super(id,comment);
 		this.seq = seq;
 		this.qual = qual;
+		//System.out.println("New seq = " + this.toString());
 	}	
 	
 	public SequenceQualImpl(String header,String seq,String repr) {

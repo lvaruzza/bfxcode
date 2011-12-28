@@ -13,13 +13,14 @@ import bfx.utils.TextUtils;
 public class ColorSpaceProgs {
 
 	static byte[] bases = new byte[] {'A','C','G','T','N'};
-	static byte[][] cov = new byte[][] {{'0','1','2','3'},
-		                                {'1','0','3','2'},
-		                                {'2','3','0','1'},
-		                                {'3','2','1','0'}};
+	static byte[][] c2b = new byte[][] {{'A','C','G','T','N'},
+		                                {'C','A','T','G','N'},
+		                                {'G','T','A','C','N'},
+		                                {'T','G','C','A','N'},
+		                                {'N','N','N','N','N'}};
 
 
-	static byte[][] covi = new byte[][] 
+	static byte[][] b2c = new byte[][] 
 			{{0,1,2,3,4},
         	 {1,0,3,2,4},
         	 {2,3,0,1,4},
@@ -49,7 +50,7 @@ public class ColorSpaceProgs {
 			System.out.println(String.format("%c: %8s",base,Integer.toBinaryString(base)));
 		}
 		System.out.println(TextUtils.doubleLine());
-		for(byte x: cov[0]) {
+		for(byte x: b2c[0]) {
 			System.out.println(String.format("%c: %8s",x,Integer.toBinaryString(x)));			
 		}
 		System.out.println(TextUtils.doubleLine());
@@ -104,9 +105,9 @@ public class ColorSpaceProgs {
 			for(byte bi=0;bi<5;bi++) {
  				byte ai = enc[a];
 				//byte bi = enc[b];
-				r[covi[ai][bi]] = bi;				
+				r[b2c[ai][bi]] = bi;				
 				//System.out.print(String.format("%c ",bases[x]));
-				System.out.println(String.format("%c %c %d",a,bases[covi[ai][bi]],bi));
+				System.out.println(String.format("%c %c %d",a,bases[b2c[ai][bi]],bi));
 			}
 			//Arrays.sort(r);
 			System.out.println(String.format("%c %s",a,Arrays.toString(r)));
