@@ -102,7 +102,7 @@ public class ColorSpaceProgs {
 		for (byte a: bases) {
 			byte[] r = new byte[5];
 			for(byte bi=0;bi<5;bi++) {
-				byte ai = enc[a];
+ 				byte ai = enc[a];
 				//byte bi = enc[b];
 				r[covi[ai][bi]] = bi;				
 				//System.out.print(String.format("%c ",bases[x]));
