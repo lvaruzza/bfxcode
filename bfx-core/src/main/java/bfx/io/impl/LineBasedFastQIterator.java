@@ -34,6 +34,7 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 	}
 
 	
+	// TODO: Support to multiline fastq
 	public Sequence next() {
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String header = li.next();
