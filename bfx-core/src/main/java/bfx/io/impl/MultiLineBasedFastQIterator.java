@@ -12,18 +12,19 @@ import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastQRepr;
 import bfx.impl.SequenceQualImpl;
+import bfx.utils.ByteBuffer;
 
-public class LineBasedFastQIterator implements Iterator<Sequence> {
+public class MultiLineBasedFastQIterator implements Iterator<Sequence> {
 	//private static Logger log = Logger.getLogger(LineBasedFastQIterator.class);
 	private LineIterator li;
 	private QualRepr qualrepr;
 	
-	public LineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding) {
+	public MultiLineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding) {
 		li =  IOUtils.lineIterator(fastaReader);
 		qualrepr = new FastQRepr(encoding);
 	}
 
-	public LineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding) throws IOException {
+	public MultiLineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding) throws IOException {
 		li =  IOUtils.lineIterator(fastaInput,"ASCII");
 		qualrepr = new FastQRepr(encoding);
 	}
@@ -32,15 +33,20 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 	public boolean hasNext() {
 		return li.hasNext();
 	}
-
 	
+	//TODO
 	public Sequence next() {
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String header = li.next();
 		if (!header.startsWith("@")) throw new RuntimeException("Invalid fastQ sequence, header does not start with '@': " + header);
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
-		String seq = li.next();
-		// throw separator
+		String line = li.next();
+		ByteBuffer curseq = new ByteBuffer();
+		while(!line.startsWith("+")) {
+			curseq.append(line.getBytes());
+			if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
+			line = li.next();
+		}		
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String sep = li.next();
 		if (!sep.startsWith("+")) throw new RuntimeException("Invalid fastQ sequence, quality separator does not start with '+': " + sep);
