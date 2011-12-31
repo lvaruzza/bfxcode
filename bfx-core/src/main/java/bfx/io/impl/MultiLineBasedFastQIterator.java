@@ -41,18 +41,20 @@ public class MultiLineBasedFastQIterator implements Iterator<Sequence> {
 		if (!header.startsWith("@")) throw new RuntimeException("Invalid fastQ sequence, header does not start with '@': " + header);
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String line = li.next();
-		ByteBuffer curseq = new ByteBuffer();
+		ByteBuffer seq = new ByteBuffer();
 		while(!line.startsWith("+")) {
-			curseq.append(line.getBytes());
+			seq.append(line.getBytes());
 			if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 			line = li.next();
 		}		
-		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
-		String sep = li.next();
-		if (!sep.startsWith("+")) throw new RuntimeException("Invalid fastQ sequence, quality separator does not start with '+': " + sep);
-		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
-		String qual = li.next();
-		return new SequenceQualImpl(header.substring(1), seq.getBytes(), qualrepr.textToQual(qual));
+		int seqLen = seq.length();
+		ByteBuffer qual = new ByteBuffer();
+		do {
+			if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
+			line = li.next();
+			qual.append(line.getBytes());
+		} while(qual.length()!=seqLen);
+		return new SequenceQualImpl(header.substring(1), seq.get(), qualrepr.textToQual(qual.get()));
 	}
 
 	public void remove() {

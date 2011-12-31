@@ -29,12 +29,12 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 	
 	@Override
 	public Iterator<Sequence> read(InputStream fastaInput) throws IOException {
-		return new LineBasedFastQIterator(fastaInput,encoding);
+		return new MultiLineBasedFastQIterator(fastaInput,encoding);
 	}
 
 	@Override
 	public Iterator<Sequence> read(Reader fastaReader) throws IOException {
-		return new LineBasedFastQIterator(fastaReader,encoding);
+		return new MultiLineBasedFastQIterator(fastaReader,encoding);
 	}
 
 	@Override

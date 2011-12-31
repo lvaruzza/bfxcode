@@ -12,13 +12,13 @@ public class ByteBuffer {
 		storage = new LinkedList<byte[]>();	
 	}
 	
-	public void insert(byte[] vec,int start,int len) {
+	public void append(byte[] vec,int start,int len) {
 		storage.add(Arrays.copyOfRange(vec, start, start+len));
 		size+=len;
 	}
 
 	public void append(byte[] vec) {
-		insert(vec,0,vec.length);
+		append(vec,0,vec.length);
 	}
 	
 	public byte[] get() {
@@ -29,5 +29,9 @@ public class ByteBuffer {
 				ret[pos++] = x;
 		}
 		return ret;
+	}
+
+	public int length() {
+		return size;
 	}
 }
