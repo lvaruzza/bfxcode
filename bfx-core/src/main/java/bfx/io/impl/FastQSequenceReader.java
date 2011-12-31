@@ -14,27 +14,39 @@ import bfx.utils.io.BaseSingleAndDualReader;
 
 public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequence>> implements SequenceReader {
 	private FastQRepr.FastqEncoding encoding;
-
-	public FastQSequenceReader(FastQRepr.FastqEncoding qualEncoding) {
-		this.encoding=qualEncoding;
+	private boolean useSingleLineReader;
+	
+	public FastQSequenceReader(FastQRepr.FastqEncoding qualEncoding,boolean useSingleLineReader) {
+		this.encoding = qualEncoding;
+		this.useSingleLineReader = useSingleLineReader;
 	};
 
 	public FastQSequenceReader() {
-		this(FastqEncoding.SANGER);
+		this(FastqEncoding.SANGER,false);
 	};
 	
 	public void setEncoding(FastQRepr.FastqEncoding qualEncoding) {
 		this.encoding = qualEncoding;
 	}
 	
+	public void fastqSequenceSingleLine(boolean singleLine) {
+		useSingleLineReader = singleLine;
+	}
+	
 	@Override
 	public Iterator<Sequence> read(InputStream fastaInput) throws IOException {
-		return new MultiLineBasedFastQIterator(fastaInput,encoding);
+		if (useSingleLineReader)
+			return new LineBasedFastQIterator(fastaInput,encoding);
+		else
+			return new MultiLineBasedFastQIterator(fastaInput,encoding);
 	}
 
 	@Override
 	public Iterator<Sequence> read(Reader fastaReader) throws IOException {
-		return new MultiLineBasedFastQIterator(fastaReader,encoding);
+		if (useSingleLineReader)
+			return new LineBasedFastQIterator(fastaReader,encoding);
+		else
+			return new MultiLineBasedFastQIterator(fastaReader,encoding);
 	}
 
 	@Override
