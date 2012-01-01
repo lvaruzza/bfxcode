@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import bfx.Sequence;
 import bfx.impl.SequenceQualImpl;
+import bfx.utils.TextUtils;
 
 public class TestColor {
 
@@ -69,5 +70,36 @@ public class TestColor {
 		System.out.println(seq);
 		Sequence decoded = Color.colorDecode(seq);
 		System.out.println(decoded);
+	}
+	
+	@Test
+	public void testSeqDecodeEncodeRandom() {
+		ColorSeqGenerator gen = new ColorSeqGenerator(0.25,0.25,0.25,0.25,0.0);
+		for(int i=0;i<10;i++) {
+			Sequence seq = gen.genSeq("seq",(byte)'T', 60,(byte)0);
+			System.out.println(seq);
+			Sequence decoded = Color.colorDecode(seq);
+			System.out.println(decoded);
+			Sequence recoded = Color.colorEncode(decoded);
+			System.out.println(recoded);
+			assertEquals(seq,recoded);
+			System.out.println(TextUtils.doubleLine());
+		}
 	}	
+
+	@Test
+	public void testSeqEncodeDecodeRandom() {
+		DNASeqGenerator gen = new DNASeqGenerator(0.25,0.25,0.25,0.25,0.0);
+		for(int i=0;i<10;i++) {
+			Sequence seq = gen.genSeq("seq", 60,(byte)0);
+			System.out.println(seq);
+			Sequence encoded = Color.colorEncode(seq);
+			System.out.println(encoded);
+			Sequence decoded = Color.colorDecode(encoded);
+			System.out.println(decoded);
+			assertEquals(seq,decoded);
+			System.out.println(TextUtils.doubleLine());
+		}
+	}	
+	
 }

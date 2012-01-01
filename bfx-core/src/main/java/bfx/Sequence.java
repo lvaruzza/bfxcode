@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import bfx.impl.FastaQualRepr;
+import bfx.impl.SequenceConstQualImpl;
 
 public abstract class Sequence {
 	//private static Logger log = Logger.getLogger(Sequence.class);
@@ -100,4 +101,48 @@ public abstract class Sequence {
 	}
 	
 	public abstract Sequence changeSeq(byte[] seq);
+	
+	public static Sequence make(byte[] seq) {
+		return new SequenceConstQualImpl("",seq,(byte)0);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((comments == null) ? 0 : comments.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + Arrays.hashCode(getQual());
+		result = prime * result + Arrays.hashCode(getSeq());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sequence other = (Sequence) obj;
+		if (comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!comments.equals(other.comments))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (!Arrays.equals(getSeq(), other.getSeq()))
+			return false;
+		if (!Arrays.equals(getQual(), other.getQual()))
+			return false;
+		return true;
+	}
+	
+	
 }

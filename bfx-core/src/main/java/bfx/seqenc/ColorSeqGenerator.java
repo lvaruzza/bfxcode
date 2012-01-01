@@ -6,9 +6,19 @@ import bfx.utils.AliasMethodGenerator;
 
 public class ColorSeqGenerator {
 	private AliasMethodGenerator gen;
+	private static Double[] defaultProbs = new Double[] {0.25-0.25/1000,
+														 0.25-0.25/1000,
+														 0.25-0.25/1000,
+														 0.25-0.25/1000,
+														 1.0/1000
+	};
 	
 	public ColorSeqGenerator(Double... probabilities) {
 		gen = new AliasMethodGenerator(probabilities);
+	}
+
+	public ColorSeqGenerator() {
+		gen = new AliasMethodGenerator(defaultProbs);
 	}
 	
 	public byte[] genBytesSeq(int len) {

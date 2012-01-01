@@ -37,4 +37,12 @@ public class SequenceConstQualImpl extends Sequence {
 	public Sequence changeSeq(byte[] newseq) {
 		return new SequenceConstQualImpl(this.getId(),this.getComments(),newseq,qual);
 	}
+	
+	@Override
+	public String toString() {
+		return "Sequence [Id=" + getId() + ", seq=" +
+				getSeqAsString() + ", qual=" + qual + "]";
+	}
+	
+	
 }

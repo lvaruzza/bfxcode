@@ -1,5 +1,7 @@
 package bfx.impl;
 
+import java.util.Arrays;
+
 import bfx.Sequence;
 
 public class SequenceQualImpl extends Sequence {
@@ -37,5 +39,5 @@ public class SequenceQualImpl extends Sequence {
 	@Override
 	public Sequence changeSeq(byte[] newseq) {
 		return new SequenceQualImpl(this.getId(),this.getComments(),newseq,getQual());
-	}	
+	}
 }
