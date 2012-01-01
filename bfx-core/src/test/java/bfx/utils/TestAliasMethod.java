@@ -8,7 +8,7 @@ public class TestAliasMethod {
 	
 	@Test
 	public void test0() {
-		AliasMethod al = new AliasMethod(1.0/5,
+		AliasMethodGenerator al = new AliasMethodGenerator(1.0/5,
 										 0.9/5,
 										 1.0/5,
 										 2.0/5,

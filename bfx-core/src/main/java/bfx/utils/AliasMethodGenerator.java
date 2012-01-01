@@ -22,7 +22,7 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Random;
 
-public final class AliasMethod {
+public final class AliasMethodGenerator {
     /* The random number generator used to sample from the distribution. */
     private final Random random;
 
@@ -40,11 +40,11 @@ public final class AliasMethod {
      *
      * @param probabilities The list of probabilities.
      */
-    public AliasMethod(List<Double> probabilities) {
+    public AliasMethodGenerator(List<Double> probabilities) {
         this(probabilities, new Random());
     }
 
-    public AliasMethod(Double... probabilities) {
+    public AliasMethodGenerator(Double... probabilities) {
     	this(Arrays.asList(probabilities));
     }
     
@@ -60,7 +60,7 @@ public final class AliasMethod {
      * @param probabilities The list of probabilities.
      * @param random The random number generator
      */
-    public AliasMethod(List<Double> probabilities, Random random) {
+    public AliasMethodGenerator(List<Double> probabilities, Random random) {
         /* Begin by doing basic structural checks on the inputs. */
         if (probabilities == null || random == null)
             throw new NullPointerException();

@@ -1,7 +1,5 @@
 package bfx.seqenc;
 
-import org.apache.log4j.Logger;
-
 import bfx.Sequence;
 
 
