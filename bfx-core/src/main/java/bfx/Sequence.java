@@ -106,16 +106,21 @@ public abstract class Sequence {
 		return new SequenceConstQualImpl("",seq,(byte)0);
 	}
 
+	// Imutable object
+	private int hashCode = 0;
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((comments == null) ? 0 : comments.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + Arrays.hashCode(getQual());
-		result = prime * result + Arrays.hashCode(getSeq());
-		return result;
+		if (hashCode == 0) {
+			final int prime = 31;
+			hashCode = 1;
+			hashCode = prime * hashCode
+					+ ((comments == null) ? 0 : comments.hashCode());
+			hashCode = prime * hashCode + ((id == null) ? 0 : id.hashCode());
+			hashCode = prime * hashCode + Arrays.hashCode(getQual());
+			hashCode = prime * hashCode + Arrays.hashCode(getSeq());
+		}
+		return hashCode;
 	}
 
 	@Override
