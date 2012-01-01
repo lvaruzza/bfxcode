@@ -1,9 +1,8 @@
 package bfx.tools.solid;
 
-import com.beust.jcommander.Parameter;
-
 import bfx.tools.Tool;
-import bfx.tools.cli.Main;
+
+import com.beust.jcommander.Parameter;
 
 public class CleanIndelGFF extends Tool {
 	public String getName() { return "cleanIndelGFF"; };
