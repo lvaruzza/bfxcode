@@ -31,9 +31,9 @@ public class Color {
         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
 
 	// convert index to bases
-	static byte[] bases = new byte[] {'A','C','G','T','N'};
+	public static byte[] bases = new byte[] {'A','C','G','T','N'};
 	// convert index to colors
-	static byte[] colors = new byte[] {'0','1','2','3','.'};
+	public static byte[] colors = new byte[] {'0','1','2','3','.'};
 	
 	/*
 	 * Color encoding matrix (is the same for encoding and decoding

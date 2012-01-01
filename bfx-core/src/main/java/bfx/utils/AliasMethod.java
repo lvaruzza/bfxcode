@@ -15,7 +15,12 @@ package bfx.utils;
  *
  *                 http://www.keithschwarz.com/darts-dice-coins/
  */
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.List;
+import java.util.Random;
 
 public final class AliasMethod {
     /* The random number generator used to sample from the distribution. */
@@ -39,6 +44,10 @@ public final class AliasMethod {
         this(probabilities, new Random());
     }
 
+    public AliasMethod(Double... probabilities) {
+    	this(Arrays.asList(probabilities));
+    }
+    
     /**
      * Constructs a new AliasMethod to sample from a discrete distribution and
      * hand back outcomes based on the probability distribution.
