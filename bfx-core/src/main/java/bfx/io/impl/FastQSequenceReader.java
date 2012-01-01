@@ -68,7 +68,7 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 		return fastQExtensions;
 	}
 
-	private ProgressCounter pc;
+	protected ProgressCounter pc;
 	
 	@Override
 	public void setProgressCounter(ProgressCounter pc) {

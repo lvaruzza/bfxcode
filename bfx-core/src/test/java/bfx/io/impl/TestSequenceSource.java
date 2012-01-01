@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import bfx.Sequence;
 import bfx.io.SequenceSource;
+import static org.junit.Assert.*;
 
 public class TestSequenceSource {
 	
@@ -13,10 +14,9 @@ public class TestSequenceSource {
 		SequenceSource src2 = new FileSequenceSource("fasta","data/test/ncbi_small.fasta",(String)null);
 		SequenceSource src3 = new FileSequenceSource(null,"data/test/ncbi_small.fasta",(String)null);
 
-		/*
-		for(Sequence seq: src) {			
-			System.out.println(seq);
-		}*/
+		assertNotNull(src1);
+		assertNotNull(src2);
+		assertNotNull(src3);
 	}
 	
 	@Test

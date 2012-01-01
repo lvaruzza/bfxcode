@@ -1,7 +1,5 @@
 package bfx.impl;
 
-import java.util.Arrays;
-
 import bfx.Sequence;
 
 public class SequenceQualImpl extends Sequence {

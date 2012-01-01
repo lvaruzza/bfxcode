@@ -82,7 +82,7 @@ public class FastaSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 		return fastaExtensions;
 	}
 
-	private ProgressCounter pc;
+	protected ProgressCounter pc;
 	
 	@Override
 	public void setProgressCounter(ProgressCounter pc) {

@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
-import org.apache.log4j.Logger;
 
 import bfx.QualRepr;
 import bfx.Sequence;
@@ -16,7 +15,7 @@ import bfx.impl.SequenceQualImpl;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaQualIterator implements Iterator<Sequence> {
-	private static Logger log = Logger.getLogger(LineBasedFastaQualIterator.class);
+	//private static Logger log = Logger.getLogger(LineBasedFastaQualIterator.class);
 	private static QualRepr qualrepr = new FastaQualRepr();
 	
 	private LineIterator liseq;
