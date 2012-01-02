@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bfx.GFF;
+import bfx.exceptions.InvalidFormatException;
 
 /**
  * Parse a GFF Line
