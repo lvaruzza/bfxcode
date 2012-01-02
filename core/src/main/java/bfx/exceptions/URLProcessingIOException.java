@@ -3,6 +3,15 @@ package bfx.exceptions;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * 
+ * IO Exception while processing a URL.
+ * 
+ * The error message will inform the error and URL.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ * 
+ */
 public class URLProcessingIOException extends IOException {
 	private static final long serialVersionUID = 1L;
 	private URL url;

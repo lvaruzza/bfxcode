@@ -1,7 +1,10 @@
 package bfx;
 
-/*
+/**
+ * 
  * Mutable sequence builder
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
  * 
  */
 public interface SequenceBuilder {

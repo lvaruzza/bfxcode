@@ -2,6 +2,15 @@ package bfx.exceptions;
 
 import java.net.URL;
 
+/**
+ * 
+ * Runtime Exception while processing a URL.
+ * 
+ * The error message will inform the error and URL.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ * 
+ */
 public class URLProcessingRuntimeException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private URL url;

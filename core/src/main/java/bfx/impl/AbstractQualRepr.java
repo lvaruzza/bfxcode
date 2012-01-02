@@ -2,6 +2,12 @@ package bfx.impl;
 
 import bfx.QualRepr;
 
+/**
+ * Base Class for all QualRepr classes
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public abstract class AbstractQualRepr implements QualRepr {
 
 

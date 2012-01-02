@@ -1,9 +1,10 @@
 package bfx;
 
-/*
- * TODO: VCF Record
+/**
+ * VCF Record
  * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
  */
-public interface Variant {
+public class Variant {
 
 }

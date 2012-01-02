@@ -2,9 +2,13 @@ package bfx.impl;
 
 
 
-/*
- * Encode and decode quality values in FastQ
+/**
+ * Encode and decode quality values in the FastQ format
  * 
+ * Supports Sanger, Illumina10 and Illumina13 formats.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
  */
 public class FastQRepr extends AbstractQualRepr {
 	public enum FastqEncoding  {

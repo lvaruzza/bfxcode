@@ -2,6 +2,16 @@ package bfx.exceptions;
 
 import java.io.File;
 
+/**
+ * 
+ * Runtime Exception while processing multiple files at same time.
+ * 
+ * The error message will inform the error and files names.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ * 
+ */
+
 public class MultipleFilesProcessingRuntimeException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private File[] files;

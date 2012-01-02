@@ -1,16 +1,18 @@
 package bfx;
 
-/*
+/**
+ * 
  * Convert between Sequence Quality values representations and 
  * byte array of quality values.
  * 
  * Concrete implementations inherit from this class
  * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
  * 
- * TODO: Do I need all this variants?
  */
 public interface QualRepr {
-	
+	//TODO: Do I need all this variants?
+
 	/*
 	 * Convert text to a byte array with the qual values
 	 */

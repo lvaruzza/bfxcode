@@ -2,8 +2,11 @@ package bfx;
 
 import java.util.Observable;
 
-/*
+/**
+ * 
  * Observable to follow job progress
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
  * 
  */
 public  class ProgressCounter extends Observable {

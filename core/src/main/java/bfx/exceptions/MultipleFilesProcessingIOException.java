@@ -3,6 +3,15 @@ package bfx.exceptions;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 
+ * IO Exception while processing multiple files at same time.
+ * 
+ * The error message will inform the error and files names.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ * 
+ */
 public class MultipleFilesProcessingIOException extends IOException {
 	private static final long serialVersionUID = 1L;
 	private File[] files;

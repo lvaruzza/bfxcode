@@ -7,6 +7,12 @@ import java.util.regex.Pattern;
 
 import bfx.GFF;
 
+/**
+ * Parse a GFF Line
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class GFFParser {
 	//static private Logger log = Logger.getLogger(AbstractGFFReader.class);
 	

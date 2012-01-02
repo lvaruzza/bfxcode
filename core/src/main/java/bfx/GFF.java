@@ -2,8 +2,10 @@ package bfx;
 
 import java.util.Map;
 
-/*
+/**
  * Generic GFF Record
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
  * 
  */
 public class GFF {

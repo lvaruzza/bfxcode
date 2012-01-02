@@ -5,9 +5,11 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 
-/*
+/**
  * Encode and decode quality values in the Qual format (used in fasta/qual pair)
  * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
  */
 public class FastaQualRepr extends AbstractQualRepr {
 

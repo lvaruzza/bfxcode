@@ -2,6 +2,15 @@ package bfx.exceptions;
 
 import java.net.URL;
 
+/**
+ * 
+ * Runtime Exception while processing multiple URL's at same time.
+ * 
+ * The error message will inform the error and URL's.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ * 
+ */
 public class MultipleURLsProcessingRuntimeException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private URL[] urls;
