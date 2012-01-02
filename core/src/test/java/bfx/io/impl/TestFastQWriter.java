@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import bfx.Sequence;
-import bfx.impl.SequenceConstQualImpl;
+import bfx.impl.SequenceConstQual;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceWriter;
 import bfx.utils.TextUtils;
@@ -27,7 +27,7 @@ public class TestFastQWriter {
 		SequenceWriter sw = new FastQSequenceWriter();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		String name  = "s1 sequence1";
-		Sequence seq = new SequenceConstQualImpl(name,TextUtils.times("ACGT",80),(byte)0);
+		Sequence seq = new SequenceConstQual(name,TextUtils.times("ACGT",80),(byte)0);
 		sw.write(out, seq);
 		String r = out.toString();
 		System.out.println(r);

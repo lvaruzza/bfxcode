@@ -11,7 +11,7 @@ import org.apache.commons.io.LineIterator;
 import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastQRepr;
-import bfx.impl.SequenceQualImpl;
+import bfx.impl.SequenceQual;
 import bfx.utils.ByteBuffer;
 
 public class MultiLineBasedFastQIterator implements Iterator<Sequence> {
@@ -54,7 +54,7 @@ public class MultiLineBasedFastQIterator implements Iterator<Sequence> {
 			line = li.next();
 			qual.append(line.getBytes());
 		} while(qual.length()!=seqLen);
-		return new SequenceQualImpl(header.substring(1), seq.get(), qualrepr.textToQual(qual.get()));
+		return new SequenceQual(header.substring(1), seq.get(), qualrepr.textToQual(qual.get()));
 	}
 
 	public void remove() {

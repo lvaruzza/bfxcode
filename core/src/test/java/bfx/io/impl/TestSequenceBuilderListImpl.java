@@ -4,17 +4,17 @@ import org.junit.Test;
 
 import bfx.Sequence;
 import bfx.SequenceBuilder;
-import bfx.impl.SequenceBuilderListImpl;
-import bfx.impl.SequenceQualImpl;
+import bfx.impl.SequenceBuilderList;
+import bfx.impl.SequenceQual;
 import static org.junit.Assert.*;
 
 public class TestSequenceBuilderListImpl {
 
 	@Test
 	public void testSameSeq10x() {
-		SequenceBuilder sb = new SequenceBuilderListImpl();
+		SequenceBuilder sb = new SequenceBuilderList();
 		byte[] text = "ACGT".getBytes();
-		Sequence s = new SequenceQualImpl("1",new String(text),"1 2 3 4");
+		Sequence s = new SequenceQual("1",new String(text),"1 2 3 4");
 		for(int i = 0;i<10;i++) {
 			sb.append(s);
 		}

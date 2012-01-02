@@ -44,8 +44,8 @@ public final class AliasMethodGenerator {
         this(probabilities, new Random());
     }
 
-    public AliasMethodGenerator(Double... probabilities) {
-    	this(Arrays.asList(probabilities));
+    public AliasMethodGenerator(double... probabilities) {
+    	this(Arrays.asList(org.apache.commons.lang.ArrayUtils.toObject(probabilities)));
     }
     
     /**

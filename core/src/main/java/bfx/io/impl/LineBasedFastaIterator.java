@@ -9,7 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
 import bfx.Sequence;
-import bfx.impl.SequenceConstQualImpl;
+import bfx.impl.SequenceConstQual;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaIterator implements Iterator<Sequence> {
@@ -51,7 +51,7 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 					header = line.substring(1);
 					curseq = new ByteBuffer();
 				} else {
-					Sequence seq = new SequenceConstQualImpl(header,
+					Sequence seq = new SequenceConstQual(header,
 														curseq.get(),
 														defaultQuality);
 					header = line.substring(1);
@@ -63,7 +63,7 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 				if (!first) curseq.append(line.trim().getBytes());
 			}
 		}
-		return new SequenceConstQualImpl(header,
+		return new SequenceConstQual(header,
 				curseq.get(),
 				defaultQuality);
 	}

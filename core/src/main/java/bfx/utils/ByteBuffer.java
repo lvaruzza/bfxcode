@@ -1,11 +1,11 @@
 package bfx.utils;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 public class ByteBuffer {
-	private List<byte[]> storage;
+	private LinkedList<byte[]> storage;
 	private int size;
 	
 	public ByteBuffer() {
@@ -13,7 +13,7 @@ public class ByteBuffer {
 	}
 	
 	public void append(byte[] vec,int start,int len) {
-		storage.add(Arrays.copyOfRange(vec, start, start+len));
+		storage.push(Arrays.copyOfRange(vec, start, start+len));
 		size+=len;
 	}
 
@@ -24,7 +24,10 @@ public class ByteBuffer {
 	public byte[] get() {
 		byte[] ret = new byte[size];
 		int pos = 0;
-		for(byte[] s:storage) {
+		Iterator<byte[]> revit = storage.descendingIterator();
+		
+		while(revit.hasNext()) {
+			byte[] s = revit.next();
 			for(byte x: s)
 				ret[pos++] = x;
 		}

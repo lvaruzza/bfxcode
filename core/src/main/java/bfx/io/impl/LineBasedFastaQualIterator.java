@@ -11,7 +11,7 @@ import org.apache.commons.io.LineIterator;
 import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastaQualRepr;
-import bfx.impl.SequenceQualImpl;
+import bfx.impl.SequenceQual;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaQualIterator implements Iterator<Sequence> {
@@ -76,7 +76,7 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 					//log.debug(String.format("Qual = '%s'",new String(curqual.get())));
 					
 					//log.debug("Returning sequence: '" + header +"'");
-					Sequence seq = new SequenceQualImpl(header,
+					Sequence seq = new SequenceQual(header,
 														curseq.get(),
 														qualrepr.textToQual(curqual.get()));
 					header = seqline.substring(1);
@@ -97,7 +97,7 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 			curqual.append(" ".getBytes());
 		}
 		
-		return new SequenceQualImpl(header,
+		return new SequenceQual(header,
 				curseq.get(),
 				qualrepr.textToQual(curqual.get()));
 	}

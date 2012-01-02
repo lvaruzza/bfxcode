@@ -1,20 +1,20 @@
 package bfx.seqenc;
 
 import bfx.Sequence;
-import bfx.impl.SequenceConstQualImpl;
+import bfx.impl.SequenceConstQual;
 import bfx.utils.AliasMethodGenerator;
 
 public class DNASeqGenerator {
 	private AliasMethodGenerator gen;
 	
-	private static Double[] defaultProbs = new Double[] {0.25-0.25/1000,
+	private static double[] defaultProbs = new double[] {0.25-0.25/1000,
 		 0.25-0.25/1000,
 		 0.25-0.25/1000,
 		 0.25-0.25/1000,
 		 1.0/1000
 	};
 	
-	public DNASeqGenerator(Double... probabilities) {
+	public DNASeqGenerator(double... probabilities) {
 		if (probabilities.length != 5)
 			throw new IllegalArgumentException(String.format("ColorGenerator needs exactly 5 probabilites values. Intead %d provieded",
 													probabilities.length));
@@ -32,6 +32,6 @@ public class DNASeqGenerator {
 		return r;
 	}
 	public Sequence genSeq(String header,int len,byte qual) {
-		return new SequenceConstQualImpl(header,genBytesSeq(len),qual);
+		return new SequenceConstQual(header,genBytesSeq(len),qual);
 	}
 }

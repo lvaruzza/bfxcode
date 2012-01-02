@@ -11,7 +11,7 @@ import org.apache.commons.io.LineIterator;
 import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastQRepr;
-import bfx.impl.SequenceQualImpl;
+import bfx.impl.SequenceQual;
 
 public class LineBasedFastQIterator implements Iterator<Sequence> {
 	//private static Logger log = Logger.getLogger(LineBasedFastQIterator.class);
@@ -46,7 +46,7 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 		if (!sep.startsWith("+")) throw new RuntimeException("Invalid fastQ sequence, quality separator does not start with '+': " + sep);
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String qual = li.next();
-		return new SequenceQualImpl(header.substring(1), seq.getBytes(), qualrepr.textToQual(qual));
+		return new SequenceQual(header.substring(1), seq.getBytes(), qualrepr.textToQual(qual));
 	}
 
 	public void remove() {

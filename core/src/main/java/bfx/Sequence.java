@@ -6,7 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import bfx.impl.FastaQualRepr;
-import bfx.impl.SequenceConstQualImpl;
+import bfx.impl.SequenceConstQual;
+import bfx.impl.SequenceQual;
 
 /**
  * 
@@ -114,7 +115,7 @@ public abstract class Sequence {
 	public abstract Sequence changeSeq(byte[] seq);
 	
 	public static Sequence make(byte[] seq) {
-		return new SequenceConstQualImpl("",seq,(byte)0);
+		return new SequenceConstQual("",seq,(byte)0);
 	}
 
 	// Imutable object
@@ -159,6 +160,12 @@ public abstract class Sequence {
 			return false;
 		return true;
 	}
-	
-	
+
+	public static Sequence make(String seq) {
+		return make(seq.getBytes());
+	}
+
+	public static Sequence make(String seq, String qual) {
+		return new SequenceQual("", seq, qual);
+	}	
 }

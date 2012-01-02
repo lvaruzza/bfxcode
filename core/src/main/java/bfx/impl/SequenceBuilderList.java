@@ -1,22 +1,36 @@
 package bfx.impl;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import bfx.Sequence;
 import bfx.SequenceBuilder;
 
-public class SequenceBuilderListImpl implements SequenceBuilder {
-	private List<Sequence> store;
+/*
+ * 
+ * 
+ * 
+ */
+/**
+ * SequnceBuilder based on a list.
+ * 
+ * Each appended sequence will be pushed on a list
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
+public class SequenceBuilderList implements SequenceBuilder {
+	private LinkedList<Sequence> store;
 	private int size = 0;
 	
-	public SequenceBuilderListImpl() {
+	public SequenceBuilderList() {
 		store = new LinkedList<Sequence>();
 	}
 	
 	@Override
 	public void append(Sequence sequence) {
-		store.add(sequence);
+		store.push(sequence);
 		size += sequence.length();
 	}
 
@@ -24,11 +38,13 @@ public class SequenceBuilderListImpl implements SequenceBuilder {
 	public Sequence getConstQual(String name,byte qual) {
 		byte[] rs = new byte[size];
 		int pos = 0;
-		for(Sequence s: store) {
+		Iterator<Sequence> revseqs = store.descendingIterator();
+		while(revseqs.hasNext()) {
+			Sequence s = revseqs.next();
 			for(byte b: s.getSeq())
 				rs[pos++] = b;
 		}
-		return new SequenceConstQualImpl(name,rs,qual);
+		return new SequenceConstQual(name,rs,qual);
 	}
 
 	@Override
@@ -36,7 +52,9 @@ public class SequenceBuilderListImpl implements SequenceBuilder {
 		byte[] rs = new byte[size];
 		byte[] rq = new byte[size];
 		int pos = 0;
-		for(Sequence s: store) {
+		Iterator<Sequence> revseqs = store.descendingIterator();
+		while(revseqs.hasNext()) {
+			Sequence s = revseqs.next();
 			int i = pos;
 			for(byte b: s.getSeq())
 				rs[i++] = b;
@@ -46,7 +64,7 @@ public class SequenceBuilderListImpl implements SequenceBuilder {
 		    for(byte b: s.getQual())
 		    	rq[j++] = b;
 		}
-		return new SequenceQualImpl(name,rs,rq);
+		return new SequenceQual(name,rs,rq);
 	}
 
 	@Override
