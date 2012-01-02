@@ -15,8 +15,8 @@ import bfx.GFF;
 import bfx.exceptions.EmptyIteratorException;
 import bfx.impl.GFFParser;
 import bfx.io.GFFWriter;
-import bfx.utils.IteratorUtils;
-import bfx.utils.MapUtils;
+import bfx.utils.BFXIteratorUtils;
+import bfx.utils.BFXMapUtils;
 
 public class TestGFFReader {
 	private static Logger log = Logger.getLogger(TestGFFReader.class);
@@ -33,19 +33,19 @@ public class TestGFFReader {
 	@Test
 	public void testReadCount() throws IOException {
 		System.out.println();
-		assertEquals(180,IteratorUtils.count(it));
+		assertEquals(180,BFXIteratorUtils.count(it));
 	}
 	
 	@Test
 	public void testReadFirst() throws IOException, EmptyIteratorException, bfx.utils.EmptyIteratorException {
 		System.out.println();
-		GFF align = IteratorUtils.first(it);
+		GFF align = BFXIteratorUtils.first(it);
 		log.debug(align);
 	}
 	
 	private void testParseAttrs1(String line,String geneId,String transcriptId) {
 		Map<String,String> attr=GFFParser.parseAttrs(line);
-		log.debug(MapUtils.toString(attr));
+		log.debug(BFXMapUtils.toString(attr));
 		assertTrue(attr.containsKey("gene_id"));
 		assertEquals(geneId,attr.get("gene_id"));
 		assertTrue(attr.containsKey("transcript_id"));

@@ -2,7 +2,7 @@ package bfx.utils;
 
 import java.util.Iterator;
 
-public class IteratorUtils {
+public class BFXIteratorUtils {
 	public static long count(Iterator<?> it) {
 		long c=0;
 		while(it.hasNext()) {it.next(); c++; }

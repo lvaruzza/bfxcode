@@ -7,7 +7,7 @@ import java.util.ServiceLoader;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
-import bfx.utils.MapUtils;
+import bfx.utils.BFXMapUtils;
 import bfx.utils.compression.CompressionUtils;
 
 public class SequenceFormats {
@@ -48,7 +48,7 @@ public class SequenceFormats {
 		log.debug("Getting reader for file: " + filename);
 		String ext = FilenameUtils.getExtension(CompressionUtils.uncompressedFilename(filename));
 		if (!extension2reader.containsKey(ext)) {
-			log.debug("Extensions: " + MapUtils.toString(extension2reader));
+			log.debug("Extensions: " + BFXMapUtils.toString(extension2reader));
 			throw new RuntimeException(String.format("Unknown file format '%s' for file '%s': Could not create an appropriate sequence reader.",ext,filename));
 		}
 		SequenceReader reader = extension2reader.get(ext);
@@ -65,7 +65,7 @@ public class SequenceFormats {
 		log.debug("Getting writer for file: " + filename);
 		String ext = FilenameUtils.getExtension(CompressionUtils.uncompressedFilename(filename));
 		if (!extension2reader.containsKey(ext)) {
-			log.debug("Extensions: " + MapUtils.toString(extension2writer));
+			log.debug("Extensions: " + BFXMapUtils.toString(extension2writer));
 			throw new RuntimeException(String.format("Unknown file format '%s' for file '%s': Could not create an appropriate sequence writer.",ext,filename));
 		}
 		SequenceWriter writer = extension2writer.get(ext);

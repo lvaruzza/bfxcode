@@ -6,7 +6,7 @@ import java.util.Iterator;
 import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.impl.FileSequenceSource;
-import bfx.utils.IteratorUtils;
+import bfx.utils.BFXIteratorUtils;
 
 public abstract class SequenceSource implements Iterable<Sequence> {
 	protected ProgressCounter pc;
@@ -19,7 +19,7 @@ public abstract class SequenceSource implements Iterable<Sequence> {
 	abstract public Iterator<Sequence> iterator();
 	
 	public long count() {
-		return IteratorUtils.count(iterator());
+		return BFXIteratorUtils.count(iterator());
 	}
 	
 	public static SequenceSource fromFile(String format,File file) {

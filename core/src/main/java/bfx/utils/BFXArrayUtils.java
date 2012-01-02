@@ -1,6 +1,6 @@
 package bfx.utils;
 
-public class ArrayUtils {
+public class BFXArrayUtils {
 	
 	// Parse Longs
 	
