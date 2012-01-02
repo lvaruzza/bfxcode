@@ -6,8 +6,8 @@ import java.io.FileOutputStream;
 import bfx.GFF;
 import bfx.Sequence;
 import bfx.SequenceBuilder;
-import bfx.impl.SequenceBuilderListImpl;
-import bfx.impl.SequenceConstQualImpl;
+import bfx.impl.SequenceBuilderList;
+import bfx.impl.SequenceConstQual;
 import bfx.io.GFFWriter;
 import bfx.io.SequenceSource;
 import bfx.io.SequenceWriter;
@@ -48,8 +48,8 @@ public class PseudoGenome extends Tool {
 	@Override
 	public void run() throws Exception {
 		SequenceSource sequences = SequenceSource.fromFile(input,inputFormat);
-		SequenceBuilder sb = new SequenceBuilderListImpl();
-		Sequence spacer = new SequenceConstQualImpl("spacer",TextUtils.times('N',spacerSize),(byte)0);
+		SequenceBuilder sb = new SequenceBuilderList();
+		Sequence spacer = new SequenceConstQual("spacer",TextUtils.times('N',spacerSize),(byte)0);
 		FileOutputStream gffout = new FileOutputStream(outputGFF);
 		GFFWriter gffw = new GFFWriterImpl();
 		
