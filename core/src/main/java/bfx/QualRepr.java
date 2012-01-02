@@ -1,7 +1,11 @@
 package bfx;
 
 /*
- * Sequence Quality values text representations
+ * Convert between Sequence Quality values representations and 
+ * byte array of quality values.
+ * 
+ * Concrete implementations inherit from this class
+ * 
  * 
  * TODO: Do I need all this variants?
  */

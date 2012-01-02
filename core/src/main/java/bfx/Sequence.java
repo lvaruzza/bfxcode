@@ -8,6 +8,14 @@ import java.util.Arrays;
 import bfx.impl.FastaQualRepr;
 import bfx.impl.SequenceConstQualImpl;
 
+/*
+ * Abstract base class for all sequence formats
+ * 
+ * A sequence has a text and a vector of quality values
+ * 
+ * This class hierarchy does not care about the symbols in the sequence
+ * 
+ */
 public abstract class Sequence {
 	//private static Logger log = Logger.getLogger(Sequence.class);
 	

@@ -2,6 +2,10 @@ package bfx;
 
 import java.util.Map;
 
+/*
+ * Generic GFF Record
+ * 
+ */
 public class GFF {
 	private String seqid;
 	private String source;

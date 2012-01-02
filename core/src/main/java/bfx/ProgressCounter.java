@@ -2,6 +2,10 @@ package bfx;
 
 import java.util.Observable;
 
+/*
+ * Observable to follow job progress
+ * 
+ */
 public  class ProgressCounter extends Observable {
 	private long updateRate = 1;
 	private long count = 0;
