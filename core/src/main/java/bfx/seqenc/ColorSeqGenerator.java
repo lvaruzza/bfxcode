@@ -14,6 +14,9 @@ public class ColorSeqGenerator {
 	};
 	
 	public ColorSeqGenerator(Double... probabilities) {
+		if (probabilities.length != 5)
+			throw new IllegalArgumentException(String.format("ColorGenerator needs exactly 5 probabilites values. Intead %d provieded",
+													probabilities.length));
 		gen = new AliasMethodGenerator(probabilities);
 	}
 
