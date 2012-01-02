@@ -14,7 +14,7 @@ import bfx.io.SequenceWriter;
 import bfx.io.impl.FastaSequenceWriter;
 import bfx.io.impl.GFFWriterImpl;
 import bfx.tools.Tool;
-import bfx.utils.MapUtils;
+import bfx.utils.BFXMapUtils;
 import bfx.utils.TextUtils;
 
 import com.beust.jcommander.Parameter;
@@ -60,7 +60,7 @@ public class PseudoGenome extends Tool {
 			sb.append(spacer);
 			GFF gff = new GFF(name,"pseudo-genome".intern(), annotationType, 
 					start,end,0.0, '+', (byte)0, 
-					MapUtils.build("transcript_id",s.getId(),"gene_id",s.getId()));
+					BFXMapUtils.build("transcript_id",s.getId(),"gene_id",s.getId()));
 			gffw.write(gffout, gff);
 		}
 		
