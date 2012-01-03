@@ -11,10 +11,12 @@ import bfx.impl.SequenceQual;
 
 /**
  * 
- * Abstract base class for all sequence formats
+ * Abstract base class for all sequence representations
  * 
  * A sequence has the sequence text and quality values, both the text
  * and qualities are represented as byte arrays.
+ * 
+ * Sequence objects are immutables.
  * 
  * This class hierarchy does not care about the symbols in the sequence, there is
  * classes in package bfx.seqenc to deal with specific sequences (DNA, color-space DNA, etc).

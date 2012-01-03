@@ -4,6 +4,8 @@ package bfx;
  * 
  * Mutable sequence builder
  * 
+ * Class used to construct a new immutable Sequence by appending other sequences.
+ * 
  * @author Leonardo Varuzza <varuzza@gmail.com>
  * 
  */
