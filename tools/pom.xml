@@ -147,6 +147,6 @@
 
 	</build>
 	<scm>
-		<url>scm:git:ssh://repository@varuzza.dyndns.org:8022/~git/bfx-core</url>
+		<url>scm:git:https://varuzza@code.google.com/p/bfxcode/</url>
 	</scm>
 </project>
