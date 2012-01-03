@@ -1,5 +1,7 @@
 package bfx.impl;
 
+import bfx.QualRepr;
+
 
 
 /**
@@ -10,7 +12,7 @@ package bfx.impl;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *
  */
-public class FastQRepr extends AbstractQualRepr {
+public class FastQRepr extends QualRepr {
 	public enum FastqEncoding  {
 		SANGER(33,0,93),
 		ILLUMINA10(59+5,-5,62),

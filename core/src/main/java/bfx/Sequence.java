@@ -22,10 +22,6 @@ import bfx.impl.SequenceQual;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *  
  */
-/**
- * @author Leonardo Varuzza <varuzza@gmail.com>
- *
- */
 public abstract class Sequence {
 	//private static Logger log = Logger.getLogger(Sequence.class);
 	

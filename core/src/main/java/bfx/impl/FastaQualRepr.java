@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
+import bfx.QualRepr;
+
 
 /**
  * Encode and decode quality values in the Qual format (used in fasta/qual pair)
@@ -11,7 +13,7 @@ import java.util.Arrays;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *
  */
-public class FastaQualRepr extends AbstractQualRepr {
+public class FastaQualRepr extends QualRepr {
 
 	@Override
 	public byte[] qualToTextBytes(byte[] qual,int off,int len) {

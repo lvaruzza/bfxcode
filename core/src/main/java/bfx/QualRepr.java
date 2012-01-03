@@ -10,21 +10,23 @@ package bfx;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  * 
  */
-public interface QualRepr {
-	//TODO: Do I need all this variants?
+public abstract class QualRepr {
 
-	/*
-	 * Convert text to a byte array with the qual values
-	 */
-	public byte[] textToQual(byte[] repr);
-	public byte[] textToQual(byte[] repr,int off,int len);
-	public byte[] textToQual(String repr);
 
-	/*
-	 * Convert from qual byte array to text
-	 * 
-	 */
-	public String qualToTextString(byte[] qual);
-	public byte[] qualToTextBytes(byte[] qual);	
-	public byte[] qualToTextBytes(byte[] qual,int off,int len);	
+	public abstract byte[] qualToTextBytes(byte[] qual,int off,int len);
+
+	public byte[] qualToTextBytes(byte[] qual) {
+		return qualToTextBytes(qual,0,qual.length);
+	}
+	
+	public String qualToTextString(byte[] qual) {
+		return new String(qualToTextBytes(qual));
+	}
+	
+	public abstract byte[] textToQual(String repr);
+	public abstract byte[] textToQual(byte[] repr,int off,int len); 
+	
+	public byte[] textToQual(byte[] repr) {
+		return textToQual(repr,0,repr.length); 
+	}
 }
