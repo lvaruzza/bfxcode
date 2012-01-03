@@ -17,21 +17,6 @@ public  class ProgressCounter extends Observable {
 	
 	private boolean finish = false;
 	
-	public void reset() {
-		count = 0;
-		this.setChanged();
-		this.notifyObservers();
-		this.finish = false;
-	}
-	
-	public void setUpdateRate(long updateRate) {
-		this.updateRate = updateRate;
-	}
-	
-	public long getCount() {
-		return count;
-	}
-	
 	public void incr(long value) {
 		count += value;
 		count2 += value;
@@ -49,6 +34,10 @@ public  class ProgressCounter extends Observable {
 		this.notifyObservers();		
 	}
 	
+	public long getCount() {
+		return count;
+	}
+	
 	public long getTicks() {
 		return ticks;
 	}
@@ -56,4 +45,15 @@ public  class ProgressCounter extends Observable {
 	public boolean isFinished() {
 		return finish;
 	}
+	public void reset() {
+		count = 0;
+		this.setChanged();
+		this.notifyObservers();
+		this.finish = false;
+	}
+	
+	public void setUpdateRate(long updateRate) {
+		this.updateRate = updateRate;
+	}
+	
 }
