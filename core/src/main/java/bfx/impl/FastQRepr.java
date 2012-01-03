@@ -35,10 +35,20 @@ public class FastQRepr extends QualRepr {
 
 	private FastqEncoding encoding = FastqEncoding.SANGER;
 
+	/**
+	 * Create a FastQ Quality Representation using default Sanger encoding.
+	 * 
+	 */
 	public FastQRepr() {
 		encoding = FastqEncoding.SANGER;
 	}
 
+	
+	/**
+	 * Create a FAstQ Quality Representation using given Encoding.
+	 * 
+	 * @param encoding
+	 */
 	public FastQRepr(FastqEncoding encoding) {
 		this.encoding = encoding;
 	}
@@ -52,10 +62,12 @@ public class FastQRepr extends QualRepr {
 		return out;
 	}
 
+	@Override
 	public byte[] textToQual(String repr) {
 		return textToQual(repr.getBytes());
 	}
 	
+	@Override
 	public byte[] textToQual(byte[] repr) {
 		byte[] qual = new byte[repr.length];
 		for(int i=0;i<qual.length;i++) {

@@ -2,7 +2,6 @@ package bfx.impl;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import bfx.Sequence;
 import bfx.SequenceBuilder;

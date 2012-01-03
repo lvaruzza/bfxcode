@@ -52,7 +52,7 @@ public class FastaQualRepr extends QualRepr {
 		return Arrays.copyOfRange(r, 0, k);
 	}
 
-
+	@Override
 	public byte[] textToQual(byte[] repr, int off, int len) {
 		return textToQual(new String(Arrays.copyOfRange(repr, off, off+len)));
 	}

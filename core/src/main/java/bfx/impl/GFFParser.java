@@ -17,6 +17,14 @@ import bfx.exceptions.InvalidFormatException;
 public class GFFParser {
 	//static private Logger log = Logger.getLogger(AbstractGFFReader.class);
 	
+	/**
+	 * Parse GFF Line.
+	 * 
+	 * @param line Line with GFF text
+	 * 
+	 * @return GFF Record
+	 * @throws InvalidFormatException
+	 */
 	static public GFF parseGFF3(String line) throws InvalidFormatException {
 		Map<String,String> attrs;
 		char strand;
@@ -89,10 +97,18 @@ public class GFFParser {
 
 	private static Pattern quoted = Pattern.compile("^\"(.*?)\"$");
 	
-	public static Map<String, String> parseAttrs(String s) {
+	/**
+	 * Parse a String with key-value pairs in the foramt
+	 * 
+	 * key1="value1"; key2="value2"...
+	 * 
+	 * @param attributes Attributes String
+	 * @return Map with parameter Name -> Value both as Strings
+	 */
+	public static Map<String, String> parseAttrs(String attributes) {
 		Map<String,String> map = new HashMap<String,String>();
 		//log.debug(s);
-		for(String x: s.split(";")) {
+		for(String x: attributes.split(";")) {
 			x = x.trim();
 			int pos = x.indexOf(' ');
 			String key;
@@ -117,6 +133,12 @@ public class GFFParser {
 		return map;
 	}
 
+	/**
+	 * Unimplemented
+	 * 
+	 * @param line
+	 * @return GFF Record
+	 */
 	static public GFF parseGTF(String line) {
 		throw new RuntimeException("Unimplemented");
 	}	
