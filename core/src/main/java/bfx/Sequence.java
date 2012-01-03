@@ -22,6 +22,10 @@ import bfx.impl.SequenceQual;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *  
  */
+/**
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public abstract class Sequence {
 	//private static Logger log = Logger.getLogger(Sequence.class);
 	
@@ -51,16 +55,39 @@ public abstract class Sequence {
 		return comments;
 	}
 	
+	/**
+	 * Get Sequence Text. 
+	 * 
+	 * The returned value should not be modified.
+	 * 
+	 * @return byte[] with sequence text.
+	 */
 	public abstract byte[] getSeq();
+	
+	
+	/**
+	 * Get Quality values
+	 * 
+	 * The returned value should not be modified.
+	 * 
+	 * @return byte[] with quality values.
+	 * 
+	 */
 	public abstract byte[] getQual();
 
 	
 	
 	/**
+	 * Constructs a empty sequence with ID and comments.
+	 * 
+	 * Both arguments can not be null.
+	 * 
+	 * Should be used by concrete implementations of this class.
+	 * 
 	 * @param id		Sequence unique ID
 	 * @param comments	Extra comments about the sequence
 	 */
-	public Sequence(String id, String comments) {
+	protected Sequence(String id, String comments) {
 		super();
 		assert(id != null);
 		assert(comments != null);
@@ -70,19 +97,26 @@ public abstract class Sequence {
 	}
 
 	/**
+	 * Construct a empty Sequence with header.
+	 * 
 	 * Splits the header between the ID and the comments using
-	 * the static method parseHeader
+	 * the static method parseHeader.
+	 * 
+	 * Header can not be null.
+	 * 
+	 * Should be used by concrete implementations of this class.
 	 * 
 	 * @param header
 	 */
-	public Sequence(String header) {
+	protected Sequence(String header) {
+		assert(header != null);
 		String[] h = parseHeader(header);
 		id = h[0];
 		comments = h[1];
 	}
 	
 	/**
-	 * Util method to return the sequence text as a String
+	 * Utility method to return the sequence text as a String
 	 * 
 	 * @return getSeq() converted to a String
 	 */
@@ -189,6 +223,8 @@ public abstract class Sequence {
 	private static QualRepr qrepr = new FastaQualRepr();
 	
 	/**
+	 * FastaQual representation of quality values.
+	 * 
 	 * @return Qualities values as a String using FastaQual representation
 	 * 
 	 */
@@ -200,7 +236,7 @@ public abstract class Sequence {
 	 * Create a new Sequence object with the new sequence text. Other values are copied from this.
 	 * 
 	 * @param text New sequence Text
-	 * @return
+	 * @return a new Sequence object
 	 */
 	public abstract Sequence changeSeq(byte[] text);
 	
@@ -265,8 +301,8 @@ public abstract class Sequence {
 	 * @param text Sequence text
 	 * @return a new Sequence Object.
 	 */
-	public static Sequence make(String seq) {
-		return make(seq.getBytes());
+	public static Sequence make(String text) {
+		return make(text.getBytes());
 	}
 
 	/**
@@ -276,7 +312,7 @@ public abstract class Sequence {
 	 * @param qual Sequence Qualities in fastaQual encoding.
 	 * @return a new Sequence Object.
 	 */
-	public static Sequence make(String seq, String qual) {
-		return new SequenceQual("", seq, qual);
+	public static Sequence make(String text, String qual) {
+		return new SequenceQual("", text, qual);
 	}	
 }
