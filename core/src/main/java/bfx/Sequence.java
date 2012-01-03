@@ -13,9 +13,11 @@ import bfx.impl.SequenceQual;
  * 
  * Abstract base class for all sequence formats
  * 
- * A sequence has a text and a vector of quality values
+ * A sequence has the sequence text and quality values, both the text
+ * and qualities are represented as byte arrays.
  * 
- * This class hierarchy does not care about the symbols in the sequence
+ * This class hierarchy does not care about the symbols in the sequence, there is
+ * classes in package bfx.seqenc to deal with specific sequences (DNA, color-space DNA, etc).
  * 
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *  
@@ -26,10 +28,25 @@ public abstract class Sequence {
 	private String id;
 	private String comments;
 	
+	/**
+	 * The ID should be unique in a given sequence set.
+	 * 
+	 * This field is equivalent of the first part of a fasta header
+	 * 
+	 * @return Sequence ID
+	 */
 	public String getId() {
 		return id;
 	}
+
 	
+	/**
+	 * Other comments about the sequence
+	 * 
+	 * This is equivalent of the second part of the fasta header.
+	 * 
+	 * @return comments
+	 */
 	public String getComments() {
 		return comments;
 	}
@@ -39,6 +56,10 @@ public abstract class Sequence {
 
 	
 	
+	/**
+	 * @param id		Sequence unique ID
+	 * @param comments	Extra comments about the sequence
+	 */
 	public Sequence(String id, String comments) {
 		super();
 		assert(id != null);
@@ -48,12 +69,23 @@ public abstract class Sequence {
 		this.comments = comments;
 	}
 
+	/**
+	 * Splits the header between the ID and the comments using
+	 * the static method parseHeader
+	 * 
+	 * @param header
+	 */
 	public Sequence(String header) {
 		String[] h = parseHeader(header);
 		id = h[0];
 		comments = h[1];
 	}
 	
+	/**
+	 * Util method to return the sequence text as a String
+	 * 
+	 * @return getSeq() converted to a String
+	 */
 	public String getSeqAsString() {
 		return new String(getSeq());
 	}
@@ -65,6 +97,21 @@ public abstract class Sequence {
 				+ Arrays.toString(getQual()) + "]";
 	}
 
+	/**
+	 * Split the header between the ID and comments using the 
+	 * fasta convetion. 
+	 * 
+	 * For example, this header
+	 * gi|224589808:41196312-41277500 Homo sapiens chromosome 17, GRCh37.p5 Primary Assembly
+	 * 
+	 * will be splited into
+	 *   ["gi|224589808:41196312-41277500","Homo sapiens chromosome 17, GRCh37.p5 Primary Assembly"]
+	 *    
+	 * @param header Sequence Header
+	 * @return A String[2] with ID in the first element and comments in the second. If there not comments
+	 * the second element will be a empty string.
+	 * 
+	 */
 	public static String[] parseHeader(String header) {
 		int idx = header.indexOf(' ');
 		if (idx != -1)
@@ -73,12 +120,27 @@ public abstract class Sequence {
 			return new String[] {header,""};			
 	}
 
+	/**
+	 * Apply a Message Digest Algorithm (such MD5 or SHA-1) the sequence text and return
+	 * a hexadecimal string representing the hash value.
+	 * 
+	 * @param algorithm Name of the algorithm
+	 * @return A string with the hexadecimal representation of the hash value
+	 * @throws NoSuchAlgorithmException
+	 */
 	public String digestSeq(String algorithm) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance(algorithm);
         digest.reset();
 		return String.format("%032x",new BigInteger(1,digest.digest(getSeq())));
 	}
 	
+	
+	/**
+	 * Apply digestSeq using MD5 sum.
+	 * 
+	 * @return A string with a hexadecimal representation of MD5 value.
+	 * 
+	 */
 	public String digestSeq() {
 		try {
 			return digestSeq("MD5");
@@ -87,12 +149,27 @@ public abstract class Sequence {
 		}
 	}
 
+	/**
+	 * Apply a Message Digest Algorithm (such MD5 or SHA-1) the quality values (the bytes, not the string representation) 
+	 * and return a hexadecimal string representing the hash value.
+	 * 
+	 * @param algorithm Name of the algorithm
+	 * @return A string with the hexadecimal representation of the hash value
+	 * 
+	 * @throws NoSuchAlgorithmException
+	 */
 	public String digestQual(String algorithm) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance(algorithm);
         digest.reset();
 		return String.format("%032x",new BigInteger(1,digest.digest(getQual())));
 	}
 	
+	/**
+	 * Apply digestQual using MD5 sum.
+	 * 
+	 * @return A string with a hexadecimal representation of MD5 value.
+	 * 
+	 */
 	public String digestQual() {
 		try {
 			return digestQual("MD5");
@@ -101,6 +178,9 @@ public abstract class Sequence {
 		}
 	}
 
+	/**
+	 * @return Sequence Length
+	 */
 	public int length() {
 		return this.getSeq().length;
 	}
@@ -108,16 +188,23 @@ public abstract class Sequence {
 	
 	private static QualRepr qrepr = new FastaQualRepr();
 	
+	/**
+	 * @return Qualities values as a String using FastaQual representation
+	 * 
+	 */
 	public String getQualAsString() {
 		return qrepr.qualToTextString(getQual());
 	}
 	
-	public abstract Sequence changeSeq(byte[] seq);
+	/**
+	 * Create a new Sequence object with the new sequence text. Other values are copied from this.
+	 * 
+	 * @param text New sequence Text
+	 * @return
+	 */
+	public abstract Sequence changeSeq(byte[] text);
 	
-	public static Sequence make(byte[] seq) {
-		return new SequenceConstQual("",seq,(byte)0);
-	}
-
+	
 	// Imutable object
 	private int hashCode = 0;
 
@@ -161,10 +248,34 @@ public abstract class Sequence {
 		return true;
 	}
 
+	/**
+	 * Helper to create a new Sequence Object with empty header and 0 quality.
+	 * 
+	 * @param text Sequence text
+	 * @return a new Sequence Object.
+	 */
+	public static Sequence make(byte[] text) {
+		return new SequenceConstQual("",text,(byte)0);
+	}
+
+	
+	/**
+	 * Helper to create a new Sequence Object with empty header and 0 quality.
+	 * 
+	 * @param text Sequence text
+	 * @return a new Sequence Object.
+	 */
 	public static Sequence make(String seq) {
 		return make(seq.getBytes());
 	}
 
+	/**
+	 * Helper to create a new Sequence Object with empty header.
+	 * 
+	 * @param text Sequence text.
+	 * @param qual Sequence Qualities in fastaQual encoding.
+	 * @return a new Sequence Object.
+	 */
 	public static Sequence make(String seq, String qual) {
 		return new SequenceQual("", seq, qual);
 	}	
