@@ -10,6 +10,7 @@ import org.apache.commons.io.LineIterator;
 
 import bfx.GFF;
 import bfx.impl.GFFParser;
+import bfx.io.GFFReader;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -20,7 +21,7 @@ import com.google.common.collect.Iterators;
  * Concrete implementation of GFFReader based on commons-io
  * 
  */
-public class LineBasedGFFReader extends AbstractGFFReader {
+public class LineBasedGFFReader extends GFFReader {
 	
 	private class GFFTransformer implements Function<String,GFF>  {
 		public GFF apply(String line) {

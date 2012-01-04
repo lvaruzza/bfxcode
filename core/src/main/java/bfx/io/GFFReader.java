@@ -3,7 +3,7 @@ package bfx.io;
 import java.util.Iterator;
 
 import bfx.GFF;
-import bfx.utils.io.AbstractReader;
+import bfx.utils.io.BaseReader;
 
 
 /**
@@ -12,5 +12,5 @@ import bfx.utils.io.AbstractReader;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *
  */
-public interface GFFReader extends AbstractReader<Iterator<GFF>> {
+public abstract class GFFReader extends BaseReader<Iterator<GFF>> {
 }

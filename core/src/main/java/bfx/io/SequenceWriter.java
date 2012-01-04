@@ -28,8 +28,23 @@ public interface SequenceWriter extends AbstractWriter<Iterator<Sequence>>,Abstr
 	public void write(Writer out1,Sequence seq) throws IOException;
 	public void write(Writer out1,Writer out2,Sequence seq) throws IOException;
 
-	public void setProgressCounter(ProgressCounter pc);		
+	/**
+	 * Set ProgressCounter to be increment on each sequence.
+	 * 
+	 * @param pc ProgressCounter.
+	 */
+	public void setProgressCounter(ProgressCounter pc);
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String[] getPreferedExtensions();
 	
+	/**
+	 * Name for this format
+	 * 
+	 * @return Format name
+	 */
 	public String getFormatName();
 }
