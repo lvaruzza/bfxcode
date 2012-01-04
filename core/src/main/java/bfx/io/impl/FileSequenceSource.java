@@ -25,7 +25,7 @@ public class FileSequenceSource extends SequenceSource {
 	private void setup(File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
-		reader = SequenceFormats.getReader(file1.getName());
+		reader = SequenceFormats.getReaderForFile(file1.getName());
 	}
 
 	public FileSequenceSource(String format,File file1,File file2) {
@@ -35,7 +35,7 @@ public class FileSequenceSource extends SequenceSource {
 	public void setup(String format,File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
-		reader = SequenceFormats.getReader(file1.getName(),format);
+		reader = SequenceFormats.getReaderForFile(file1.getName(),format);
 	}
 	
 	public FileSequenceSource(File file1) {
@@ -45,7 +45,7 @@ public class FileSequenceSource extends SequenceSource {
 	public void setup(File file1) {
 		this.file1 = file1;
 		this.file2 = null;
-		reader = SequenceFormats.getReader(file1.getName());
+		reader = SequenceFormats.getReaderForFile(file1.getName());
 	}
 
 	
@@ -56,7 +56,7 @@ public class FileSequenceSource extends SequenceSource {
 	public void setup(String format,File file1) {
 		this.file1 = file1;
 		this.file2 = null;
-		reader = SequenceFormats.getReader(file1.getName(),format);
+		reader = SequenceFormats.getReaderForFile(file1.getName(),format);
 	}
 	
 	public FileSequenceSource(String filename) {

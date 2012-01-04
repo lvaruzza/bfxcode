@@ -26,7 +26,7 @@ public class FileSequenceSink extends SequenceSink {
 	public void setup(File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
-		writer = SequenceFormats.getWriter(file1.getName());
+		writer = SequenceFormats.getWriterForFile(file1.getName());
 	}
 
 	public FileSequenceSink(String format,File file1,File file2) {
@@ -36,7 +36,7 @@ public class FileSequenceSink extends SequenceSink {
 	public void setup(String format,File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
-		writer = SequenceFormats.getWriter(file1.getName(),format);
+		writer = SequenceFormats.getWriterForFile(file1.getName(),format);
 	}
 	
 	public FileSequenceSink(File file1) {
@@ -46,7 +46,7 @@ public class FileSequenceSink extends SequenceSink {
 	public void setup(File file1) {
 		this.file1 = file1;
 		this.file2 = null;
-		writer = SequenceFormats.getWriter(file1.getName());
+		writer = SequenceFormats.getWriterForFile(file1.getName());
 	}
 
 	
@@ -57,7 +57,7 @@ public class FileSequenceSink extends SequenceSink {
 	public void setup(String format,File file1) {
 		this.file1 = file1;
 		this.file2 = null;
-		writer = SequenceFormats.getWriter(file1.getName(),format);
+		writer = SequenceFormats.getWriterForFile(file1.getName(),format);
 	}
 	
 	public FileSequenceSink(String filename) {

@@ -7,10 +7,10 @@ public class TestSequenceFormat {
 
 	@Test
 	public void testGetReader() {
-		SequenceReader reader = SequenceFormats.getReader("foo.fasta");
+		SequenceReader reader = SequenceFormats.getReaderForFile("foo.fasta");
 		assertEquals("bfx.io.impl.FastaSequenceReader",reader.getClass().getName());
 
-		SequenceReader reader2 = SequenceFormats.getReader("foo.fastq");
+		SequenceReader reader2 = SequenceFormats.getReaderForFile("foo.fastq");
 		assertEquals("bfx.io.impl.FastQSequenceReader",reader2.getClass().getName());
 	}
 }

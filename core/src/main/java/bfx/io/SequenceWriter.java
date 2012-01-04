@@ -12,6 +12,12 @@ import bfx.utils.io.AbstractDualWriter;
 import bfx.utils.io.AbstractWriter;
 
 
+/**
+ * Interface for Writing Sequences
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public interface SequenceWriter extends AbstractWriter<Iterator<Sequence>>,AbstractDualWriter<Iterator<Sequence>> {
 
 	public void write(File file1,Sequence seq) throws IOException;

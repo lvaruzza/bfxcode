@@ -15,10 +15,10 @@ import static org.junit.Assert.*;
 public class TestFastQWriter {
 	@Test
 	public void testGetWriter() {
-		SequenceWriter sw1 = SequenceFormats.getWriter("test.fastq", "fasta");
+		SequenceWriter sw1 = SequenceFormats.getWriterForFile("test.fastq", "fasta");
 		assertEquals("bfx.io.impl.FastQSequenceWriter",sw1.getClass().getName());
 
-		SequenceWriter sw2 = SequenceFormats.getWriter("test.fastq", null);
+		SequenceWriter sw2 = SequenceFormats.getWriterForFile("test.fastq", null);
 		assertEquals("bfx.io.impl.FastQSequenceWriter",sw2.getClass().getName());
 	}
 	

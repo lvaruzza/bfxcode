@@ -8,9 +8,23 @@ import bfx.Sequence;
 import bfx.io.impl.FileSequenceSource;
 import bfx.utils.BFXIteratorUtils;
 
+/**
+ * Abstract Sequence Iterable
+ * 
+ * This is an abstract class to iterate throught sets of sequences.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public abstract class SequenceSource implements Iterable<Sequence> {
 	protected ProgressCounter pc;
 	
+	
+	/**
+	 * Set ProgressCounter to be increment on each sequence.
+	 * 
+	 * @param pc ProgressCounter.
+	 */
 	public void setProgressCounter(ProgressCounter pc) {
 		this.pc = pc;
 	}
@@ -18,31 +32,67 @@ public abstract class SequenceSource implements Iterable<Sequence> {
 	@Override
 	abstract public Iterator<Sequence> iterator();
 	
+	
+	/**
+	 * Count the number of sequences in this source.
+	 * 
+	 * @return Number of sequences
+	 */
 	public long count() {
 		return BFXIteratorUtils.count(iterator());
 	}
 	
+	/**
+	 * Create a SequenceSource backed by a file.
+	 * 
+	 * @param format File Format (if null the format will be determined by the file name extension)
+	 * @param file File
+	 * @return A FileSequenceSource
+	 */
 	public static SequenceSource fromFile(String format,File file) {
 		return new FileSequenceSource(format,file);
 	}	
 
+	/**
+	 * Create a SequenceSource backed by a file.
+	 * 
+	 * @param format File Format (if null the format will be determined by the file name extension)
+	 * @param filename File Name
+	 * @return A FileSequenceSource
+	 */
 	public static SequenceSource fromFile(String format,String filename) {
 		return new FileSequenceSource(format,new File(filename));
 	}	
 	
-	public static SequenceSource fromFile(String format,File file1,File file2) {
+	/**
+	 * Create a SequenceSource backed by a file.
+	 * 
+	 * @param format File Format (if null the format will be determined by the file name extension)
+	 * @param seqfile Sequence File
+	 * @param qualfile Quality File
+	 * @return A FileSequenceSource
+	 */
+	public static SequenceSource fromFile(String format,File seqfile,File qualfile) {
 		
-		if (file2 != null && format != null && !format.equals("fasta")) {
+		if (qualfile != null && format != null && !format.equals("fasta")) {
 			throw new RuntimeException("You can only use specify a qual file for fasta format");
 		}
 		
-		if (file2==null)
-			return new FileSequenceSource(format,file1);
+		if (qualfile==null)
+			return new FileSequenceSource(format,seqfile);
 		else
-			return new FileSequenceSource(format,file1,file2);
+			return new FileSequenceSource(format,seqfile,qualfile);
 	}		
 
-	public static SequenceSource fromFile(String format,String filename1,String filename2) {
-		return new FileSequenceSource(format,new File(filename1),filename2 == null ? null : new File(filename2));
+	/**
+	 * Create a SequenceSource backed by a file.
+	 * 
+	 * @param format File Format (if null the format will be determined by the file name extension)
+	 * @param seqfile Sequence File Name
+	 * @param qualfile Quality File Name
+	 * @return A FileSequenceSource
+	 */
+	public static SequenceSource fromFile(String format,String seqFilename,String qualFilename) {
+		return new FileSequenceSource(format,new File(seqFilename),qualFilename == null ? null : new File(qualFilename));
 	}		
 }
