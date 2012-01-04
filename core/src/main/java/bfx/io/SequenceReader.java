@@ -6,6 +6,7 @@ import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.utils.io.AbstractDualReader;
 import bfx.utils.io.AbstractReader;
+import bfx.utils.io.BaseSingleAndDualReader;
 
 
 /**
@@ -14,23 +15,25 @@ import bfx.utils.io.AbstractReader;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *
  */
-public interface SequenceReader extends AbstractReader<Iterator<Sequence>>,
-										AbstractDualReader<Iterator<Sequence>> {
+public abstract class SequenceReader extends BaseSingleAndDualReader<Iterator<Sequence>> {
 
-
+	protected ProgressCounter pc;
+	
 	/**
 	 * Set ProgressCounter to be increment on each sequence.
 	 * 
 	 * @param pc ProgressCounter.
 	 */
-	public void setProgressCounter(ProgressCounter pc);		
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
+	}
 	
 	/**
 	 * Return a list of life extensions associated with this SequenceReader.
 	 *   
 	 * @return List of file extensions.
 	 */
-	public String[] getPreferedExtensions();
+	abstract public String[] getPreferedExtensions();
 	
 	
 	/**
@@ -38,5 +41,5 @@ public interface SequenceReader extends AbstractReader<Iterator<Sequence>>,
 	 * 
 	 * @return format name
 	 */
-	public String getFormatName();
+	abstract public String getFormatName();
 }

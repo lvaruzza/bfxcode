@@ -12,7 +12,7 @@ import bfx.impl.FastQRepr.FastqEncoding;
 import bfx.io.SequenceReader;
 import bfx.utils.io.BaseSingleAndDualReader;
 
-public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequence>> implements SequenceReader {
+public class FastQSequenceReader extends SequenceReader {
 	private FastQRepr.FastqEncoding encoding;
 	private boolean useSingleLineReader;
 	
@@ -67,14 +67,7 @@ public class FastQSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 	public String[] getPreferedExtensions() {
 		return fastQExtensions;
 	}
-
-	protected ProgressCounter pc;
 	
-	@Override
-	public void setProgressCounter(ProgressCounter pc) {
-		this.pc = pc;
-	}
-
 	@Override
 	public String getFormatName() {
 		return "fastQ";

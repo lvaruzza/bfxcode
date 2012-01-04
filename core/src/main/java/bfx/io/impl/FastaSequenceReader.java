@@ -13,9 +13,14 @@ import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.SequenceReader;
 import bfx.utils.compression.CompressionUtils;
-import bfx.utils.io.BaseSingleAndDualReader;
 
-public class FastaSequenceReader extends BaseSingleAndDualReader<Iterator<Sequence>> implements SequenceReader {
+/**
+ * SequenceReader for fastaFile
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
+public class FastaSequenceReader extends SequenceReader {
 	private static Logger log = Logger.getLogger(FastaSequenceReader.class);
 	
 	private byte defaultQuality = 0;
@@ -80,13 +85,6 @@ public class FastaSequenceReader extends BaseSingleAndDualReader<Iterator<Sequen
 	@Override
 	public String[] getPreferedExtensions() {
 		return fastaExtensions;
-	}
-
-	protected ProgressCounter pc;
-	
-	@Override
-	public void setProgressCounter(ProgressCounter pc) {
-		this.pc = pc;
 	}
 	
 	@Override
