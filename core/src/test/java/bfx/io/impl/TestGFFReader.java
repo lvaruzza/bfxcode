@@ -61,7 +61,7 @@ public class TestGFFReader {
 	
 	@Test
 	public void testReadWrite() throws IOException {
-		GFFWriter gw = new GFFWriterImpl();
+		GFFWriter gw = new OSGFFWriter();
 		
 		gw.write(System.out,it);
 	}

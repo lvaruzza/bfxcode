@@ -1,6 +1,5 @@
 package bfx.io.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
@@ -11,7 +10,13 @@ import java.util.Map.Entry;
 import bfx.GFF;
 import bfx.io.GFFWriter;
 
-public class GFFWriterImpl extends GFFWriter {
+/**
+ * OutputStream GFFWriter
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
+public class OSGFFWriter extends GFFWriter {
 
 	@Override
 	public void write(OutputStream output, Iterator<GFF> data)
