@@ -5,12 +5,10 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.impl.FastQRepr;
 import bfx.impl.FastQRepr.FastqEncoding;
 import bfx.io.SequenceReader;
-import bfx.utils.io.BaseSingleAndDualReader;
 
 public class FastQSequenceReader extends SequenceReader {
 	private FastQRepr.FastqEncoding encoding;

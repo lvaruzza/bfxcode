@@ -12,9 +12,8 @@ import bfx.Sequence;
 import bfx.exceptions.FileProcessingIOException;
 import bfx.exceptions.MultipleFilesProcessingIOException;
 import bfx.io.SequenceWriter;
-import bfx.utils.io.BaseSingleAndDualWriter;
 
-public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequence>> implements SequenceWriter {
+public class FastaSequenceWriter extends SequenceWriter {
 	private int lineWidth;
 
 	public FastaSequenceWriter(int lineWidth) {
@@ -138,24 +137,6 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	}
 
 	@Override
-	public void write(File file1, Sequence seq) throws IOException{
-		try {
-			write(new FileOutputStream(file1),seq);
-		} catch(IOException e) {
-			throw new FileProcessingIOException(e,file1);
-		}
-	}
-
-	@Override
-	public void write(File file1, File file2, Sequence seq) throws IOException{
-		try {
-			write(new FileOutputStream(file1),new FileOutputStream(file2),seq);
-		} catch(IOException e) {
-			throw new MultipleFilesProcessingIOException(e,file1,file2);
-		}
-	}
-
-	@Override
 	public void write(OutputStream out1, OutputStream out2, Sequence seq) throws IOException {
 		write(out1,seq);		
 		writeQual(out2,seq);	
@@ -172,12 +153,6 @@ public class FastaSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 			throws IOException {
 		write(out1,seq);
 		writeQual(out2,seq);
-	}
-	
-	private ProgressCounter pc;	
-	@Override
-	public void setProgressCounter(ProgressCounter pc) {
-		this.pc = pc;
 	}
 
 	@Override

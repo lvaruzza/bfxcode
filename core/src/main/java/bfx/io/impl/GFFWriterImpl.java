@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import bfx.GFF;
 import bfx.io.GFFWriter;
 
-public class GFFWriterImpl implements GFFWriter {
+public class GFFWriterImpl extends GFFWriter {
 
 	@Override
 	public void write(OutputStream output, Iterator<GFF> data)
@@ -21,25 +21,7 @@ public class GFFWriterImpl implements GFFWriter {
 			write(output,data.next());
 		}
 	}
-
-	@Override
-	public void write(Writer writer, Iterator<GFF> data) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void write(File file, Iterator<GFF> data) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void write(String filename, Iterator<GFF> data) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Override
 	public void write(OutputStream out, GFF gff) throws IOException {		
 		out.write(gff.getSeqid().getBytes());    				out.write('\t');
@@ -76,15 +58,9 @@ public class GFFWriterImpl implements GFFWriter {
 	}
 
 	@Override
-	public void write(File file, GFF gff) throws IOException {
+	public void write(Writer writer, Iterator<GFF> data) throws IOException {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void write(String filename, GFF gff) throws IOException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

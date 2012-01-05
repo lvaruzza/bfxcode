@@ -4,13 +4,11 @@ import java.util.Iterator;
 
 import bfx.ProgressCounter;
 import bfx.Sequence;
-import bfx.utils.io.AbstractDualReader;
-import bfx.utils.io.AbstractReader;
 import bfx.utils.io.BaseSingleAndDualReader;
 
 
 /**
- * Interface for SequenceReader
+ * SequenceReader
  *  
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *

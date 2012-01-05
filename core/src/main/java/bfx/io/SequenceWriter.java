@@ -1,6 +1,7 @@
 package bfx.io;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
@@ -8,43 +9,63 @@ import java.util.Iterator;
 
 import bfx.ProgressCounter;
 import bfx.Sequence;
-import bfx.utils.io.AbstractDualWriter;
-import bfx.utils.io.AbstractWriter;
+import bfx.exceptions.FileProcessingIOException;
+import bfx.exceptions.MultipleFilesProcessingIOException;
+import bfx.utils.io.BaseSingleAndDualWriter;
 
 
 /**
- * Interface for Writing Sequences
+ * SequenceWriter
  * 
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *
  */
-public interface SequenceWriter extends AbstractWriter<Iterator<Sequence>>,AbstractDualWriter<Iterator<Sequence>> {
+public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequence>> {
+	protected ProgressCounter pc;
 
-	public void write(File file1,Sequence seq) throws IOException;
-	public void write(File file1,File file2,Sequence seq) throws IOException;
-	public void write(OutputStream out1,Sequence seq) throws IOException;
-	public void write(OutputStream out1,OutputStream out2,Sequence seq) throws IOException;
+	public void write(File file1, Sequence seq) throws IOException{
+		try {
+			write(new FileOutputStream(file1),seq);
+		} catch(IOException e) {
+			throw new FileProcessingIOException(e,file1);
+		}
+	}
+	
+	public void write(File file1, File file2, Sequence seq) throws IOException{
+		try {
+			write(new FileOutputStream(file1),file2==null ? null : new FileOutputStream(file2),seq);
+		} catch(IOException e) {
+			throw new MultipleFilesProcessingIOException(e,file1,file2);
+		}
+	}
+	
+	abstract public void write(OutputStream out1,Sequence seq) throws IOException;
+	abstract public void write(OutputStream out1,OutputStream out2,Sequence seq) throws IOException;
 
-	public void write(Writer out1,Sequence seq) throws IOException;
-	public void write(Writer out1,Writer out2,Sequence seq) throws IOException;
+	abstract public void write(Writer out1,Sequence seq) throws IOException;
+	abstract public void write(Writer out1,Writer out2,Sequence seq) throws IOException;
 
 	/**
 	 * Set ProgressCounter to be increment on each sequence.
 	 * 
 	 * @param pc ProgressCounter.
 	 */
-	public void setProgressCounter(ProgressCounter pc);
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
+	}
+	
 	
 	/**
-	 * 
-	 * @return
+	 * Return a list of life extensions associated with this SequenceWriter.
+	 *   
+	 * @return List of file extensions.
 	 */
-	public String[] getPreferedExtensions();
+	abstract public String[] getPreferedExtensions();
 	
 	/**
 	 * Name for this format
 	 * 
 	 * @return Format name
 	 */
-	public String getFormatName();
+	abstract public String getFormatName();
 }

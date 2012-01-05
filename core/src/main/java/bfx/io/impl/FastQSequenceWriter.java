@@ -13,9 +13,8 @@ import bfx.Sequence;
 import bfx.exceptions.FileProcessingIOException;
 import bfx.impl.FastQRepr;
 import bfx.io.SequenceWriter;
-import bfx.utils.io.BaseSingleAndDualWriter;
 
-public class FastQSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequence>> implements SequenceWriter {
+public class FastQSequenceWriter extends SequenceWriter {
 	private QualRepr qualrepr;
 	
 	public FastQSequenceWriter(QualRepr qualrepr) {
@@ -109,15 +108,6 @@ public class FastQSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 	}
 
 	@Override
-	public void write(File fastqFile, Sequence seq) throws IOException{
-		try {
-			write(new FileOutputStream(fastqFile),seq);
-		} catch(IOException e) {
-			throw new FileProcessingIOException(e,fastqFile);
-		}
-	}
-
-	@Override
 	public void write(File fastqFile, File ignored, Sequence seq) throws IOException{
 		write(fastqFile,seq);
 	}
@@ -139,13 +129,6 @@ public class FastQSequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequen
 		write(fastqWriter,seq);
 	}
 
-	private ProgressCounter pc;
-	
-	@Override
-	public void setProgressCounter(ProgressCounter pc) {
-		this.pc = pc;
-	}
-	
 	@Override
 	public String getFormatName() {
 		return "fastQ";
