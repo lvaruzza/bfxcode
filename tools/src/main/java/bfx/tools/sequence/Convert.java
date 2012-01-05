@@ -34,8 +34,8 @@ public class Convert extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SequenceReader sr = SequenceFormats.getReader(input,inputFormat);
-		SequenceWriter sw = SequenceFormats.getWriter(output,outputFormat);
+		SequenceReader sr = SequenceFormats.getReaderForFile(input,inputFormat);
+		SequenceWriter sw = SequenceFormats.getWriterForFile(output,outputFormat);
 
 		inputFormat = sr.getFormatName();
 		outputFormat = sw.getFormatName();

@@ -12,7 +12,7 @@ import bfx.io.GFFWriter;
 import bfx.io.SequenceSource;
 import bfx.io.SequenceWriter;
 import bfx.io.impl.FastaSequenceWriter;
-import bfx.io.impl.GFFWriterImpl;
+import bfx.io.impl.OSGFFWriter;
 import bfx.tools.Tool;
 import bfx.utils.BFXMapUtils;
 import bfx.utils.TextUtils;
@@ -51,7 +51,7 @@ public class PseudoGenome extends Tool {
 		SequenceBuilder sb = new SequenceBuilderList();
 		Sequence spacer = new SequenceConstQual("spacer",TextUtils.times('N',spacerSize),(byte)0);
 		FileOutputStream gffout = new FileOutputStream(outputGFF);
-		GFFWriter gffw = new GFFWriterImpl();
+		GFFWriter gffw = new OSGFFWriter();
 		
 		for(Sequence s: sequences) {
 			int start = sb.getPosition();
