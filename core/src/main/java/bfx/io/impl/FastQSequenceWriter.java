@@ -1,16 +1,13 @@
 package bfx.io.impl;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Iterator;
 
-import bfx.ProgressCounter;
 import bfx.QualRepr;
 import bfx.Sequence;
-import bfx.exceptions.FileProcessingIOException;
 import bfx.impl.FastQRepr;
 import bfx.io.SequenceWriter;
 

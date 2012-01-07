@@ -1,25 +1,42 @@
 package bfx.io.impl;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.Writer;
 import java.util.Iterator;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
-import bfx.exceptions.FileProcessingIOException;
-import bfx.exceptions.MultipleFilesProcessingIOException;
 import bfx.io.SequenceWriter;
+import bfx.utils.ByteUtils;
 
+/**
+ * Fasta format sequence writer.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class FastaSequenceWriter extends SequenceWriter {
 	private int lineWidth;
 
+	/**
+	 * Construct a new SequenceWriter
+	 * 
+	 * This writer will break the sequence in lineWidth characters per line.
+	 * 
+	 * @param lineWidth
+	 */
 	public FastaSequenceWriter(int lineWidth) {
 		this.lineWidth = lineWidth;
 	}
 
+	/**
+	 * Construct a new SequenceWriter
+	 * 
+	 * This writer will break the sequence in 80 characters per line.
+	 * 
+	 * @param lineWidth
+	 */
 	public FastaSequenceWriter() {
 		this(80);
 	}
@@ -44,6 +61,7 @@ public class FastaSequenceWriter extends SequenceWriter {
 		out.write('\n');	
 	}
 	
+	@Override
 	public void write(OutputStream out,Sequence seq) throws IOException {
 		writeHeader(out,seq);
 		byte[] bs = seq.getSeq();
@@ -65,13 +83,13 @@ public class FastaSequenceWriter extends SequenceWriter {
 		}				
 	}
 	
+	
 	public void writeQual(OutputStream out,Sequence seq) throws IOException {
 		writeHeader(out,seq);
 		byte[] bs = seq.getQual();
-		
+		PrintStream pr = new PrintStream(out);
 		for(int i=0;i<bs.length;i+=lineWidth) {
-			//TODO
-			//out.write(bs, i, Math.min(lineWidth,bs.length-i));
+			ByteUtils.printBytes(pr,bs, i, Math.min(lineWidth,bs.length-i));
 			out.write('\n');
 		}		
 	}
@@ -81,8 +99,7 @@ public class FastaSequenceWriter extends SequenceWriter {
 		byte[] bs = seq.getQual();
 		
 		for(int i=0;i<bs.length;i+=lineWidth) {
-			//TODO!!!!!!!!!!!!!!
-			//out.write(bs, i, Math.min(lineWidth,bs.length-i));
+			ByteUtils.printBytes(out,bs, i, Math.min(lineWidth,bs.length-i));
 			out.write('\n');
 		}		
 	}

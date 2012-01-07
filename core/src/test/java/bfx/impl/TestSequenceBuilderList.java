@@ -1,10 +1,9 @@
 package bfx.impl;
 
-import java.util.Arrays;
+import static org.junit.Assert.assertEquals;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import bfx.Sequence;
 import bfx.SequenceBuilder;
 

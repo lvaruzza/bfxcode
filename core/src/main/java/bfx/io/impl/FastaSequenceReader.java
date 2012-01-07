@@ -9,7 +9,6 @@ import java.util.Iterator;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.SequenceReader;
 import bfx.utils.compression.CompressionUtils;

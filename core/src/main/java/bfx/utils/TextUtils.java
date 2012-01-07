@@ -21,6 +21,5 @@ public class TextUtils {
 		for(int i=0;i<times;i++)
 			sb.append(str);
 		return sb.toString();
-	}
-	
+	}	
 }
