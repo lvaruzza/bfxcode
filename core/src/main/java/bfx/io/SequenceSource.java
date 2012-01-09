@@ -6,6 +6,8 @@ import java.util.Iterator;
 import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.impl.FileSequenceSource;
+import bfx.io.impl.KmerIterable;
+import bfx.io.impl.KmerWithQualIterable;
 import bfx.utils.BFXIteratorUtils;
 
 /**
@@ -94,5 +96,23 @@ public abstract class SequenceSource implements Iterable<Sequence> {
 	 */
 	public static SequenceSource fromFile(String format,String seqFilename,String qualFilename) {
 		return new FileSequenceSource(format,new File(seqFilename),qualFilename == null ? null : new File(qualFilename));
-	}		
+	}
+	
+	
+	public Iterable<byte[]> kmers(int k) {
+		return kmers(k,0,0);
+	}
+
+	public Iterable<byte[]> kmersWithQual(int k) {
+		return kmersWithQual(k,0,0);
+	}
+	
+	public Iterable<byte[]> kmers(int k,int trimLeft,int trimRight) {
+		return new KmerIterable(this,k,trimLeft,trimRight);
+	}
+	
+	public Iterable<byte[]> kmersWithQual(int k,int trimLeft,int trimRight) {
+		return new KmerWithQualIterable(this,k,trimLeft,trimRight);		
+	}
+	
 }
