@@ -36,7 +36,7 @@ public class KmerIterable implements Iterable<byte[]> {
 		@Override
 		public byte[] next() {
 			byte[] r = Arrays.copyOfRange(curseq.getSeq(), pos, pos+iterable.k);
-			pos += iterable.k;
+			pos++;
 			
 			if (endOfCurseq()) {
 				if (it.hasNext()) {
