@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package bfx.utils;
+package bfx.utils.bloomfilter;
 
 import java.nio.ByteBuffer;
 
