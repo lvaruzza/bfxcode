@@ -1,7 +1,10 @@
 package bfx.io.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -10,7 +13,6 @@ import bfx.impl.SequenceConstQual;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceWriter;
 import bfx.utils.TextUtils;
-import static org.junit.Assert.*;
 
 public class TestFastaWriter {
 	@Test
@@ -26,7 +28,7 @@ public class TestFastaWriter {
 	public void testWriter() throws IOException {
 		SequenceWriter sw = new FastaSequenceWriter();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		String name  = out.toString();
+		String name  = "test";
 		Sequence seq = new SequenceConstQual(name,TextUtils.times("ACGT",80),(byte)0);
 		sw.write(out, seq);
 		String r = out.toString();
@@ -35,5 +37,20 @@ public class TestFastaWriter {
 		assertEquals(5,rs.length);
 		for(int i=1;i<rs.length;i++)
 			assertEquals(TextUtils.times("ACGT",20),rs[i]);
+	}
+	
+	@Test
+	public void testQualWriter() throws IOException {
+		SequenceWriter sw = new FastaSequenceWriter();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ByteArrayOutputStream qual = new ByteArrayOutputStream();
+		Sequence seq = new SequenceConstQual("test",TextUtils.times("ACGT",80),(byte)42);
+		sw.write(out, qual,seq);
+		String r = qual.toString();
+		String[] rs = r.split("\n");
+		assertEquals(5,rs.length);
+		String[] vs = rs[1].split(" ");
+		assertEquals(20,vs.length);
+		System.out.println(Arrays.toString(vs));
 	}
 }
