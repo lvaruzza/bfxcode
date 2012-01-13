@@ -2,6 +2,8 @@ package bfx.utils;
 
 import java.util.Iterator;
 
+import bfx.exceptions.EmptyIteratorException;
+
 /**
  * Iterator Utils
  * 
