@@ -37,7 +37,7 @@ public class TestGFFReader {
 	}
 	
 	@Test
-	public void testReadFirst() throws IOException, EmptyIteratorException, bfx.utils.EmptyIteratorException {
+	public void testReadFirst() throws IOException, EmptyIteratorException, EmptyIteratorException {
 		System.out.println();
 		GFF align = BFXIteratorUtils.first(it);
 		log.debug(align);
