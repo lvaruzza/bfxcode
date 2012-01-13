@@ -13,6 +13,12 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
 import org.apache.log4j.Logger;
 
+/**
+ * Utils for handling compressed files.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class CompressionUtils {
 	private static Logger log = Logger.getLogger(CompressionUtils.class);
 	
@@ -30,6 +36,13 @@ public class CompressionUtils {
 		return new FileInputStream(filename);
 	}
 	
+	/**
+	 * Return the appropriated InputStream based on file extension
+	 * 
+	 * @param filename filename of the file to be read
+	 * @return an InputStream
+	 * @throws IOException
+	 */
 	static public InputStream openInputStream(String filename) throws IOException {
 		if (filename.endsWith(".gz")) {
 			log.debug(String.format("Openning GZIP file '%s'",filename));
@@ -47,6 +60,13 @@ public class CompressionUtils {
 		return new FileInputStream(file);
 	}
 	
+	/**
+	 * Return the appropriated InputtStream based on file extension
+	 * 
+	 * @param file File to be read
+	 * @return an inputStream
+	 * @throws IOException
+	 */
 	static public InputStream openInputStream(File file) throws IOException {
 		if (file.getName().endsWith(".gz")) {
 			log.debug(String.format("Openning GZIP file '%s'",file.getName()));
@@ -64,7 +84,19 @@ public class CompressionUtils {
 	static private OutputStream openOutputStream0(String filename) throws IOException {
 		return new FileOutputStream(filename);
 	}
+
+	static private OutputStream openOutputStream0(File file) throws IOException {
+		return new FileOutputStream(file);
+	}
 	
+	
+	/**
+	 * Use the appropriated OutputStream based on file extension
+	 * 
+	 * @param filename File to be write
+	 * @return an OutputStream
+	 * @throws IOException
+	 */
 	static public OutputStream openOutputStream(String filename) throws IOException {
 		if (filename.endsWith(".gz")) {
 			return new GZIPOutputStream(openOutputStream0(filename));
@@ -75,10 +107,13 @@ public class CompressionUtils {
 		}
 	}
 
-	static private OutputStream openOutputStream0(File file) throws IOException {
-		return new FileOutputStream(file);
-	}
-	
+	/**
+	 * Use the appropriated OutputStream based on file extension
+	 * 
+	 * @param file File to be write
+	 * @return an OutputStream
+	 * @throws IOException
+	 */
 	static public OutputStream openOutputStream(File file) throws IOException {
 		if (file.getName().endsWith(".gz")) {
 			return new GZIPOutputStream(openOutputStream0(file));
@@ -89,8 +124,9 @@ public class CompressionUtils {
 		}
 	}
 	
-	/*
-	 * Remove the compression extension from a filename or return the same same.
+	/**
+	 * 
+	 * Remove the compression extension from a filename or return the same filename.
 	 * 
 	 */
 	static public String uncompressedFilename(String filename) {
