@@ -6,9 +6,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+/**
+ * Map Utils
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class BFXMapUtils {
 	
-	/*
+	/**
+	 * 
 	 * String representation of a map
 	 * 
 	 */
@@ -27,7 +34,8 @@ public class BFXMapUtils {
 		return buff.toString();
 	}
 	
-	/*
+	/**
+	 * 
 	 * Convert a String into a map
 	 * 
 	 * Splits the records by recordSep and splits the key-value pair 
@@ -54,6 +62,12 @@ public class BFXMapUtils {
 		return map;
 	}
 	
+	/**
+	 * Convert an array of instring in format [key1,value1,key2,value2,...] into a Map.
+	 * 
+	 * @param args keys and values
+	 * @return Map
+	 */
 	public static Map<String,String> build(String... args) {
 		Map<String,String> r = new HashMap<String,String>();
 		if (args.length % 2 != 0)

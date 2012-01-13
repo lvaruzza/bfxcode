@@ -18,9 +18,7 @@ public class MemorySpectrum extends Spectrum {
 	}
 
 	@Override
-	public void add(byte[] seq) {
-		if(seq.length != k) throw new RuntimeException(String.format("Sequence size '%d' not equal to k value (%d)",seq.length,k));
-		
+	protected void add1(byte[] seq) {
 		if (map.containsKey(seq))
 			map.put(seq, map.get(seq)+1);
 		else

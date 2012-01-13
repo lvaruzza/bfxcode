@@ -1,9 +1,21 @@
 package bfx.utils;
 
+/**
+ * Array Utils
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class BFXArrayUtils {
 	
-	// Parse Longs
-	
+	/**
+	 * Convert an array of string into a array of longs
+	 * 
+	 * @param lst Array of strings
+	 * @param start first element
+	 * @param end last element
+	 * @return array of longs
+	 */
 	public static long[] parseLongs(String[] lst,int start,int end) {
 		long[] r=new long[end-start];
 		
@@ -12,12 +24,25 @@ public class BFXArrayUtils {
 		return r;
 	}
 
-	public static long[] parseLongs(String[] lst, int init) {
-		return parseLongs(lst,init,lst.length);
+	/**
+	 * Convert an array of string into a array of longs
+	 * 
+	 * @param lst Array of strings
+	 * @param start first element
+	 * @return array of longs
+	 */
+	public static long[] parseLongs(String[] lst, int start) {
+		return parseLongs(lst,start,lst.length);
 	}
 	
-	// Parse Ints
-	
+	/**
+	 * Convert an array of string into a array of ints
+	 * 
+	 * @param lst Array of strings
+	 * @param start first element
+	 * @param end last element
+	 * @return array of ints
+	 */
 	public static int[] parseInts(String[] lst,int start,int end) {
 		int[] r=new int[end-start];
 		
@@ -26,8 +51,15 @@ public class BFXArrayUtils {
 		return r;
 	}
 
-	public static int[] parseInts(String[] lst, int init) {
-		return parseInts(lst,init,lst.length);
+	/**
+	 * Convert an array of string into a array of ints
+	 * 
+	 * @param lst Array of strings
+	 * @param start first element
+	 * @return array of ints
+	 */
+	public static int[] parseInts(String[] lst, int start) {
+		return parseInts(lst,start,lst.length);
 	}
 	
 }

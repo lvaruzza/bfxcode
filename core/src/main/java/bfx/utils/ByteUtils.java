@@ -4,15 +4,39 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
 
+/**
+ * Byte Utils.
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class ByteUtils {
-	public static void printBytes(PrintStream out,byte[] bs, int start, int size) {
-		for(int i=start;i<start+size;i++) {
+	
+	/**
+	 * Print bytes in the format "b1 b2 b3..."
+	 * 
+	 * @param out Output PrintStream
+	 * @param bs byte array
+	 * @param start start position
+	 * @param length
+	 */
+	public static void printBytes(PrintStream out,byte[] bs, int start, int length) {
+		for(int i=start;i<start+length;i++) {
 			out.print(Byte.toString(bs[i]));
 			out.write(' ');
 		}		
 	}
-	public static void printBytes(Writer out,byte[] bs, int start, int size) throws IOException {
-		for(int i=start;i<start+size;i++) {
+	
+	/**
+	 * Print bytes in the format "b1 b2 b3..."
+	 * 
+	 * @param out Output Writer
+	 * @param bs byte array
+	 * @param start start position
+	 * @param length
+	 */
+	public static void printBytes(Writer out,byte[] bs, int start, int length) throws IOException {
+		for(int i=start;i<start+length;i++) {
 			out.write(Byte.toString(bs[i]));
 			out.write(' ');
 		}		
