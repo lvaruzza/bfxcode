@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -47,10 +46,12 @@ public class TestFastaWriter {
 		Sequence seq = new SequenceConstQual("test",TextUtils.times("ACGT",80),(byte)42);
 		sw.write(out, qual,seq);
 		String r = qual.toString();
+		//System.out.println(r.replace("\n", "|\n"));
 		String[] rs = r.split("\n");
 		assertEquals(5,rs.length);
-		String[] vs = rs[1].split(" ");
-		assertEquals(20,vs.length);
-		System.out.println(Arrays.toString(vs));
+		String[] vs = rs[2].split(" ");
+		//System.out.println(Arrays.toString(vs));
+		assertEquals(80,vs.length);
+		//System.out.println(Arrays.toString(vs));
 	}
 }
