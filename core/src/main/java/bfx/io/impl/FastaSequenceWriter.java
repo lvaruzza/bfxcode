@@ -35,7 +35,6 @@ public class FastaSequenceWriter extends SequenceWriter {
 	 * 
 	 * This writer will break the sequence in 80 characters per line.
 	 * 
-	 * @param lineWidth
 	 */
 	public FastaSequenceWriter() {
 		this(80);
@@ -104,7 +103,8 @@ public class FastaSequenceWriter extends SequenceWriter {
 		}		
 	}
 	
-	/* 
+	/**
+	 *  
 	 * Write only the sequence to a fasta file
 	 */
 	@Override

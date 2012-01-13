@@ -135,8 +135,8 @@ public class Color {
 	/**
 	 * Convert from color to base-space
 	 * 
-	 * @param seq
-	 * @return
+	 * @param seq Color space sequence
+	 * @return Base space sequence
 	 */
 	public static Sequence colorDecode(Sequence seq) {
 		byte[] s = seq.getSeq();

@@ -91,8 +91,8 @@ public abstract class SequenceSource implements Iterable<Sequence> {
 	 * Create a SequenceSource backed by a file.
 	 * 
 	 * @param format File Format (if null the format will be determined by the file name extension)
-	 * @param seqfile Sequence File Name
-	 * @param qualfile Quality File Name
+	 * @param seqFilename Sequence File Name
+	 * @param qualFilename Quality File Name
 	 * @return A FileSequenceSource
 	 */
 	public static SequenceSource fromFile(String format,String seqFilename,String qualFilename) {

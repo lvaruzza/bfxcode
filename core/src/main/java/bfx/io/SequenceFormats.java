@@ -123,7 +123,7 @@ public class SequenceFormats {
 	 * @param formatName Name of the format (which is just the extension for the format like fasta, fastq, etc)
 	 * @return SequenceWriter for formatName
 	 */
-	public static SequenceWriter getWriterForFile(String filename, String format) {
+	public static SequenceWriter getWriterForFile(String filename, String formatName) {
 		log.debug("Getting writer for file: " + filename);
 		String ext = FilenameUtils.getExtension(CompressionUtils.uncompressedFilename(filename));
 		SequenceWriter writer = getWriter(ext);
