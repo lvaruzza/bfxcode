@@ -4,6 +4,12 @@ import bfx.Sequence;
 import bfx.impl.SequenceConstQual;
 import bfx.utils.AliasMethodGenerator;
 
+/**
+ * Generate a random sequence in color space
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class ColorSeqGenerator {
 	private AliasMethodGenerator gen;
 	private static double[] defaultProbs = new double[] {0.25-0.25/1000,

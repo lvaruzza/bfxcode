@@ -4,6 +4,12 @@ import bfx.Sequence;
 import bfx.impl.SequenceConstQual;
 import bfx.utils.AliasMethodGenerator;
 
+/**
+ * Generate Sequence in base space
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class DNASeqGenerator {
 	private AliasMethodGenerator gen;
 	

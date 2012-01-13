@@ -10,6 +10,12 @@ import bfx.utils.TextUtils;
 //G 2 3 0 1
 //T 3 2 1 0
 
+/**
+ * Color space tests
+ * 
+ * @author Leonardo Varuzza <varuzza@gmail.com>
+ *
+ */
 public class ColorSpaceProgs {
 
 	static byte[] bases = new byte[] {'A','C','G','T','N'};
