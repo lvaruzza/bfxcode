@@ -18,9 +18,9 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 		
 		@Override
 		public void writeHuman(PrintWriter out) {
-			out.println(String.format("\tk         \t%d",k));			
-			out.println(String.format("\tn kmers   \t%d",nkmers));			
-			out.println(String.format("\tkmers size\t%d",kmerGenomeSize));			
+			out.println(String.format("\tk                \t%d",k));			
+			out.println(String.format("\tn kmers          \t%,d",nkmers));			
+			out.println(String.format("\tkmers genome size\t%,d",kmerGenomeSize));			
 		}
 		
 	}

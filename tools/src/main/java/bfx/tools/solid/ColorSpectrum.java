@@ -21,6 +21,9 @@ public class ColorSpectrum extends Tool {
 	
 	@Parameter(names = {"--reportFormat","-rf"}, description = "Report Format",required=false)
 	public String reportFormat;
+
+	@Parameter(names = {"--reportOutput","-ro"}, description = "Report Output",required=false)
+	public String reportOutput;
 	
 	@Parameter(names = "-k", description = "k value",required=true)
 	public int k;
@@ -38,7 +41,7 @@ public class ColorSpectrum extends Tool {
 		pc.finish();
 		spectrum.save(output);
 		Report result = spectrum.getReport();
-		result.write(getStdOut(output), reportFormat);
+		result.write(getStdOut(reportOutput), reportFormat);
 	}
 
 	@Override
