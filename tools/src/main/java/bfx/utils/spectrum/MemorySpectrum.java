@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import bfx.utils.ByteUtils;
 import bfx.utils.Pair;
 
 import com.google.common.base.Function;
@@ -14,11 +15,11 @@ public class MemorySpectrum extends Spectrum {
 	
 	public MemorySpectrum(int k) {
 		super(k);
-		map = new TreeMap<byte[],Long>();
+		map = new TreeMap<byte[],Long>(new ByteUtils.BytesComparator());
 	}
 
 	@Override
-	protected void add1(byte[] seq) {
+	protected void add1(byte[] seq) {	
 		if (map.containsKey(seq))
 			map.put(seq, map.get(seq)+1);
 		else

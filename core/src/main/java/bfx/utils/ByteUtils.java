@@ -3,6 +3,7 @@ package bfx.utils;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
+import java.util.Comparator;
 
 /**
  * Byte Utils.
@@ -40,5 +41,19 @@ public class ByteUtils {
 			out.write(Byte.toString(bs[i]));
 			out.write(' ');
 		}		
+	}
+	
+	public static class BytesComparator implements Comparator<byte[]> {
+		@Override
+		public int compare(byte[] as, byte[] bs) {
+			for(int i=0;i<Math.min(as.length,bs.length);i++) {
+				if (as[i] < bs[i]) return -1;
+				if (as[i] < bs[i]) return 1;
+			}
+			if(as.length < bs.length) return -1;
+			if(as.length > bs.length) return 1;
+			return 0;
+		}
+		
 	}
 }
