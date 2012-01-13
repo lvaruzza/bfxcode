@@ -1,10 +1,10 @@
 package bfx.tools.solid;
 
 import bfx.io.SequenceSource;
+import bfx.spectrum.MemorySpectrum;
+import bfx.spectrum.Spectrum;
 import bfx.tools.Report;
 import bfx.tools.Tool;
-import bfx.utils.spectrum.MemorySpectrum;
-import bfx.utils.spectrum.Spectrum;
 
 import com.beust.jcommander.Parameter;
 

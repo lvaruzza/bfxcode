@@ -1,10 +1,12 @@
-package bfx.utils.spectrum;
+package bfx.spectrum;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import bfx.tools.Report;
@@ -31,6 +33,10 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 	public Spectrum(int k) {
 		this.k = k;
 	}
+
+	protected Spectrum() {
+		
+	}
 	
 	protected abstract void add1(byte[] seq);
 	
@@ -51,10 +57,25 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 		save(out);
 	}
 	
+	private static byte[] signature = "SPEC".getBytes();
+	
 	private void writeHeader(DataOutputStream dos) throws IOException {
-		dos.write("SPEC".getBytes());
+		dos.write(signature);
 		dos.writeInt(k);		
 	}
+	
+	protected void setK(int k) {
+		this.k = k;
+	}
+	
+	protected void readHeader(DataInputStream dis) throws IOException {
+		byte[] header = new byte[4];
+		dis.read(header);
+		if (!Arrays.equals(header,signature))
+			throw new RuntimeException("Invalid spectrum file, file signature does not match");
+		setK(dis.readInt());
+	}
+	
 	
 	public void save(OutputStream out) throws IOException {
 		DataOutputStream dos = new DataOutputStream(out);
