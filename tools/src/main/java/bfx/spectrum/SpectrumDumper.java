@@ -19,11 +19,7 @@ public class SpectrumDumper extends Tool {
 	public void run() throws Exception {
 		Spectrum spec = MemorySpectrum.load(input);
 		PrintStream out = new PrintStream(getStdOut(output));
-		for(Pair<byte[],Long> kmer:spec) {
-			out.print(new String(kmer.fst));
-			out.print("\t");
-			out.print(kmer.snd);
-		}
+		spec.dump(out);
 	}
 
 	@Override

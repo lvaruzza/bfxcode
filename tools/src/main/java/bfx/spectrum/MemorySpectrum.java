@@ -51,7 +51,7 @@ public class MemorySpectrum extends Spectrum {
 	private void load(DataInputStream dis) throws IOException {
 		byte[] kmer=new byte[k];
 		
-		while(dis.read(kmer)==k) {
+		while(dis.read(kmer)!=k) {
 			long count = dis.readLong();
 			map.put(kmer, count);
 		}		

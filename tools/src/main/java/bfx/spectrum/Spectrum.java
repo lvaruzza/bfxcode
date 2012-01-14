@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -93,5 +94,13 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 		report.kmerGenomeSize = nkmers * k;
 		
 		return report;
+	}
+
+	public void dump(PrintStream out) {
+		for(Pair<byte[],Long> kmer:this) {
+			out.print(new String(kmer.fst));
+			out.print("\t");
+			out.println(kmer.snd);
+		}		
 	}
 }
