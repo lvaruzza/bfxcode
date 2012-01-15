@@ -47,11 +47,11 @@ public class ByteUtils {
 		@Override
 		public int compare(byte[] as, byte[] bs) {
 			for(int i=0;i<Math.min(as.length,bs.length);i++) {
-				if (as[i] < bs[i]) return -1;
-				if (as[i] > bs[i]) return 1;
+				if (as[i] < bs[i]) return 1;
+				if (as[i] > bs[i]) return -1;
 			}
-			if(as.length < bs.length) return -1;
-			if(as.length > bs.length) return 1;
+			if(as.length < bs.length) return 1;
+			if(as.length > bs.length) return -1;
 			return 0;
 		}
 		

@@ -18,10 +18,11 @@ public class TestByteComparator {
 	@Test
 	public void test0() {
 		compare("AAA","AAA",0);
-		compare("AA","AAA",-1);
-		compare("AAA","AA",1);
-		compare("AAA","B",-1);
-		compare("B","AAA",1);
-		compare("AAA","AAB",-1);
+		compare("AA","AAA",1);
+		compare("AAA","AA",-1);
+		compare("AAA","B",1);
+		compare("B","AAA",-1);
+		compare("AAA","AAB",1);
+		compare("BBB","AAA",-1);
 	}
 }
