@@ -90,7 +90,7 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 			out.print(new String(kmer.fst));
 			out.print("\t");
 			out.println(kmer.snd);
-			log.debug(String.format("D: %s\t%d",new String(kmer.fst),kmer.snd));
+			//log.debug(String.format("D: %s\t%d",new String(kmer.fst),kmer.snd));
 		}
 		out.flush();
 	}
