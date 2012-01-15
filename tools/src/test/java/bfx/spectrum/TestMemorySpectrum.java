@@ -3,11 +3,19 @@ package bfx.spectrum;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.junit.Test;
 
-public class TestMemorySpectrum {
+import bfx.utils.TextUtils;
+import static org.junit.Assert.*;
 
+public class TestMemorySpectrum {
+	private static String expectedDump=
+			"GTCA\t1\n"+
+			"CGTC\t1\n"+
+			"ACGT\t2\n";
+	
 	public MemorySpectrum createSpectrum() {
 		MemorySpectrum spc = new MemorySpectrum(4);
 		spc.add("ACGT".getBytes());
@@ -20,24 +28,28 @@ public class TestMemorySpectrum {
 	@Test
 	public void testDump() {
 		MemorySpectrum spc = createSpectrum();
-		
-		spc.dump(System.out);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();		
+		spc.dump(new PrintStream(out));
+		assertEquals(expectedDump,out.toString());
 	}
 	
 	@Test
 	public void testSaveLoad() throws IOException {
-		try {
-			MemorySpectrum spc = createSpectrum();
-			ByteArrayOutputStream out = new ByteArrayOutputStream();		
-			spc.save(out);
-			byte[] data = out.toByteArray();
-			ByteArrayInputStream in = new ByteArrayInputStream(data);
-			Spectrum spc2 = MemorySpectrum.load(in);
-			spc2.dump(System.out);
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-			throw e;
-		}
+		// Save
+		MemorySpectrum spc = createSpectrum();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();		
+		spc.save(out);
+		
+		// Load
+		byte[] data = out.toByteArray();
+		out = null;
+		ByteArrayInputStream in = new ByteArrayInputStream(data);
+		Spectrum spc2 = MemorySpectrum.load(in);
+		
+		// Verify
+		ByteArrayOutputStream dump = new ByteArrayOutputStream();		
+		spc2.dump(new PrintStream(dump));
+		System.out.println(dump.toString());
+		assertEquals(expectedDump,dump.toString());
 	}	
 }

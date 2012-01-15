@@ -3,7 +3,6 @@ package bfx.spectrum;
 import java.io.PrintStream;
 
 import bfx.tools.Tool;
-import bfx.utils.Pair;
 
 import com.beust.jcommander.Parameter;
 

@@ -10,10 +10,14 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
+
 import bfx.tools.Report;
 import bfx.utils.Pair;
 
 public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {	
+	private static Logger log = Logger.getLogger(Spectrum.class);
+	
 	static public class SpectrumReport extends Report {
 		public long nkmers;
 		public long kmerGenomeSize;
@@ -45,24 +49,18 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 		if(seq.length != k) throw new RuntimeException(String.format("Sequence size '%d' not equal to k value (%d)",seq.length,k));
 		
 		add1(seq);
-		nkmers++;
 	}
 	
 	public abstract boolean member(byte[] seq);
 	public abstract long getCount(byte[] seq);
 	public abstract Iterator<Pair<byte[], Long>> iterator();
-
 		
-	public void save(String output) throws IOException {
-		OutputStream out = new FileOutputStream(output);
-		save(out);
-	}
-	
 	private static byte[] signature = "SPEC".getBytes();
 	
-	private void writeHeader(DataOutputStream dos) throws IOException {
+	protected void writeHeader(DataOutputStream dos) throws IOException {
 		dos.write(signature);
-		dos.writeInt(k);		
+		dos.writeInt(k);
+		dos.writeLong(nkmers);
 	}
 	
 	protected void setK(int k) {
@@ -75,17 +73,8 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 		if (!Arrays.equals(header,signature))
 			throw new RuntimeException("Invalid spectrum file, file signature does not match");
 		setK(dis.readInt());
+		nkmers = dis.readLong();
 	}
-	
-	
-	public void save(OutputStream out) throws IOException {
-		DataOutputStream dos = new DataOutputStream(out);
-		writeHeader(dos);
-		for(Pair<byte[],Long> pair: this) {
-			dos.write(pair.fst);
-			dos.writeLong(pair.snd);
-		}
-	};
 	
 	public Report getReport() {
 		SpectrumReport report = new SpectrumReport();
@@ -101,6 +90,15 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 			out.print(new String(kmer.fst));
 			out.print("\t");
 			out.println(kmer.snd);
-		}		
+			log.debug(String.format("D: %s\t%d",new String(kmer.fst),kmer.snd));
+		}
+		out.flush();
 	}
+
+	public void save(String output) throws IOException {
+		OutputStream out = new FileOutputStream(output);
+		save(out);
+	}
+
+	public abstract void save(OutputStream out) throws IOException;
 }
