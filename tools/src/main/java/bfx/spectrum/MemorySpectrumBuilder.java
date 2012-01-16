@@ -20,16 +20,16 @@ import bfx.utils.Pair;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 
-public class MemorySpectrum extends Spectrum {
-	private static Logger log = Logger.getLogger(MemorySpectrum.class);
+public class MemorySpectrumBuilder extends SpectrumBuilder {
+	private static Logger log = Logger.getLogger(MemorySpectrumBuilder.class);
 	
 	private TreeMap<byte[],Long> map = new TreeMap<byte[],Long>(new ByteUtils.BytesComparator());
 	
-	public MemorySpectrum(int k) {
+	public MemorySpectrumBuilder(int k) {
 		super(k);
 	}
 	 
-	protected MemorySpectrum() {
+	protected MemorySpectrumBuilder() {
 		super();
 	}
 	
@@ -80,16 +80,16 @@ public class MemorySpectrum extends Spectrum {
 	};
 	
 	
-	public static Spectrum load(String filename) throws IOException {
+	public static SpectrumBuilder load(String filename) throws IOException {
 		try {
 			return load(new FileInputStream(filename));
 		} catch(Exception e) {
 			throw new FileProcessingIOException(e,new File(filename));
 		}
 	}
-	public static Spectrum load(InputStream in) throws IOException {
+	public static SpectrumBuilder load(InputStream in) throws IOException {
 		DataInputStream dis = new DataInputStream(in);
-		MemorySpectrum spc = new MemorySpectrum();
+		MemorySpectrumBuilder spc = new MemorySpectrumBuilder();
 		spc.readHeader(dis);
 		log.info(String.format("Loaded Spectrum k = %d",spc.k));
 		log.info(String.format("Number of kmers = %d",spc.nkmers));
@@ -104,5 +104,10 @@ public class MemorySpectrum extends Spectrum {
 				return new Pair<byte[], Long>(e.getKey(),e.getValue());
 			}			
 		});
+	}
+
+	@Override
+	public void finish() {
+		finished = true;
 	}
 }

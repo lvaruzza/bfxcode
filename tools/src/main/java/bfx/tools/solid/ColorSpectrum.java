@@ -1,8 +1,8 @@
 package bfx.tools.solid;
 
 import bfx.io.SequenceSource;
-import bfx.spectrum.MemorySpectrum;
-import bfx.spectrum.Spectrum;
+import bfx.spectrum.MemorySpectrumBuilder;
+import bfx.spectrum.SpectrumBuilder;
 import bfx.tools.Report;
 import bfx.tools.Tool;
 
@@ -31,13 +31,14 @@ public class ColorSpectrum extends Tool {
 	@Override
 	public void run() throws Exception {
 		SequenceSource seqs = SequenceSource.fromFile(format, input);
-		Spectrum spectrum = new MemorySpectrum(k);
+		SpectrumBuilder spectrum = new MemorySpectrumBuilder(k);
 
 		seqs.setProgressCounter(getProgressCounter());
 		Iterable<byte[]> kmers = seqs.kmers(k,1,0);
 		for(byte[] kmer: kmers) {
 			spectrum.add(kmer);
 		}
+		spectrum.finish();
 		pc.finish();
 		spectrum.save(output);
 		Report result = spectrum.getReport();

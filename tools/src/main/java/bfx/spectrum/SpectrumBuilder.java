@@ -13,7 +13,7 @@ import java.util.Iterator;
 import bfx.tools.Report;
 import bfx.utils.Pair;
 
-public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {	
+public abstract class SpectrumBuilder implements Iterable<Pair<byte[],Long>> {	
 	//private static Logger log = Logger.getLogger(Spectrum.class);
 	
 	static public class SpectrumReport extends Report {
@@ -30,14 +30,15 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 		
 	}
 	
+	protected boolean finished = false;
 	protected int k;
 	protected long nkmers;
 	
-	public Spectrum(int k) {
+	public SpectrumBuilder(int k) {
 		this.k = k;
 	}
 
-	protected Spectrum() {
+	protected SpectrumBuilder() {
 		
 	}
 	
@@ -99,4 +100,10 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {
 	}
 
 	public abstract void save(OutputStream out) throws IOException;
+	
+	public abstract void finish();	
+	
+	public boolean isFinished() {
+		return finished;
+	}
 }
