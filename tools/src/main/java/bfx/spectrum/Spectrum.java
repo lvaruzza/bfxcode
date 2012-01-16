@@ -1,0 +1,39 @@
+package bfx.spectrum;
+
+import java.io.PrintStream;
+import java.util.Iterator;
+
+import bfx.utils.Pair;
+
+public abstract class Spectrum implements Iterable<Pair<byte[],Long>>{
+	protected int k;
+	protected long nkmers;
+
+	public static byte[] fileSignature = "SPEC".getBytes();
+	
+	
+	protected Spectrum(int k,long nkmers) {
+		this.k = k;
+		this.nkmers = nkmers;
+	}
+
+	protected Spectrum() {};
+	
+	public abstract boolean member(byte[] seq);
+	public abstract long getCount(byte[] seq);
+	public abstract Iterator<Pair<byte[], Long>> iterator();	
+
+	public void dump(PrintStream out) {
+		for(Pair<byte[],Long> kmer:this) {
+			out.print(new String(kmer.fst));
+			out.print("\t");
+			out.println(kmer.snd);
+			//log.debug(String.format("D: %s\t%d",new String(kmer.fst),kmer.snd));
+		}
+		out.flush();
+	}
+
+	protected void setK(int k) {
+		this.k = k;
+	}	
+}

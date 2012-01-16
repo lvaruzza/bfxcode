@@ -16,7 +16,7 @@ public class SpectrumDumper extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SpectrumBuilder spec = MemorySpectrumBuilder.load(input);
+		Spectrum spec = MemorySpectrum.load(input);
 		PrintStream out = new PrintStream(getStdOut(output));
 		spec.dump(out);
 	}

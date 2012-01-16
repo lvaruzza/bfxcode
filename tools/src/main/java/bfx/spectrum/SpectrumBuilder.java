@@ -1,20 +1,20 @@
 package bfx.spectrum;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Iterator;
 
 import bfx.tools.Report;
-import bfx.utils.Pair;
 
-public abstract class SpectrumBuilder implements Iterable<Pair<byte[],Long>> {	
+public abstract class SpectrumBuilder {	
 	//private static Logger log = Logger.getLogger(Spectrum.class);
+	
+	protected boolean finished = false;
+	protected int k;
+	protected long nkmers;
+
 	
 	static public class SpectrumReport extends Report {
 		public long nkmers;
@@ -29,10 +29,6 @@ public abstract class SpectrumBuilder implements Iterable<Pair<byte[],Long>> {
 		}
 		
 	}
-	
-	protected boolean finished = false;
-	protected int k;
-	protected long nkmers;
 	
 	public SpectrumBuilder(int k) {
 		this.k = k;
@@ -50,30 +46,12 @@ public abstract class SpectrumBuilder implements Iterable<Pair<byte[],Long>> {
 		add1(seq);
 	}
 	
-	public abstract boolean member(byte[] seq);
-	public abstract long getCount(byte[] seq);
-	public abstract Iterator<Pair<byte[], Long>> iterator();
-		
-	private static byte[] signature = "SPEC".getBytes();
-	
 	protected void writeHeader(DataOutputStream dos) throws IOException {
-		dos.write(signature);
+		dos.write(Spectrum.fileSignature);
 		dos.writeInt(k);
 		dos.writeLong(nkmers);
 	}
 	
-	protected void setK(int k) {
-		this.k = k;
-	}
-	
-	protected void readHeader(DataInputStream dis) throws IOException {
-		byte[] header = new byte[4];
-		dis.read(header);
-		if (!Arrays.equals(header,signature))
-			throw new RuntimeException("Invalid spectrum file, file signature does not match");
-		setK(dis.readInt());
-		nkmers = dis.readLong();
-	}
 	
 	public Report getReport() {
 		SpectrumReport report = new SpectrumReport();
@@ -84,15 +62,6 @@ public abstract class SpectrumBuilder implements Iterable<Pair<byte[],Long>> {
 		return report;
 	}
 
-	public void dump(PrintStream out) {
-		for(Pair<byte[],Long> kmer:this) {
-			out.print(new String(kmer.fst));
-			out.print("\t");
-			out.println(kmer.snd);
-			//log.debug(String.format("D: %s\t%d",new String(kmer.fst),kmer.snd));
-		}
-		out.flush();
-	}
 
 	public void save(String output) throws IOException {
 		OutputStream out = new FileOutputStream(output);

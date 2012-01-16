@@ -27,8 +27,9 @@ public class TestMemorySpectrum {
 	
 	@Test
 	public void testDump() {
-		MemorySpectrumBuilder spc = createSpectrum();
+		MemorySpectrumBuilder spcb = createSpectrum();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();		
+		Spectrum spc = spcb.getSpectrum();
 		spc.dump(new PrintStream(out));
 		assertEquals(expectedDump,out.toString());
 	}
@@ -44,7 +45,7 @@ public class TestMemorySpectrum {
 		byte[] data = out.toByteArray();
 		out = null;
 		ByteArrayInputStream in = new ByteArrayInputStream(data);
-		SpectrumBuilder spc2 = MemorySpectrumBuilder.load(in);
+		Spectrum spc2 = MemorySpectrum.load(in);
 		
 		// Verify
 		ByteArrayOutputStream dump = new ByteArrayOutputStream();		
