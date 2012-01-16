@@ -10,13 +10,11 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
-
 import bfx.tools.Report;
 import bfx.utils.Pair;
 
 public abstract class Spectrum implements Iterable<Pair<byte[],Long>> {	
-	private static Logger log = Logger.getLogger(Spectrum.class);
+	//private static Logger log = Logger.getLogger(Spectrum.class);
 	
 	static public class SpectrumReport extends Report {
 		public long nkmers;

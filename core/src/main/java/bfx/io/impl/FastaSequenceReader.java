@@ -31,12 +31,14 @@ public class FastaSequenceReader extends SequenceReader {
 	
 	@Override
 	public Iterator<Sequence> read(InputStream fastaInput) throws IOException {
-		return new LineBasedFastaIterator(fastaInput,defaultQuality);
+		log.info("progressCounter = " + pc);
+		return new LineBasedFastaIterator(fastaInput,defaultQuality,pc);
 	}
 
 	@Override
 	public Iterator<Sequence> read(Reader fastaReader) throws IOException {
-		return new LineBasedFastaIterator(fastaReader,defaultQuality);
+		log.info("progressCounter = " + pc);
+		return new LineBasedFastaIterator(fastaReader,defaultQuality,pc);
 	}
 
 	@Override
@@ -65,7 +67,7 @@ public class FastaSequenceReader extends SequenceReader {
 	public Iterator<Sequence> read(InputStream fastaInput, InputStream qualInput)
 			throws IOException {
 		if (qualInput != null)
-			return new LineBasedFastaQualIterator(fastaInput,qualInput);
+			return new LineBasedFastaQualIterator(fastaInput,qualInput,pc);
 		else
 			return read(fastaInput);
 	}
@@ -74,7 +76,7 @@ public class FastaSequenceReader extends SequenceReader {
 	public Iterator<Sequence> read(Reader fastaReader, Reader qualReader)
 			throws IOException {
 		if (qualReader != null)
-			return new LineBasedFastaQualIterator(fastaReader,qualReader);
+			return new LineBasedFastaQualIterator(fastaReader,qualReader,pc);
 		else
 			return read(fastaReader);
 	}

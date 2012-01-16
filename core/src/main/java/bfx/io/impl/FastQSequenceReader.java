@@ -34,17 +34,17 @@ public class FastQSequenceReader extends SequenceReader {
 	@Override
 	public Iterator<Sequence> read(InputStream fastaInput) throws IOException {
 		if (useSingleLineReader)
-			return new LineBasedFastQIterator(fastaInput,encoding);
+			return new LineBasedFastQIterator(fastaInput,encoding,pc);
 		else
-			return new MultiLineBasedFastQIterator(fastaInput,encoding);
+			return new MultiLineBasedFastQIterator(fastaInput,encoding,pc);
 	}
 
 	@Override
 	public Iterator<Sequence> read(Reader fastaReader) throws IOException {
 		if (useSingleLineReader)
-			return new LineBasedFastQIterator(fastaReader,encoding);
+			return new LineBasedFastQIterator(fastaReader,encoding,pc);
 		else
-			return new MultiLineBasedFastQIterator(fastaReader,encoding);
+			return new MultiLineBasedFastQIterator(fastaReader,encoding,pc);
 	}
 
 	@Override

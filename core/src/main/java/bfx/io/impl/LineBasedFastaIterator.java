@@ -7,34 +7,36 @@ import java.util.Iterator;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
+import org.apache.log4j.Logger;
 
+import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.impl.SequenceConstQual;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaIterator implements Iterator<Sequence> {
-	//private static Logger log = Logger.getLogger(LineBasedFastaIterator.class);
+	private static Logger log = Logger.getLogger(LineBasedFastaIterator.class);
 	private LineIterator li;
 	private byte defaultQuality;
+	private ProgressCounter pc;
 	
 	private ByteBuffer curseq;
 	private String line = "";
 	private String header = "";
 	private boolean first = true;
 	
-	public LineBasedFastaIterator(Reader fastaReader, byte defaultQuality) {
+	public LineBasedFastaIterator(Reader fastaReader, byte defaultQuality,ProgressCounter pc) {
 		li =  IOUtils.lineIterator(fastaReader);
-		init(defaultQuality);
-	}
-
-	public LineBasedFastaIterator(InputStream fastaInput, byte defaultQuality) throws IOException {
-		li =  IOUtils.lineIterator(fastaInput,"ASCII");
-		init(defaultQuality);
-	}
-
-	private void init(byte defaultQuality) {
 		this.defaultQuality = defaultQuality;
-		//curseq = new StringBuilder();
+		this.pc = pc;
+		log.info("Progress Counter = " + pc);
+	}
+
+	public LineBasedFastaIterator(InputStream fastaInput, byte defaultQuality,ProgressCounter pc) throws IOException {
+		li =  IOUtils.lineIterator(fastaInput,"ASCII");
+		this.defaultQuality = defaultQuality;
+		this.pc = pc;
+		log.info("Progress Counter = " + pc);
 	}
 	
 	public boolean hasNext() {
@@ -51,11 +53,13 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 					header = line.substring(1);
 					curseq = new ByteBuffer();
 				} else {
+					
 					Sequence seq = new SequenceConstQual(header,
 														curseq.get(),
 														defaultQuality);
 					header = line.substring(1);
 					curseq = new ByteBuffer();
+					if (pc!=null) pc.incr(1);
 					return seq;
 				}
 			} else {
@@ -63,6 +67,7 @@ public class LineBasedFastaIterator implements Iterator<Sequence> {
 				if (!first) curseq.append(line.trim().getBytes());
 			}
 		}
+		if (pc!=null) pc.incr(1);
 		return new SequenceConstQual(header,
 				curseq.get(),
 				defaultQuality);

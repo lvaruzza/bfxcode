@@ -8,6 +8,7 @@ import java.util.Iterator;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
+import bfx.ProgressCounter;
 import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastQRepr;
@@ -17,15 +18,18 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 	//private static Logger log = Logger.getLogger(LineBasedFastQIterator.class);
 	private LineIterator li;
 	private QualRepr qualrepr;
+	private ProgressCounter pc;
 	
-	public LineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding) {
+	public LineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding,ProgressCounter pc) {
 		li =  IOUtils.lineIterator(fastaReader);
 		qualrepr = new FastQRepr(encoding);
+		this.pc = pc;
 	}
 
-	public LineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding) throws IOException {
+	public LineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding,ProgressCounter pc) throws IOException {
 		li =  IOUtils.lineIterator(fastaInput,"ASCII");
 		qualrepr = new FastQRepr(encoding);
+		this.pc = pc;
 	}
 
 	
@@ -46,6 +50,7 @@ public class LineBasedFastQIterator implements Iterator<Sequence> {
 		if (!sep.startsWith("+")) throw new RuntimeException("Invalid fastQ sequence, quality separator does not start with '+': " + sep);
 		if (!li.hasNext()) throw new RuntimeException("Incomplete sequence in fastq stream.");
 		String qual = li.next();
+		if (pc!=null) pc.incr(1);
 		return new SequenceQual(header.substring(1), seq.getBytes(), qualrepr.textToQual(qual));
 	}
 

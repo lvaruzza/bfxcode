@@ -8,6 +8,7 @@ import java.util.Iterator;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
+import bfx.ProgressCounter;
 import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastaQualRepr;
@@ -20,7 +21,8 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 	
 	private LineIterator liseq;
 	private LineIterator liqual;
-
+	private ProgressCounter pc;
+	
 	private ByteBuffer curseq;
 	private ByteBuffer curqual;
 	private String seqline = "";
@@ -28,14 +30,16 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 	private String header = "";
 	private boolean first = true;
 	
-	public LineBasedFastaQualIterator(Reader fastaReader, Reader qualReader) {
+	public LineBasedFastaQualIterator(Reader fastaReader, Reader qualReader,ProgressCounter pc) {
 		this.liseq = IOUtils.lineIterator(fastaReader);
 		this.liqual = IOUtils.lineIterator(qualReader);
+		this.pc = pc;
 	}
 
-	public LineBasedFastaQualIterator(InputStream fastaInput, InputStream qualInput) throws IOException {
+	public LineBasedFastaQualIterator(InputStream fastaInput, InputStream qualInput,ProgressCounter pc) throws IOException {
 		this.liseq = IOUtils.lineIterator(fastaInput,"ASCII");
 		this.liqual = IOUtils.lineIterator(qualInput,"ASCII");	
+		this.pc = pc;
 	}
 
 	public boolean hasNext() {
@@ -82,6 +86,7 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 					header = seqline.substring(1);
 					curseq = new ByteBuffer();
 					curqual = new ByteBuffer();
+					if (pc!=null) pc.incr(1);
 					return seq;
 				}
 			} else {
@@ -96,7 +101,7 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 			curqual.append(qualline.getBytes());
 			curqual.append(" ".getBytes());
 		}
-		
+		if (pc!=null) pc.incr(1);
 		return new SequenceQual(header,
 				curseq.get(),
 				qualrepr.textToQual(curqual.get()));

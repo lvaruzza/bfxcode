@@ -28,7 +28,7 @@ public class MemorySpectrum extends Spectrum {
 	public MemorySpectrum(int k) {
 		super(k);
 	}
-	
+	 
 	protected MemorySpectrum() {
 		super();
 	}
