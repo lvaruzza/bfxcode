@@ -25,6 +25,6 @@ public class TestFastQReader {
 	public void testColor() throws IOException {
 		SequenceReader sr = new FastQSequenceReader();
 		Iterator<Sequence> it = sr.read("data/test/color.fastq");
-		assertEquals(30,BFXIteratorUtils.count(it));
+		assertEquals(25,BFXIteratorUtils.count(it));
 	}	
 }
