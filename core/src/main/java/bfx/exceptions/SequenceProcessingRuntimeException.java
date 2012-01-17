@@ -11,14 +11,14 @@ package bfx.exceptions;
  */
 public class SequenceProcessingRuntimeException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
-	private int positionInSequence;
+	private long positionInSequence;
 	
-	public SequenceProcessingRuntimeException(int positionInSequence,String message) {
+	public SequenceProcessingRuntimeException(long positionInSequence,String message) {
 		super(String.format("Error: '%s'\n\t in position %d of sequence.",message,positionInSequence));
 		this.positionInSequence = positionInSequence;
 	}
 
-	public int getPositionInSequence() {
+	public long getPositionInSequence() {
 		return positionInSequence;
 	}
 }

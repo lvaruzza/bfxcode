@@ -49,9 +49,10 @@ public class SubSet extends Tool {
 	public void run() throws Exception {
 		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
 		SequenceSink sink =  new FileSequenceSink(outputFormat,output,outputQual);
-
+		percent = (float) (percent / 100.0);
+		
 		log.info(TextUtils.doubleLine());
-		log.info(String.format("Started subsampling"));
+		log.info(String.format("Started subsampling %.1f%% of sequences",percent*100.0));
 		log.info(TextUtils.doubleLine());
 		
 		ProgressCounter pc = getProgressCounter();
