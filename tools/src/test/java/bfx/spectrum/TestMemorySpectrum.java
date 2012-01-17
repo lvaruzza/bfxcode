@@ -1,14 +1,13 @@
 package bfx.spectrum;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
 import org.junit.Test;
-
-import bfx.utils.TextUtils;
-import static org.junit.Assert.*;
 
 public class TestMemorySpectrum {
 	private static String expectedDump=
