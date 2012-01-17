@@ -15,8 +15,8 @@ import bfx.utils.TextUtils;
 
 import com.beust.jcommander.Parameter;
 
-public class Subset extends Tool {
-	private static Logger log = Logger.getLogger(Subset.class);
+public class SubSet extends Tool {
+	private static Logger log = Logger.getLogger(SubSet.class);
 	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
