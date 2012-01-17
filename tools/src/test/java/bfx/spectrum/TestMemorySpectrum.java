@@ -16,7 +16,7 @@ public class TestMemorySpectrum {
 			"CGTC\t1\n"+
 			"ACGT\t2\n";
 	
-	public MemorySpectrumBuilder createSpectrum() {
+	public MemorySpectrumBuilder createSpectrum() throws IOException {
 		MemorySpectrumBuilder spc = new MemorySpectrumBuilder(4);
 		spc.add("ACGT".getBytes());
 		spc.add("ACGT".getBytes());
@@ -26,7 +26,7 @@ public class TestMemorySpectrum {
 	}
 	
 	@Test
-	public void testDump() {
+	public void testDump() throws IOException {
 		MemorySpectrumBuilder spcb = createSpectrum();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();		
 		Spectrum spc = spcb.getSpectrum();

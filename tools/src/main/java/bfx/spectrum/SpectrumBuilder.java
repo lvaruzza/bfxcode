@@ -38,9 +38,9 @@ public abstract class SpectrumBuilder {
 		
 	}
 	
-	protected abstract void add1(byte[] seq);
+	protected abstract void add1(byte[] seq) throws IOException;
 	
-	public void add(byte [] seq) {
+	public void add(byte [] seq) throws IOException {
 		if(seq.length != k) throw new RuntimeException(String.format("Sequence size '%d' not equal to k value (%d)",seq.length,k));
 		
 		add1(seq);
