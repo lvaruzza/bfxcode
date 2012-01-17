@@ -1,7 +1,9 @@
-package bfx.spectrum;
+package bfx.tools.spectrum;
 
 import java.io.PrintStream;
 
+import bfx.spectrum.MemorySpectrum;
+import bfx.spectrum.Spectrum;
 import bfx.tools.Tool;
 
 import com.beust.jcommander.Parameter;
