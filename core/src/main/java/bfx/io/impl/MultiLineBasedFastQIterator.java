@@ -45,8 +45,10 @@ public class MultiLineBasedFastQIterator implements Iterator<Sequence> {
 		if (!li.hasNext()) throw new SequenceProcessingRuntimeException(sequenceCount,
 				"Empty sequence in fastq stream.");
 		String header = li.next();
+		
 		if (!header.startsWith("@")) throw new SequenceProcessingRuntimeException(sequenceCount,
 				"Invalid fastQ sequence, header does not start with '@': " + header);
+		
 		
 		if (!li.hasNext()) throw new SequenceProcessingRuntimeException(sequenceCount,
 										"Header without sequence in fastq stream at " + header);
@@ -68,7 +70,7 @@ public class MultiLineBasedFastQIterator implements Iterator<Sequence> {
 			
 	    // Color space sequences will have a difference of one position between sequence values and quality values
 		// TODO: Find a better way to handle color encoded fastq files
-		} while((seqLen - qual.length())  >= 1);
+		} while((seqLen - qual.length())  > 1);
 		if (pc != null) pc.incr(1);
 		sequenceCount++;
 		return new SequenceQual(header.substring(1), seq.get(), qualrepr.textToQual(qual.get()));
