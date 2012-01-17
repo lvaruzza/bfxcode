@@ -65,7 +65,10 @@ public class MultiLineBasedFastQIterator implements Iterator<Sequence> {
 												"Incomplete quality values in fastq stream at " + header);
 			line = li.next();
 			qual.append(line.getBytes());
-		} while(qual.length() - seqLen > 1);
+			
+	    // Color space sequences will have a difference of one position between sequence values and quality values
+		// TODO: Find a better way to handle color encoded fastq files
+		} while((seqLen - qual.length())  >= 1);
 		if (pc != null) pc.incr(1);
 		sequenceCount++;
 		return new SequenceQual(header.substring(1), seq.get(), qualrepr.textToQual(qual.get()));
