@@ -4,12 +4,12 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.SequenceSink;
 import bfx.io.SequenceSource;
 import bfx.io.impl.FileSequenceSink;
 import bfx.io.impl.FileSequenceSource;
+import bfx.process.ProgressCounter;
 import bfx.tools.Tool;
 import bfx.utils.TextUtils;
 
@@ -57,6 +57,7 @@ public class SubSet extends Tool {
 		
 		ProgressCounter pc = getProgressCounter();
 		src.setProgressCounter(pc);
+		pc.start("Reading Sequences");
 		Random rnd = new Random();
 		for(Sequence seq: src) {
 			if (rnd.nextFloat() < percent)

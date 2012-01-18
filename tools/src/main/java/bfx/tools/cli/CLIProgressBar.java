@@ -7,9 +7,12 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-import bfx.ProgressCounter;
+import bfx.process.ProgressCounter;
+import bfx.utils.TextUtils;
 
 public class CLIProgressBar implements Observer {
+	private static int lineSize = 60;
+	
 	private long start = -1;
 	private static PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
 															.printZeroNever()
@@ -28,26 +31,39 @@ public class CLIProgressBar implements Observer {
 															.toFormatter();
 															
 	
-	public void showProgress(ProgressCounter pc) {
-		if (start==-1)
-			start = System.currentTimeMillis();
+	private void printPerformance(ProgressCounter pc) {
+		long now = System.currentTimeMillis();
+		long elapsed = now - start;
+		Period period = new Period(elapsed);
+		double rate  = (1000.0 * pc.getCount()) / elapsed;
+		System.out.println(String.format(" [%,d recs in %s: %,.0f recs/s]",
+				pc.getCount(), periodFormatter.print(period),rate));
+		
+		pc.setUpdateRate((long)(rate));		
+	}
+	
+	public void showProgress(ProgressCounter pc) {	
+		long ticks = pc.getTicks();
 		
 		if (pc.isFinished()) {
+			System.out.print('.');
+			System.out.print(TextUtils.times(' ', (int)(lineSize-ticks%lineSize)-1));
+			printPerformance(pc);
 			System.out.println();
+			System.out.println(TextUtils.banner("Finished " + pc.getProgressName()));
+			System.out.flush();
+			start = -1;
 			return;
 		}
-			
-		long ticks = pc.getTicks();
-		System.out.print('.');
-		if (ticks%60==0) {
-			long now = System.currentTimeMillis();
-			long elapsed = now - start;
-			Period period = new Period(elapsed);
-			double rate  = (1000.0 * pc.getCount()) / elapsed;
-			System.out.println(String.format(" [%,d recs in %s: %,.0f recs/s]",
-					pc.getCount(), periodFormatter.print(period),rate));
-			
-			pc.setUpdateRate((long)(rate));
+		
+		if (start==-1) {
+			start = System.currentTimeMillis();
+			System.out.println(TextUtils.banner("Started " + pc.getProgressName()));
+			System.out.flush();
+		}
+		System.out.print('*');
+		if (ticks%lineSize==0) {
+			printPerformance(pc);
 		}
 		System.out.flush();
 	}

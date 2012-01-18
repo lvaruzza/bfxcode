@@ -3,12 +3,12 @@ package bfx.io;
 import java.io.File;
 import java.util.Iterator;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.impl.BufferSequenceSource;
 import bfx.io.impl.FileSequenceSource;
 import bfx.io.impl.KmerIterable;
 import bfx.io.impl.KmerWithQualIterable;
+import bfx.process.ProgressCounter;
 import bfx.utils.BFXIteratorUtils;
 
 /**

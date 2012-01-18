@@ -1,4 +1,4 @@
-package bfx;
+package bfx.process;
 
 import java.util.Observable;
 
@@ -14,6 +14,8 @@ public  class ProgressCounter extends Observable {
 	private long count = 0;
 	private long count2 = 0;
 	private long ticks = 0;
+
+	private String name;
 	
 	private boolean finish = false;
 	
@@ -45,10 +47,9 @@ public  class ProgressCounter extends Observable {
 	public boolean isFinished() {
 		return finish;
 	}
+	
 	public void reset() {
 		count = 0;
-		this.setChanged();
-		this.notifyObservers();
 		this.finish = false;
 	}
 	
@@ -56,4 +57,12 @@ public  class ProgressCounter extends Observable {
 		this.updateRate = updateRate;
 	}
 	
+	public void start(String name) {
+		this.name = name;
+		reset();
+	}
+	
+	public String getProgressName() {
+		return name;
+	}
 }

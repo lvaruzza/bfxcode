@@ -9,9 +9,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.log4j.Logger;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.impl.SequenceConstQual;
+import bfx.process.ProgressCounter;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaIterator implements Iterator<Sequence> {

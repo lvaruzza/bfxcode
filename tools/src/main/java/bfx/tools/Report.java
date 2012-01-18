@@ -39,7 +39,7 @@ public abstract class Report {
 			writeHuman(pr);
 			pr.println();
 			pr.println("=====================================================================");
-			pr.println("# Finished                                                          #");
+			pr.println("# End                                                               #");
 			pr.println("=====================================================================");
 			pr.flush();
 			break;

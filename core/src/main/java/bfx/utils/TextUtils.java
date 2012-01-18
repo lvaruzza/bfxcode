@@ -11,23 +11,24 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public class TextUtils {
+	public static int lineSize = 80;
 	
 	/**
-	 * Return a ascii art line.
+	 * Return a ASCII art line.
 	 * 
-	 * @return A string with 60 '-'
+	 * @return A string with lineSize '-'
 	 */
 	public static String line() {
-		return StringUtils.leftPad("", 60, "-");
+		return StringUtils.leftPad("", lineSize, "-");
 	}
 	
 	/**
 	 * Return a ascii art double line.
 	 * 
-	 * @return A string with 60 '='
+	 * @return A string with lineSize '='
 	 */
 	public static String doubleLine() {
-		return StringUtils.leftPad("", 60, "=");
+		return StringUtils.leftPad("", lineSize, "=");
 	}
 	
 	/**
@@ -55,5 +56,9 @@ public class TextUtils {
 		for(int i=0;i<n;i++)
 			sb.append(str);
 		return sb.toString();
+	}
+
+	public static String banner(String message) {
+		return doubleLine() + "\n" + message + "\n" + doubleLine() + "\n";
 	}	
 }

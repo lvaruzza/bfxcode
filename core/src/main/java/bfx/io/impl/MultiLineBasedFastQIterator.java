@@ -8,12 +8,12 @@ import java.util.Iterator;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
-import bfx.ProgressCounter;
 import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.exceptions.SequenceProcessingRuntimeException;
 import bfx.impl.FastQRepr;
 import bfx.impl.SequenceQual;
+import bfx.process.ProgressCounter;
 import bfx.utils.ByteBuffer;
 
 public class MultiLineBasedFastQIterator implements Iterator<Sequence> {

@@ -2,8 +2,8 @@ package bfx.io;
 
 import java.util.Iterator;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
+import bfx.process.ProgressCounter;
 import bfx.utils.io.BaseSingleAndDualReader;
 
 

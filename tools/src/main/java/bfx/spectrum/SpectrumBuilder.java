@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import bfx.ProgressCounter;
+import bfx.process.ProgressCounter;
 import bfx.tools.Report;
 
 public abstract class SpectrumBuilder {	

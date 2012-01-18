@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import com.beust.jcommander.Parameter;
 
-import bfx.ProgressCounter;
+import bfx.process.ProgressCounter;
 
 
 

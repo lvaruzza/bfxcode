@@ -7,10 +7,10 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Iterator;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.exceptions.FileProcessingIOException;
 import bfx.exceptions.MultipleFilesProcessingIOException;
+import bfx.process.ProgressCounter;
 import bfx.utils.io.BaseSingleAndDualWriter;
 
 

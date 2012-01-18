@@ -3,7 +3,7 @@ package bfx.spectrum;
 import java.io.PrintStream;
 import java.util.Iterator;
 
-import bfx.ProgressCounter;
+import bfx.process.ProgressCounter;
 import bfx.utils.Pair;
 
 public abstract class Spectrum implements Iterable<Pair<byte[],Long>>{

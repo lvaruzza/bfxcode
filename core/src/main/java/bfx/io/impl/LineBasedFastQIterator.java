@@ -8,11 +8,11 @@ import java.util.Iterator;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
-import bfx.ProgressCounter;
 import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastQRepr;
 import bfx.impl.SequenceQual;
+import bfx.process.ProgressCounter;
 
 public class LineBasedFastQIterator implements Iterator<Sequence> {
 	//private static Logger log = Logger.getLogger(LineBasedFastQIterator.class);

@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import bfx.ProgressCounter;
 import bfx.Sequence;
 import bfx.io.SequenceSource;
+import bfx.process.ProgressCounter;
 import bfx.tools.Report;
 import bfx.tools.Tool;
 
@@ -82,11 +82,9 @@ public class SequenceStat extends Tool {
 
 		StatReport result = new StatReport();
 		ProgressCounter pc = getProgressCounter();
-		//pc.setTick(1000*1000);
-		
+		sequences.setProgressCounter(pc);
+		pc.start("Reading Sequences");
 		for (Sequence s: sequences) {
-			pc.incr(1);
-			
 			result.seqCount++;
 			result.totalLen += s.length();
 			if (s.length() > result.maxSequenceLength)

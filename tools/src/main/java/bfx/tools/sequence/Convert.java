@@ -1,18 +1,15 @@
 package bfx.tools.sequence;
 
-import org.apache.log4j.Logger;
-
-import bfx.ProgressCounter;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceWriter;
+import bfx.process.ProgressCounter;
 import bfx.tools.Tool;
-import bfx.utils.TextUtils;
 
 import com.beust.jcommander.Parameter;
 
 public class Convert extends Tool {
-	private static Logger log = Logger.getLogger(Convert.class);
+	//private static Logger log = Logger.getLogger(Convert.class);
 	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
@@ -39,20 +36,12 @@ public class Convert extends Tool {
 
 		inputFormat = sr.getFormatName();
 		outputFormat = sw.getFormatName();
-		
-		
-		log.info(TextUtils.doubleLine());
-		log.info(String.format("Started sequences conversion from %s format to %s format",inputFormat,outputFormat));
-		log.info(TextUtils.doubleLine());
-		
+				
 		ProgressCounter pc = getProgressCounter();
 		sw.setProgressCounter(pc);
+		pc.start(String.format("Sequences conversion from %s format to %s format",inputFormat,outputFormat));
 		sw.write(output,outputQual,sr.read(input,qual));
 		pc.finish();
-		
-		log.info(TextUtils.doubleLine());
-		log.info("Finished.");
-		log.info(TextUtils.doubleLine());
 	}
 
 	@Override

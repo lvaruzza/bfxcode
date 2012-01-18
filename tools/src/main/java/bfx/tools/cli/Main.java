@@ -11,7 +11,7 @@ import java.util.ServiceLoader;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import bfx.ProgressCounter;
+import bfx.process.ProgressCounter;
 import bfx.tools.Tool;
 import bfx.utils.TextUtils;
 
