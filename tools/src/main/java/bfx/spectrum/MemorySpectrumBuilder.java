@@ -37,6 +37,7 @@ public class MemorySpectrumBuilder extends SpectrumBuilder  {
 		for(Entry<byte[],Long> pair: map.entrySet()) {
 			dos.write(pair.getKey());
 			dos.writeLong(pair.getValue());
+			if (pc!=null) pc.incr(1);
 		}
 		out.close();
 	};

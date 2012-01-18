@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import bfx.ProgressCounter;
 import bfx.tools.Report;
 
 public abstract class SpectrumBuilder {	
@@ -14,7 +15,7 @@ public abstract class SpectrumBuilder {
 	protected boolean finished = false;
 	protected int k;
 	protected long nkmers;
-
+	protected ProgressCounter pc;
 	
 	static public class SpectrumReport extends Report {
 		public long nkmers;
@@ -74,5 +75,9 @@ public abstract class SpectrumBuilder {
 	
 	public boolean isFinished() {
 		return finished;
+	}
+
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
 	}
 }

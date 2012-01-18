@@ -1,5 +1,7 @@
 package bfx.tools.solid;
 
+import org.apache.log4j.Logger;
+
 import bfx.io.SequenceSource;
 import bfx.spectrum.MemorySpectrumBuilder;
 import bfx.spectrum.SpectrumBuilder;
@@ -9,7 +11,8 @@ import bfx.tools.Tool;
 import com.beust.jcommander.Parameter;
 
 public class ColorSpectrum extends Tool {
-
+	private static Logger log = Logger.getLogger(ColorSpectrum.class);
+	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;
 
@@ -40,7 +43,11 @@ public class ColorSpectrum extends Tool {
 		}
 		spectrum.finish();
 		pc.finish();
+		pc.reset();
+		log.info("Saving Spectrum");
+		spectrum.setProgressCounter(pc);		
 		spectrum.save(output);
+		pc.finish();
 		Report result = spectrum.getReport();
 		result.write(getStdOut(reportOutput), reportFormat);
 	}

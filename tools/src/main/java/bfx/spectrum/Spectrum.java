@@ -3,12 +3,14 @@ package bfx.spectrum;
 import java.io.PrintStream;
 import java.util.Iterator;
 
+import bfx.ProgressCounter;
 import bfx.utils.Pair;
 
 public abstract class Spectrum implements Iterable<Pair<byte[],Long>>{
 	protected int k;
 	protected long nkmers;
-
+	protected ProgressCounter pc;
+	
 	public static byte[] fileSignature = "SPEC".getBytes();
 	
 	
@@ -28,6 +30,7 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>>{
 			out.print(new String(kmer.fst));
 			out.print("\t");
 			out.println(kmer.snd);
+			if (pc!=null) pc.incr(1);
 			//log.debug(String.format("D: %s\t%d",new String(kmer.fst),kmer.snd));
 		}
 		out.flush();
@@ -35,5 +38,10 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>>{
 
 	protected void setK(int k) {
 		this.k = k;
+	}
+
+
+	public void setProgressCounter(ProgressCounter pc) {
+		this.pc = pc;
 	}	
 }
