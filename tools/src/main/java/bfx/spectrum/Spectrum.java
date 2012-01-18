@@ -4,9 +4,8 @@ import java.io.PrintStream;
 import java.util.Iterator;
 
 import bfx.process.ProgressCounter;
-import bfx.utils.Pair;
 
-public abstract class Spectrum implements Iterable<Pair<byte[],Long>>{
+public abstract class Spectrum implements Iterable<Kmer>{
 	protected int k;
 	protected long nkmers;
 	protected ProgressCounter pc;
@@ -23,13 +22,13 @@ public abstract class Spectrum implements Iterable<Pair<byte[],Long>>{
 	
 	public abstract boolean member(byte[] seq);
 	public abstract long getCount(byte[] seq);
-	public abstract Iterator<Pair<byte[], Long>> iterator();	
+	public abstract Iterator<Kmer> iterator();	
 
 	public void dump(PrintStream out) {
-		for(Pair<byte[],Long> kmer:this) {
-			out.print(new String(kmer.fst));
+		for(Kmer kmer:this) {
+			out.print(new String(kmer.kmer));
 			out.print("\t");
-			out.println(kmer.snd);
+			out.println(kmer.count);
 			if (pc!=null) pc.incr(1);
 			//log.debug(String.format("D: %s\t%d",new String(kmer.fst),kmer.snd));
 		}

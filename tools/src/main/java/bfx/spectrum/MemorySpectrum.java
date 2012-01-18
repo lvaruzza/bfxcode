@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 
 import bfx.exceptions.FileProcessingIOException;
 import bfx.utils.ByteUtils;
-import bfx.utils.Pair;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
@@ -44,10 +43,10 @@ public class MemorySpectrum extends Spectrum {
 	}
 	
 	@Override
-	public Iterator<Pair<byte[], Long>> iterator() {
-		return Iterators.transform(map.entrySet().iterator(), new Function<Entry<byte[],Long>,Pair<byte[],Long>>() {
-			@Override public Pair<byte[], Long> apply(Entry<byte[], Long> e) {
-				return new Pair<byte[], Long>(e.getKey(),e.getValue());
+	public Iterator<Kmer> iterator() {
+		return Iterators.transform(map.entrySet().iterator(), new Function<Entry<byte[],Long>,Kmer>() {
+			@Override public Kmer apply(Entry<byte[], Long> e) {
+				return new Kmer(e.getKey(),e.getValue());
 			}			
 		});
 	}
