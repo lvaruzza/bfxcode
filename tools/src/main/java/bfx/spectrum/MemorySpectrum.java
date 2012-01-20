@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -13,6 +12,7 @@ import java.util.TreeMap;
 import org.apache.log4j.Logger;
 
 import bfx.exceptions.FileProcessingIOException;
+import bfx.spectrum.SpectrumIO.SpectrumHeader;
 import bfx.utils.ByteUtils;
 
 import com.google.common.base.Function;
@@ -62,7 +62,10 @@ public class MemorySpectrum extends Spectrum {
 	public static Spectrum load(InputStream in) throws IOException {
 		DataInputStream dis = new DataInputStream(in);
 		MemorySpectrum spc = new MemorySpectrum();
-		spc.readHeader(dis);
+		SpectrumHeader header = SpectrumIO.readHeader(dis);
+		spc.k=header.k;
+		spc.nkmers = header.nkmers;
+		
 		log.info(String.format("Loaded Spectrum k = %d",spc.k));
 		log.info(String.format("Number of kmers = %d",spc.nkmers));
 		spc.loadKmers(dis);
@@ -82,15 +85,6 @@ public class MemorySpectrum extends Spectrum {
 		log.debug(String.format("Loaded kmers = %d",i));
 	}
 
-	protected void readHeader(DataInputStream dis) throws IOException {
-		byte[] header = new byte[4];
-		dis.read(header);
-		if (!Arrays.equals(header,fileSignature))
-			throw new RuntimeException("Invalid spectrum file, file signature does not match");
-		setK(dis.readInt());
-		nkmers = dis.readLong();
-	}
-	
 	protected void setMap(TreeMap<byte[],Long> map) {
 		this.map = map;
 	}

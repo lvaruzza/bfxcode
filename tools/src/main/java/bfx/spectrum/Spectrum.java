@@ -10,8 +10,6 @@ public abstract class Spectrum implements Iterable<Kmer>{
 	protected long nkmers;
 	protected ProgressCounter pc;
 	
-	public static byte[] fileSignature = "SPEC".getBytes();
-	
 	
 	protected Spectrum(int k,long nkmers) {
 		this.k = k;
@@ -42,5 +40,13 @@ public abstract class Spectrum implements Iterable<Kmer>{
 
 	public void setProgressCounter(ProgressCounter pc) {
 		this.pc = pc;
+	}
+
+	public int getK() {
+		return k;
+	}
+
+	public long numberOfKmers() {
+		return nkmers;
 	}	
 }

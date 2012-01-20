@@ -47,13 +47,6 @@ public abstract class SpectrumBuilder {
 		add1(seq);
 	}
 	
-	protected void writeHeader(DataOutputStream dos) throws IOException {
-		dos.write(Spectrum.fileSignature);
-		dos.writeInt(k);
-		dos.writeLong(nkmers);
-	}
-	
-	
 	public Report getReport() {
 		SpectrumReport report = new SpectrumReport();
 		report.k = k;

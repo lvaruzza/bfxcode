@@ -33,7 +33,7 @@ public class MemorySpectrumBuilder extends SpectrumBuilder  {
 
 	public void save(OutputStream out) throws IOException {
 		DataOutputStream dos = new DataOutputStream(out);
-		writeHeader(dos);
+		SpectrumIO.writeHeader(dos,new SpectrumIO.SpectrumHeader(k,nkmers));
 		for(Entry<byte[],Long> pair: map.entrySet()) {
 			dos.write(pair.getKey());
 			dos.writeLong(pair.getValue());
