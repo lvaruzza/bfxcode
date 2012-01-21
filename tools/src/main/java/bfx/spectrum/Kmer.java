@@ -8,4 +8,9 @@ public class Kmer {
 		this.kmer = kmer;
 		this.count = count;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("<%s,%d>",new String(kmer),count);
+	}
 }

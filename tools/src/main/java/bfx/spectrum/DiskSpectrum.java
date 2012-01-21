@@ -7,14 +7,14 @@ import java.util.Iterator;
 
 import bfx.spectrum.SpectrumIO.SpectrumHeader;
 
-public class DiskBasedSpectrum extends Spectrum {
+public class DiskSpectrum extends Spectrum {
 	private File file;
 	
-	public DiskBasedSpectrum(File file) throws IOException {
+	public DiskSpectrum(File file) throws IOException {
 		this.file = file;
 	}
 
-	public DiskBasedSpectrum(String filename) throws IOException {
+	public DiskSpectrum(String filename) throws IOException {
 		this(new File(filename));
 	}
 	
@@ -52,6 +52,7 @@ public class DiskBasedSpectrum extends Spectrum {
 				byte[] kmer = new byte[header.k];
 				input.read(kmer);
 				long count = input.readLong();
+				pos += header.k + 8;
 				return new Kmer(kmer,count);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
