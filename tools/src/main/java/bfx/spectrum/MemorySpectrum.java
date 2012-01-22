@@ -78,9 +78,9 @@ public class MemorySpectrum extends Spectrum {
 			byte[] kmer=new byte[k];
 			dis.read(kmer);
 			long count = dis.readLong();
-			log.debug(String.format("L: %s\t%d",new String(kmer),count));
+			//log.debug(String.format("L: %s\t%d",new String(kmer),count));
 			map.put(kmer, count);
-			log.debug(String.format("Map size = %d",map.size()));
+			//log.debug(String.format("Map size = %d",map.size()));
 		}
 		log.debug(String.format("Loaded kmers = %d",i));
 	}

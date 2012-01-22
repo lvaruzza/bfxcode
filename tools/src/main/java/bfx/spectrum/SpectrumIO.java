@@ -53,7 +53,11 @@ public class SpectrumIO {
 		dos.writeLong(spectrumHeader.nkmers);
 	}
 
-
+	public static void writeKmer(DataOutputStream out,Kmer kmer) throws IOException {
+		out.write(kmer.kmer);
+		out.writeLong(kmer.count);
+	}
+	
 	public static void fixNkmers(File file, long nkmers) throws IOException {
 		RandomAccessFile out = new RandomAccessFile(file, "rw");
 		out.seek(fileSignature.length + 4);

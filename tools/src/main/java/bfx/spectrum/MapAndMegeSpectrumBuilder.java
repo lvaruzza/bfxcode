@@ -18,8 +18,8 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 		this.basename = ".spectrum" + System.currentTimeMillis();
 	}
 	
-	private String getPartName(int x) {
-		return basename + "-" + x + ".dat";
+	private String getPartName(int level,int x) {
+		return basename + "-" + level + "." + x + ".dat";
 	}
 	
 	@Override
@@ -28,14 +28,15 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 		nkmers = spec.nkmers;
 		
 		if (spec.nkmers == memoryLimit) {
-			spec.save(getPartName(numParts));
+			spec.save(getPartName(0,numParts));
 			this.spec = new MemorySpectrumBuilder(k);
 			System.gc();
 			numParts++;
 		}
 	}
 
-	public int merge(int a,int b) {
+	public int merge(int level,int a,int b) {
+		
 		return 0;
 	}
 	

@@ -11,9 +11,9 @@ import org.junit.Test;
 
 public class TestMemorySpectrum {
 	private static String expectedDump=
-			"GTCA\t1\n"+
+			"ACGT\t2\n"+
 			"CGTC\t1\n"+
-			"ACGT\t2\n";
+			"GTCA\t1\n";
 
 	public MemorySpectrumBuilder createSpectrum() throws IOException {
 		MemorySpectrumBuilder spc = new MemorySpectrumBuilder(4);
