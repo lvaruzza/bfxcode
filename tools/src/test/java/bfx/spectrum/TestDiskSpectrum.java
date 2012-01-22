@@ -7,11 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
-
-import bfx.utils.TextUtils;
 
 public class TestDiskSpectrum {
 	
@@ -32,6 +29,15 @@ public class TestDiskSpectrum {
 			"CGTC\t1\n"+
 			"GTCA\t2\n";
 	
+	private static String expectedNoOverlap =
+			"ACAT	2" +
+			"ACGT	2" +
+			"CGTC	1" +
+			"CTTC	1" +
+			"GTCA	1" +
+			"GTCC	1" +
+			"TTTT	1";
+	
 	@Before
 	public void setup() throws IOException {
 		MemorySpectrumBuilder spc = new MemorySpectrumBuilder(4);
@@ -40,13 +46,6 @@ public class TestDiskSpectrum {
 		spc.add("ACGT".getBytes());
 		spc.add("CGTC".getBytes());
 		spc.save("test4.spec");
-		
-		MemorySpectrumBuilder spc2 = new MemorySpectrumBuilder(4);
-		spc2.add("GTCA".getBytes());
-		spc2.add("ACGT".getBytes());
-		spc2.add("ACGA".getBytes());
-		spc2.save("test4b.spec");
-		
 	}
 	
 	@Test
@@ -80,7 +79,7 @@ public class TestDiskSpectrum {
 		
 		File out = new File("testMerge.spec");
 		DiskSpectrum.merge(out, a, b);
-		DiskSpectrum merge = new DiskSpectrum("testMerge.spec");
+		DiskSpectrum merge = new DiskSpectrum(out);
 		
 		merge.dump(System.out);
 		
@@ -91,18 +90,51 @@ public class TestDiskSpectrum {
 	
 	@Test
 	public void testMergeDifferent() throws IOException {
+		// Create test4b
+		MemorySpectrumBuilder spc = new MemorySpectrumBuilder(4);
+		spc.add("GTCA".getBytes());
+		spc.add("ACGT".getBytes());
+		spc.add("ACGA".getBytes());
+		spc.save("test4c.spec");
+		
+
 		DiskSpectrum a = new DiskSpectrum("test4.spec");
 		DiskSpectrum b = new DiskSpectrum("test4b.spec");
 		
 		File out = new File("testMerge.spec");
 		DiskSpectrum.merge(out, a, b);
-		DiskSpectrum merge = new DiskSpectrum("testMerge.spec");
+		DiskSpectrum merge = new DiskSpectrum(out);
 
 		merge.dump(System.out);
 
 		ByteArrayOutputStream outDump = new ByteArrayOutputStream();		
 		merge.dump(new PrintStream(outDump));
 		assertEquals(expectedDumpDiff,outDump.toString());		
+	}	
+
+	@Test
+	public void testMergeNorOverlap() throws IOException {
+		// Create test4c
+		MemorySpectrumBuilder spc = new MemorySpectrumBuilder(4);
+		spc.add("GTCC".getBytes());
+		spc.add("ACAT".getBytes());
+		spc.add("ACAT".getBytes());
+		spc.add("CTTC".getBytes());
+		spc.add("TTTT".getBytes());
+		spc.save("test4c.spec");
+
+		DiskSpectrum a = new DiskSpectrum("test4.spec");
+		DiskSpectrum b = new DiskSpectrum("test4c.spec");
+		
+		File out = new File("testMerge.spec");
+		DiskSpectrum.merge(out, a, b);
+		DiskSpectrum merge = new DiskSpectrum(out);
+
+		merge.dump(System.out);
+
+		ByteArrayOutputStream outDump = new ByteArrayOutputStream();		
+		merge.dump(new PrintStream(outDump));
+		assertEquals(expectedNoOverlap,outDump.toString());		
 	}	
 	
 }

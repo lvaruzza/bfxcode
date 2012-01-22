@@ -99,12 +99,12 @@ public class DiskSpectrum extends Spectrum {
 		while((ia.hasNext() || ka!=null) && (ib.hasNext() || kb!=null)) {
 			if (ka == null && ia.hasNext()) ka = ia.next();
 			if (kb == null && ib.hasNext()) kb = ib.next();
-			System.out.print(String.format("ka = %s kb = %s\t",ka,kb));
+			//System.out.print(String.format("ka = %s kb = %s\t",ka,kb));
 			
 			switch(cmp.compare(ka.kmer, kb.kmer)) {
 			case 0:  
 				Kmer r = new Kmer(ka.kmer,ka.count+kb.count); 
-				System.out.println(String.format("%s+%s=%s",ka,kb,r));
+				//System.out.println(String.format("%s+%s=%s",ka,kb,r));
 				SpectrumIO.writeKmer(out, r);
 				nkmers++;
 				ka=null;
@@ -112,33 +112,33 @@ public class DiskSpectrum extends Spectrum {
 				break;
 			case 1:	 
 				SpectrumIO.writeKmer(out,kb); 
-				System.out.println(String.format("A: %s > %s",ka,kb));
+				//System.out.println(String.format("A: %s > %s",ka,kb));
 				nkmers++;
 				kb=null;
 				break;
 			case -1:
 				SpectrumIO.writeKmer(out,ka); 
-				System.out.println(String.format("B: %s < %s",ka,kb));
+				//System.out.println(String.format("B: %s < %s",ka,kb));
 				nkmers++;
 				ka=null;
 				break;
 			}
 		}
-		System.out.println(String.format("ka = %s kb = %s\t",ka,kb));
+		//System.out.println(String.format("ka = %s kb = %s\t",ka,kb));
 		if (ka!=null) SpectrumIO.writeKmer(out,ka); 
 		if (kb!=null) SpectrumIO.writeKmer(out,kb); 
 		
 		Iterator<Kmer> rest;
 		if (ia.hasNext()) {
-			System.out.println("ia has next");
+			//System.out.println("ia has next");
 			rest = ia;
 		} else {
-			System.out.println("ib has next");
+			//if (ib.hasNext()) System.out.println("ib has next");
 			rest = ib;			
-		}
+		}  
 		while(rest.hasNext()) {
 			Kmer r = rest.next();
-			System.out.println(String.format("%s in rest",r));
+			//System.out.println(String.format("%s in rest",r));
 			out.write(r.kmer);
 			out.writeLong(r.count);	
 			nkmers++;
