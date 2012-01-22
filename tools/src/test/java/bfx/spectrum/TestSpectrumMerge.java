@@ -10,7 +10,7 @@ import java.io.PrintStream;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestDiskSpectrum {
+public class TestSpectrumMerge {
 	
 	private static String expectedDump=
 			"ACGT\t2\n"+
@@ -78,7 +78,7 @@ public class TestDiskSpectrum {
 		b.dump(System.out);
 		
 		File out = new File("testMerge.spec");
-		DiskSpectrum.merge(out, a, b);
+		SpectrumIO.merge(out, a, b);
 		DiskSpectrum merge = new DiskSpectrum(out);
 		
 		merge.dump(System.out);
@@ -102,7 +102,7 @@ public class TestDiskSpectrum {
 		DiskSpectrum b = new DiskSpectrum("test4b.spec");
 		
 		File out = new File("testMerge.spec");
-		DiskSpectrum.merge(out, a, b);
+		SpectrumIO.merge(out, a, b);
 		DiskSpectrum merge = new DiskSpectrum(out);
 
 		merge.dump(System.out);
@@ -127,7 +127,7 @@ public class TestDiskSpectrum {
 		DiskSpectrum b = new DiskSpectrum("test4c.spec");
 		
 		File out = new File("testMerge.spec");
-		DiskSpectrum.merge(out, a, b);
+		SpectrumIO.merge(out, a, b);
 		DiskSpectrum merge = new DiskSpectrum(out);
 
 		merge.dump(System.out);

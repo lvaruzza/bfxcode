@@ -12,8 +12,6 @@ import bfx.spectrum.SpectrumIO.SpectrumHeader;
 import bfx.utils.ByteUtils;
 
 public class DiskSpectrum extends Spectrum {
-	private static Comparator<byte[]> cmp = new ByteUtils.BytesComparator();
-	
 	private File file;
 	
 	public DiskSpectrum(File file) throws IOException {
@@ -84,66 +82,4 @@ public class DiskSpectrum extends Spectrum {
 		}
 	}
 
-	public static void merge(File fileOut,Spectrum a,Spectrum b) throws IOException {
-		if (a.getK() != b.getK()) throw new RuntimeException("Can't merge spectrums, different values of k");
-		
-		DataOutputStream out = new DataOutputStream(new FileOutputStream(fileOut));
-		
-		SpectrumIO.writeHeader(out, new SpectrumHeader(a.getK(),-1));
-		
-		Iterator<Kmer> ia = a.iterator();
-		Iterator<Kmer> ib = b.iterator();
-		long nkmers = 0;
-		Kmer ka = null;
-		Kmer kb = null;
-		while((ia.hasNext() || ka!=null) && (ib.hasNext() || kb!=null)) {
-			if (ka == null && ia.hasNext()) ka = ia.next();
-			if (kb == null && ib.hasNext()) kb = ib.next();
-			//System.out.print(String.format("ka = %s kb = %s\t",ka,kb));
-			
-			switch(cmp.compare(ka.kmer, kb.kmer)) {
-			case 0:  
-				Kmer r = new Kmer(ka.kmer,ka.count+kb.count); 
-				//System.out.println(String.format("%s+%s=%s",ka,kb,r));
-				SpectrumIO.writeKmer(out, r);
-				nkmers++;
-				ka=null;
-				kb=null;
-				break;
-			case 1:	 
-				SpectrumIO.writeKmer(out,kb); 
-				//System.out.println(String.format("A: %s > %s",ka,kb));
-				nkmers++;
-				kb=null;
-				break;
-			case -1:
-				SpectrumIO.writeKmer(out,ka); 
-				//System.out.println(String.format("B: %s < %s",ka,kb));
-				nkmers++;
-				ka=null;
-				break;
-			}
-		}
-		//System.out.println(String.format("ka = %s kb = %s\t",ka,kb));
-		if (ka!=null) SpectrumIO.writeKmer(out,ka); 
-		if (kb!=null) SpectrumIO.writeKmer(out,kb); 
-		
-		Iterator<Kmer> rest;
-		if (ia.hasNext()) {
-			//System.out.println("ia has next");
-			rest = ia;
-		} else {
-			//if (ib.hasNext()) System.out.println("ib has next");
-			rest = ib;			
-		}  
-		while(rest.hasNext()) {
-			Kmer r = rest.next();
-			//System.out.println(String.format("%s in rest",r));
-			out.write(r.kmer);
-			out.writeLong(r.count);	
-			nkmers++;
-		}
-		out.close();
-		SpectrumIO.fixNkmers(fileOut,nkmers);
-	}
 }

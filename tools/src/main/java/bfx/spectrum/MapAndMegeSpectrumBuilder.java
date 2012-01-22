@@ -36,7 +36,7 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 	}
 
 	public int merge(int level,int a,int b) {
-		
+		DiskSpectrum.merge(fileOut, a, b)
 		return 0;
 	}
 	
