@@ -52,7 +52,7 @@ public class SpectrumIO {
 	
 	
 	public static void writeHeader(DataOutputStream dos,SpectrumHeader spectrumHeader) throws IOException {
-		log.debug("Saving header " + spectrumHeader);
+		//log.debug("Saving header " + spectrumHeader);
 
 		dos.write(fileSignature);
 		dos.writeInt(spectrumHeader.k);
@@ -76,6 +76,7 @@ public class SpectrumIO {
 	
 	public static void merge(File fileOut,Spectrum a,Spectrum b) throws IOException {
 		if (a.getK() != b.getK()) throw new RuntimeException("Can't merge spectrums, different values of k");
+		log.debug(String.format("Mering spectrums into '%s'",fileOut.getPath()));
 		
 		DataOutputStream out = new DataOutputStream(new FileOutputStream(fileOut));
 		

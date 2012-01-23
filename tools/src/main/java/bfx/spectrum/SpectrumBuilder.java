@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import org.apache.log4j.Logger;
+
 import bfx.io.SequenceSource;
 import bfx.process.ProgressCounter;
 import bfx.tools.Report;
 
 public abstract class SpectrumBuilder {	
-	//private static Logger log = Logger.getLogger(Spectrum.class);
+	private static Logger log = Logger.getLogger(Spectrum.class);
 	
 	protected boolean finished = false;
 	protected int k;
@@ -66,6 +68,7 @@ public abstract class SpectrumBuilder {
 
 
 	public void save(String output) throws IOException {
+		log.debug(String.format("Saving spectrum to file '%s'",output));
 		OutputStream out = new FileOutputStream(output);
 		save(out);
 	}

@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.log4j.Logger;
+
 public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
+	private static Logger log = Logger.getLogger(MapAndMegeSpectrumBuilder.class);
+	
 	private MemorySpectrumBuilder spec;
 	private int memoryLimit;
 	private int numParts;
@@ -16,10 +20,10 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 		this.memoryLimit = memoryLimit;
 		this.spec = new MemorySpectrumBuilder(k);
 		this.numParts = 0;
-		this.basename = ".spectrum" + System.currentTimeMillis();
+		this.basename = ".spectrum"; // + System.currentTimeMillis();
 	}
 	
-	private String getPartName(int level,int x) {
+	public String getPartName(int level,int x) {
 		return basename + "-" + level + "." + x + ".dat";
 	}
 	
@@ -37,6 +41,7 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 	}
 
 	public void merge(int level,int a,int b,int outNum) throws IOException {
+		log.debug(String.format("Merging %d.%d and %d.%d into %d.%d",level,a,level,b,level+1,outNum));
 		DiskSpectrum sa = new DiskSpectrum(getPartName(level,a));
 		DiskSpectrum sb = new DiskSpectrum(getPartName(level,b));
 		String outName = getPartName(level+1,outNum);
@@ -44,8 +49,15 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 	}
 	
 	public void mergeLevel(int level, int n) throws IOException {
-		for(int i=0;i<n;i+=2) {
-			merge(level,i,i+1,i/2);
+		log.debug(String.format("n=%d",n));
+		for(int i=0;i<n/2;i++) {
+			merge(level,2*i,2*i+1,i);
+		}
+		if (n%2==1) {
+			File last=new File(getPartName(level, n));
+			File nxlevel=new File(getPartName(level+1,n/2));
+			log.debug(String.format("Even number of parts. Moving '%s' to '%s",last,nxlevel));
+			last.renameTo(nxlevel);
 		}
 	}
 
@@ -66,6 +78,10 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 	public void finish() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public int getNparts() {
+		return this.numParts;
 	}
 
 }
