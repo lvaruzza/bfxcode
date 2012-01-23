@@ -1,5 +1,6 @@
 package bfx.spectrum;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -23,8 +24,8 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 	}
 	
 	@Override
-	protected void add1(byte[] seq) throws IOException {
-		spec.add1(seq);
+	public void add(byte[] seq) throws IOException {
+		spec.add(seq);
 		nkmers = spec.nkmers;
 		
 		if (spec.nkmers == memoryLimit) {
@@ -35,9 +36,24 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 		}
 	}
 
-	public int merge(int level,int a,int b) {
-		DiskSpectrum.merge(fileOut, a, b)
-		return 0;
+	public void merge(int level,int a,int b,int outNum) throws IOException {
+		DiskSpectrum sa = new DiskSpectrum(getPartName(level,a));
+		DiskSpectrum sb = new DiskSpectrum(getPartName(level,b));
+		String outName = getPartName(level+1,outNum);
+		SpectrumIO.merge(new File(outName), sa, sb);
+	}
+	
+	public void mergeLevel(int level, int n) throws IOException {
+		for(int i=0;i<n;i+=2) {
+			merge(level,i,i+1,i/2);
+		}
+	}
+
+	public void mergeAll(int n) throws IOException  {
+		int level=0;
+		for(int i=n;i>=1;i=i/2,level++) {
+			mergeLevel(level,i);
+		}
 	}
 	
 	@Override

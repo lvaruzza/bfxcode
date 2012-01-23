@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import bfx.io.SequenceSource;
 import bfx.process.ProgressCounter;
 import bfx.tools.Report;
 
@@ -38,12 +39,20 @@ public abstract class SpectrumBuilder {
 		
 	}
 	
-	protected abstract void add1(byte[] seq) throws IOException;
+	public int getK() {
+		return k;
+	}
 	
-	public void add(byte [] seq) throws IOException {
-		if(seq.length != k) throw new RuntimeException(String.format("Sequence size '%d' not equal to k value (%d)",seq.length,k));
+	public abstract void add(byte[] seq) throws IOException;
 		
-		add1(seq);
+	public void add(SequenceSource src) throws IOException {
+		add(src,0,0);
+	}
+	
+	public void add(SequenceSource src,int trimLeft,int trimRight) throws IOException {
+		for(byte[] kmer: src.kmers(getK(),trimLeft,trimRight)) {
+			add(kmer);
+		}
 	}
 	
 	public Report getReport() {

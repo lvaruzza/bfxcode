@@ -22,7 +22,7 @@ public class MemorySpectrumBuilder extends SpectrumBuilder  {
 	}
 	
 	@Override
-	protected void add1(byte[] seq) {	
+	public void add(byte[] seq) {	
 		if (map.containsKey(seq))
 			map.put(seq, map.get(seq)+1);
 		else {

@@ -1,15 +1,11 @@
 package bfx.spectrum;
 
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Comparator;
 import java.util.Iterator;
 
 import bfx.spectrum.SpectrumIO.SpectrumHeader;
-import bfx.utils.ByteUtils;
 
 public class DiskSpectrum extends Spectrum {
 	private File file;
