@@ -38,10 +38,7 @@ public class ColorSpectrum extends Tool {
 		pc.start("Creating Spectrum");
 		
 		seqs.setProgressCounter(pc);
-		Iterable<byte[]> kmers = seqs.kmers(k,1,0);
-		for(byte[] kmer: kmers) {
-			spectrum.add(kmer);
-		}
+		spectrum.add(seqs);
 		spectrum.finish();
 		pc.finish();
 		
