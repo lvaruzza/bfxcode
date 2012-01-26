@@ -2,7 +2,7 @@ package bfx.tools.solid;
 
 import bfx.io.SequenceSource;
 import bfx.process.ProgressCounter;
-import bfx.spectrum.MemorySpectrumBuilder;
+import bfx.spectrum.MapAndMergeSpectrumBuilder;
 import bfx.spectrum.SpectrumBuilder;
 import bfx.tools.Report;
 import bfx.tools.Tool;
@@ -29,11 +29,14 @@ public class ColorSpectrum extends Tool {
 	
 	@Parameter(names = "-k", description = "k value",required=true)
 	public int k;
+
+	@Parameter(names = "-mem", description = "Number of kmers in memory",required=false)
+	public int kmersInMemory=10*1000*1000;
 	
 	@Override
 	public void run() throws Exception {
 		SequenceSource seqs = SequenceSource.fromFile(format, input);
-		SpectrumBuilder spectrum = new MemorySpectrumBuilder(k);
+		SpectrumBuilder spectrum = new MapAndMergeSpectrumBuilder(k,kmersInMemory);
 		ProgressCounter pc = getProgressCounter();
 		pc.start("Creating Spectrum");
 		

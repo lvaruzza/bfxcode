@@ -14,7 +14,7 @@ public class TestMapAndMegeSpectrumBuilder {
 	
 	@Test
 	public void test0() throws IOException {
-		MapAndMegeSpectrumBuilder sb = new MapAndMegeSpectrumBuilder(3,10);
+		MapAndMergeSpectrumBuilder sb = new MapAndMergeSpectrumBuilder(3,10);
 		sb.add(SequenceSource.fromFile("fasta","data/test/spectrumU3.fasta"));	
 		sb.finish();
 		int n = sb.getNparts();

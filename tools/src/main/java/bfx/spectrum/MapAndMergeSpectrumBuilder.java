@@ -1,26 +1,28 @@
 package bfx.spectrum;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
-	private static Logger log = Logger.getLogger(MapAndMegeSpectrumBuilder.class);
+public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
+	private static Logger log = Logger.getLogger(MapAndMergeSpectrumBuilder.class);
 	
 	private MemorySpectrumBuilder spec;
 	private int memoryLimit;
 	private int numParts;
 	private String basename;
 	
-	public MapAndMegeSpectrumBuilder(int k,int memoryLimit) {
+	public MapAndMergeSpectrumBuilder(int k,int memoryLimit) {
 		super(k);
 		
 		this.memoryLimit = memoryLimit;
 		this.spec = new MemorySpectrumBuilder(k);
 		this.numParts = 0;
-		this.basename = ".spectrum"; // + System.currentTimeMillis();
+		this.basename = ".spectrum" + System.currentTimeMillis();
 	}
 	
 	public String getPartName(int level,int x) {
@@ -72,19 +74,34 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 		
 	}
 
+	private int lastLevel=-1;
+	
 	public void mergeAll(int n) throws IOException  {
 		int level=0;
 		for(int i=n;i>=1;i=(int)(i/2.0+0.5),level++) {
 			mergeLevel(level,i);
 		}
+		lastLevel = level;
+	}
+
+	private File lastFile() {
+		return new File(getPartName(lastLevel,0));		
 	}
 	
 	@Override
 	public void save(OutputStream out) throws IOException {
-		// TODO Auto-generated method stub
-		
+		IOUtils.copyLarge(new FileInputStream(lastFile()), out);		
 	}
-
+	
+	@Override
+	public void save(String outName) throws IOException {
+		File lastFile = lastFile();
+		File out = new File(outName);
+		if (out.exists())
+			out.delete();
+		lastFile.renameTo(out);
+	}
+	
 	@Override
 	public void finish() throws IOException {
 		// Save the last part
