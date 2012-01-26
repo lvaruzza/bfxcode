@@ -75,7 +75,7 @@ public abstract class SpectrumBuilder {
 
 	public abstract void save(OutputStream out) throws IOException;
 	
-	public abstract void finish();	
+	public abstract void finish() throws IOException;	
 	
 	public boolean isFinished() {
 		return finished;

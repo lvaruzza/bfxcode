@@ -30,13 +30,13 @@ public class TestSpectrumMerge {
 			"GTCA\t2\n";
 	
 	private static String expectedNoOverlap =
-			"ACAT	2" +
-			"ACGT	2" +
-			"CGTC	1" +
-			"CTTC	1" +
-			"GTCA	1" +
-			"GTCC	1" +
-			"TTTT	1";
+			"ACAT	2\n" +
+			"ACGT	2\n" +
+			"CGTC	1\n" +
+			"CTTC	1\n" +
+			"GTCA	1\n" +
+			"GTCC	1\n" +
+			"TTTT	1\n";
 	
 	@Before
 	public void setup() throws IOException {
@@ -113,7 +113,7 @@ public class TestSpectrumMerge {
 	}	
 
 	@Test
-	public void testMergeNorOverlap() throws IOException {
+	public void testMergeNoOverlap() throws IOException {
 		// Create test4c
 		MemorySpectrumBuilder spc = new MemorySpectrumBuilder(4);
 		spc.add("GTCC".getBytes());
@@ -126,7 +126,7 @@ public class TestSpectrumMerge {
 		DiskSpectrum a = new DiskSpectrum("test4.spec");
 		DiskSpectrum b = new DiskSpectrum("test4c.spec");
 		
-		File out = new File("testMerge.spec");
+		File out = new File("testMergeNoOver.spec");
 		SpectrumIO.merge(out, a, b);
 		DiskSpectrum merge = new DiskSpectrum(out);
 

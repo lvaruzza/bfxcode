@@ -27,16 +27,20 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 		return basename + "-" + level + "." + x + ".dat";
 	}
 	
+	private void savePart() throws IOException {
+		spec.save(getPartName(0,numParts));
+		System.gc();
+		numParts++;		
+	}
+	
 	@Override
 	public void add(byte[] seq) throws IOException {
 		spec.add(seq);
 		nkmers = spec.nkmers;
 		
 		if (spec.nkmers == memoryLimit) {
-			spec.save(getPartName(0,numParts));
+			savePart();
 			this.spec = new MemorySpectrumBuilder(k);
-			System.gc();
-			numParts++;
 		}
 	}
 
@@ -50,20 +54,22 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 	
 	public void mergeLevel(int level, int n) throws IOException {
 		log.debug(String.format("n=%d",n));
+		
 		for(int i=0;i<n/2;i++) {
 			merge(level,2*i,2*i+1,i);
 		}
 		if (n%2==1) {
-			File last=new File(getPartName(level, n));
+			File last=new File(getPartName(level, n-1));
 			File nxlevel=new File(getPartName(level+1,n/2));
 			log.debug(String.format("Even number of parts. Moving '%s' to '%s",last,nxlevel));
 			last.renameTo(nxlevel);
 		}
+		
 	}
 
 	public void mergeAll(int n) throws IOException  {
 		int level=0;
-		for(int i=n;i>=1;i=i/2,level++) {
+		for(int i=n;i>=1;i=(int)(i/2.0+0.5),level++) {
 			mergeLevel(level,i);
 		}
 	}
@@ -75,9 +81,11 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 	}
 
 	@Override
-	public void finish() {
-		// TODO Auto-generated method stub
-		
+	public void finish() throws IOException {
+		// Save the last part
+		log.info(String.format("Kmers in the last part %d",spec.nkmers));
+		if (spec.nkmers>0) savePart();
+		log.info("Finished building spectrum");
 	}
 
 	public int getNparts() {

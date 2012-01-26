@@ -16,22 +16,30 @@ public class TestMapAndMegeSpectrumBuilder {
 		MapAndMegeSpectrumBuilder sb = new MapAndMegeSpectrumBuilder(3,10);
 		sb.add(SequenceSource.fromFile("fasta","data/test/spectrumU3.fasta"));	
 		sb.finish();
+		int n = sb.getNparts();
+		log.debug(TextUtils.doubleLine());
 		
+		sb.mergeLevel(0, n);
+		log.debug(TextUtils.doubleLine());		
+		n = (int)(n/2.0+0.5);
+		sb.mergeLevel(1, n);
 		log.debug(TextUtils.doubleLine());
-		sb.mergeLevel(0, sb.getNparts());
+		n = (int)(n/2.0+0.5);
+		sb.mergeLevel(2, n);
 		log.debug(TextUtils.doubleLine());
-		sb.mergeLevel(1, sb.getNparts()/2);
-		log.debug(TextUtils.doubleLine());
-		sb.mergeLevel(2, sb.getNparts()/4);
-		log.debug(TextUtils.doubleLine());
-		sb.mergeLevel(3, sb.getNparts()/8);
+		n = (int)(n/2.0+0.5);
+		sb.mergeLevel(3, n);
 
+		log.debug(TextUtils.doubleLine());
+		n = (int)(n/2.0+0.5);
+		sb.mergeLevel(4, n);
+		
 		MemorySpectrumBuilder msb = new MemorySpectrumBuilder(3);
 		msb.add(SequenceSource.fromFile("fasta","data/test/spectrumU3.fasta"));	
 		msb.finish();
 		msb.save("fromMemory.spec");
 		
-		DiskSpectrum dsk1 = new DiskSpectrum(sb.getPartName(4,0));
+		DiskSpectrum dsk1 = new DiskSpectrum(sb.getPartName(5,0));
 		DiskSpectrum dsk2 = new DiskSpectrum("fromMemory.spec");
 
 		dsk1.dump(System.out);

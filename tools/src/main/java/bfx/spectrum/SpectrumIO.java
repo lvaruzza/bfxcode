@@ -116,8 +116,14 @@ public class SpectrumIO {
 			}
 		}
 		//System.out.println(String.format("ka = %s kb = %s\t",ka,kb));
-		if (ka!=null) SpectrumIO.writeKmer(out,ka); 
-		if (kb!=null) SpectrumIO.writeKmer(out,kb); 
+		if (ka!=null) {
+			SpectrumIO.writeKmer(out,ka); 
+			nkmers++;
+		}
+		if (kb!=null) {
+			SpectrumIO.writeKmer(out,kb); 
+			nkmers++;
+		}
 		
 		Iterator<Kmer> rest;
 		if (ia.hasNext()) {
