@@ -44,20 +44,25 @@ public class MapAndMegeSpectrumBuilder extends SpectrumBuilder{
 		}
 	}
 
-	public void merge(int level,int a,int b,int outNum) throws IOException {
-		log.debug(String.format("Merging %d.%d and %d.%d into %d.%d",level,a,level,b,level+1,outNum));
-		DiskSpectrum sa = new DiskSpectrum(getPartName(level,a));
-		DiskSpectrum sb = new DiskSpectrum(getPartName(level,b));
-		String outName = getPartName(level+1,outNum);
-		SpectrumIO.merge(new File(outName), sa, sb);
+	public void merge(File a,File b,File out) throws IOException {
+		DiskSpectrum sa = new DiskSpectrum(a);
+		DiskSpectrum sb = new DiskSpectrum(b);
+		SpectrumIO.merge(out, sa, sb);
+		a.delete();
+		b.delete();
 	}
 	
 	public void mergeLevel(int level, int n) throws IOException {
 		log.debug(String.format("n=%d",n));
 		
 		for(int i=0;i<n/2;i++) {
-			merge(level,2*i,2*i+1,i);
+			File a=new File(getPartName(level,2*i));
+			File b=new File(getPartName(level,2*i+1));
+			File out=new File(getPartName(level+1,i));
+			merge(a,b,out);
+			
 		}
+		
 		if (n%2==1) {
 			File last=new File(getPartName(level, n-1));
 			File nxlevel=new File(getPartName(level+1,n/2));
