@@ -48,5 +48,32 @@ public abstract class Spectrum implements Iterable<Kmer>{
 
 	public long numberOfKmers() {
 		return nkmers;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Spectrum))
+			return false;
+		Spectrum other = (Spectrum) obj;
+		if (k != other.k)
+			return false;
+		if (nkmers != other.nkmers)
+			return false;
+		
+		Iterator<Kmer> ia = this.iterator();
+		Iterator<Kmer> ib = other.iterator();
+		
+		while(ia.hasNext() && ib.hasNext()) {
+			Kmer ka = ia.next();
+			Kmer kb = ib.next();
+			if (!ka.equals(kb)) return false;
+		}
+		return true;
 	}	
+	
+	
 }

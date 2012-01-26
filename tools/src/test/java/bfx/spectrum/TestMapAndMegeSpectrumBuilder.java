@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import bfx.io.SequenceSource;
 import bfx.utils.TextUtils;
+import static org.junit.Assert.*;
 
 public class TestMapAndMegeSpectrumBuilder {
 	private static Logger log = Logger.getLogger(TestMapAndMegeSpectrumBuilder.class);
@@ -42,10 +43,11 @@ public class TestMapAndMegeSpectrumBuilder {
 		DiskSpectrum dsk1 = new DiskSpectrum(sb.getPartName(5,0));
 		DiskSpectrum dsk2 = new DiskSpectrum("fromMemory.spec");
 
-		dsk1.dump(System.out);
+		/*dsk1.dump(System.out);
 		System.out.println(TextUtils.doubleLine());
-		dsk2.dump(System.out);
+		dsk2.dump(System.out);*/
 		
+		assertTrue(dsk1.equals(dsk2));
 		
 	}
 }
