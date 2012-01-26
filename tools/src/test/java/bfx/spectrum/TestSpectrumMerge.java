@@ -62,11 +62,8 @@ public class TestSpectrumMerge {
 	@Test
 	public void testFiles() throws IOException {
 		DiskSpectrum a = new DiskSpectrum("test4.spec");
-		DiskSpectrum b = new DiskSpectrum("test4b.spec");
 		assertEquals(4,a.getK());
-		assertEquals(4,b.getK());
 		assertEquals(3,a.numberOfKmers());
-		assertEquals(3,b.numberOfKmers());
 	}
 	
 	@Test
@@ -95,7 +92,7 @@ public class TestSpectrumMerge {
 		spc.add("GTCA".getBytes());
 		spc.add("ACGT".getBytes());
 		spc.add("ACGA".getBytes());
-		spc.save("test4c.spec");
+		spc.save("test4b.spec");
 		
 
 		DiskSpectrum a = new DiskSpectrum("test4.spec");
