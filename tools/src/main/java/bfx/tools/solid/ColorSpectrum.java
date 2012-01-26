@@ -1,5 +1,7 @@
 package bfx.tools.solid;
 
+import java.io.File;
+
 import bfx.io.SequenceSource;
 import bfx.process.ProgressCounter;
 import bfx.spectrum.MapAndMergeSpectrumBuilder;
@@ -32,11 +34,15 @@ public class ColorSpectrum extends Tool {
 
 	@Parameter(names = "-mem", description = "Number of kmers in memory",required=false)
 	public int kmersInMemory=10*1000*1000;
-	
+
+	@Parameter(names = {"--temp","-T"}, description = "Temporary files locations")
+	public String temp=".";
+
 	@Override
 	public void run() throws Exception {
 		SequenceSource seqs = SequenceSource.fromFile(format, input);
-		SpectrumBuilder spectrum = new MapAndMergeSpectrumBuilder(k,kmersInMemory);
+		File tempDir = new File(temp);
+		SpectrumBuilder spectrum = new MapAndMergeSpectrumBuilder(k,kmersInMemory,tempDir);
 		ProgressCounter pc = getProgressCounter();
 		pc.start("Creating Spectrum");
 		

@@ -15,18 +15,20 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 	private int memoryLimit;
 	private int numParts;
 	private String basename;
+	private File tempDir;
 	
-	public MapAndMergeSpectrumBuilder(int k,int memoryLimit) {
+	public MapAndMergeSpectrumBuilder(int k,int memoryLimit,File tempDir) {
 		super(k);
 		
 		this.memoryLimit = memoryLimit;
 		this.spec = new MemorySpectrumBuilder(k);
 		this.numParts = 0;
 		this.basename = ".spectrum" + System.currentTimeMillis();
+		this.tempDir = tempDir;
 	}
 	
 	public String getPartName(int level,int x) {
-		return basename + "-" + level + "." + x + ".dat";
+		return tempDir.getAbsolutePath() + "/" + basename + "-" + level + "." + x + ".dat";
 	}
 	
 	private void savePart() throws IOException {

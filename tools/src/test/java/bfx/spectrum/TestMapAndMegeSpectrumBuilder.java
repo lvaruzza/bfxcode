@@ -1,5 +1,8 @@
 package bfx.spectrum;
 
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -7,14 +10,13 @@ import org.junit.Test;
 
 import bfx.io.SequenceSource;
 import bfx.utils.TextUtils;
-import static org.junit.Assert.*;
 
 public class TestMapAndMegeSpectrumBuilder {
 	private static Logger log = Logger.getLogger(TestMapAndMegeSpectrumBuilder.class);
 	
 	@Test
 	public void test0() throws IOException {
-		MapAndMergeSpectrumBuilder sb = new MapAndMergeSpectrumBuilder(3,10);
+		MapAndMergeSpectrumBuilder sb = new MapAndMergeSpectrumBuilder(3,10,new File("."));
 		sb.add(SequenceSource.fromFile("fasta","data/test/spectrumU3.fasta"));	
 		sb.finish();
 		int n = sb.getNparts();
