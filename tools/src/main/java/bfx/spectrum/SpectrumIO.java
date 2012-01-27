@@ -142,5 +142,13 @@ public class SpectrumIO {
 		}
 		out.close();
 		SpectrumIO.fixNkmers(fileOut,nkmers);
+	}
+
+
+	public static Kmer readKmer(DataInput input, int k) throws IOException {
+		byte[] kmer = new byte[k];
+		input.readFully(kmer);
+		long count = input.readLong();
+		return new Kmer(kmer,count);
 	}	
 }

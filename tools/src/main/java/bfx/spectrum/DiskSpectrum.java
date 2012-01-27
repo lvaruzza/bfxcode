@@ -52,12 +52,10 @@ public class DiskSpectrum extends Spectrum {
 		@Override
 		public Kmer next() {
 			try {
-				byte[] kmer = new byte[header.k];
-				input.read(kmer);
-				long count = input.readLong();
+				Kmer r = SpectrumIO.readKmer(input,header.k);
 				pos += header.k + 8;
 				//System.out.println(String.format("file=%d pos=%d",input.getFilePointer(),pos));
-				return new Kmer(kmer,count);
+				return r;
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
