@@ -1,6 +1,8 @@
 package bfx.spectrum;
 
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
@@ -32,28 +34,26 @@ public class DiskSpectrum extends Spectrum {
 	}
 	
 	public static class SpectrumDiskIterator implements Iterator<Kmer> {
-		private RandomAccessFile input;
-		private long pos;
-		private long length;
+		private DataInputStream input;
+		private long readedKmers;
 		private SpectrumHeader header;
 		
 		public SpectrumDiskIterator(File file) throws IOException { 
-			this.input = new RandomAccessFile(file,"r");
-			length = input.length();
+			this.input = new DataInputStream(new FileInputStream(file));
 			header = SpectrumIO.readHeader(input);
-			pos = input.getFilePointer();
+			readedKmers = 0;
 		}
 
 		@Override
 		public boolean hasNext() {
-			return pos < length;
+			return readedKmers < header.nkmers;
 		}
 
 		@Override
 		public Kmer next() {
 			try {
 				Kmer r = SpectrumIO.readKmer(input,header.k);
-				pos += header.k + 8;
+				readedKmers++;
 				//System.out.println(String.format("file=%d pos=%d",input.getFilePointer(),pos));
 				return r;
 			} catch (IOException e) {
