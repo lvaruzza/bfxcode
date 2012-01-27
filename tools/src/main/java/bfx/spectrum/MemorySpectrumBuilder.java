@@ -35,8 +35,7 @@ public class MemorySpectrumBuilder extends SpectrumBuilder  {
 		DataOutputStream dos = new DataOutputStream(out);
 		SpectrumIO.writeHeader(dos,new SpectrumIO.SpectrumHeader(k,nkmers));
 		for(Entry<byte[],Long> pair: map.entrySet()) {
-			dos.write(pair.getKey());
-			dos.writeLong(pair.getValue());
+			SpectrumIO.writeKmer(dos, new Kmer(pair.getKey(),pair.getValue()));
 			if (pc!=null) pc.incr(1);
 		}
 		out.close();
