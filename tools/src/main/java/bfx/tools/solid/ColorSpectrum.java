@@ -47,7 +47,7 @@ public class ColorSpectrum extends Tool {
 		pc.start("Creating Spectrum");
 		
 		seqs.setProgressCounter(pc);
-		spectrum.add(seqs);
+		spectrum.add(seqs,1,0);
 		spectrum.finish();
 		pc.finish();
 		

@@ -2,6 +2,7 @@ package bfx.spectrum;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -58,13 +59,14 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 	
 	public void mergeLevel(int level, int n) throws IOException {
 		log.debug(String.format("n=%d",n));
+		long incr = (long)Math.pow(2, level);
 		
 		for(int i=0;i<n/2;i++) {
 			File a=new File(getPartName(level,2*i));
 			File b=new File(getPartName(level,2*i+1));
 			File out=new File(getPartName(level+1,i));
 			merge(a,b,out);
-			
+			if (pc!=null) pc.incr(incr);
 		}
 		
 		if (n%2==1) {
@@ -78,9 +80,11 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 
 	private int lastLevel=-1;
 	
-	public void mergeAll(int n) throws IOException  {
+	private void mergeAll() throws IOException  {
 		int level=0;
-		for(int i=n;i>=1;i=(int)(i/2.0+0.5),level++) {
+		int n = getNparts();
+		for(int i=n;i>1;i=(int)(i/2.0+0.5),level++) {
+			log.info(String.format("Level %d with %d parts",level,i));
 			mergeLevel(level,i);
 		}
 		lastLevel = level;
@@ -92,16 +96,15 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 	
 	@Override
 	public void save(OutputStream out) throws IOException {
-		IOUtils.copyLarge(new FileInputStream(lastFile()), out);		
+		mergeAll();
+		File lastFile = lastFile();
+		IOUtils.copyLarge(new FileInputStream(lastFile), out);
+		lastFile.delete();
 	}
 	
 	@Override
 	public void save(String outName) throws IOException {
-		File lastFile = lastFile();
-		File out = new File(outName);
-		if (out.exists())
-			out.delete();
-		lastFile.renameTo(out);
+		save(new FileOutputStream(outName));
 	}
 	
 	@Override

@@ -52,4 +52,22 @@ public class TestMapAndMegeSpectrumBuilder {
 		assertTrue(dsk1.equals(dsk2));
 		
 	}
+	
+	@Test
+	public void test1() throws IOException {
+		MapAndMergeSpectrumBuilder sb = new MapAndMergeSpectrumBuilder(3,10,new File("."));
+		sb.add(SequenceSource.fromFile("fasta","data/test/spectrumU3.fasta"));	
+		sb.finish();
+		sb.save("mm.spec");
+		
+		MemorySpectrumBuilder msb = new MemorySpectrumBuilder(3);
+		msb.add(SequenceSource.fromFile("fasta","data/test/spectrumU3.fasta"));	
+		msb.finish();
+		msb.save("fromMemory.spec");
+		
+		DiskSpectrum dsk1 = new DiskSpectrum("mm.spec");
+		DiskSpectrum dsk2 = new DiskSpectrum("fromMemory.spec");
+		
+		assertTrue(dsk1.equals(dsk2));		
+	}
 }
