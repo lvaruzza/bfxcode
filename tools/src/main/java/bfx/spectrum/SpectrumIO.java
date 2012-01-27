@@ -135,9 +135,8 @@ public class SpectrumIO {
 		}  
 		while(rest.hasNext()) {
 			Kmer r = rest.next();
+			SpectrumIO.writeKmer(out, r);
 			//System.out.println(String.format("%s in rest",r));
-			out.write(r.kmer);
-			out.writeLong(r.count);	
 			nkmers++;
 		}
 		out.close();
