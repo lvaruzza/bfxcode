@@ -1,6 +1,7 @@
 package bfx.spectrum;
 
 import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,7 +52,7 @@ public class SpectrumIO {
 	}
 	
 	
-	public static void writeHeader(DataOutputStream dos,SpectrumHeader spectrumHeader) throws IOException {
+	public static void writeHeader(DataOutput dos,SpectrumHeader spectrumHeader) throws IOException {
 		//log.debug("Saving header " + spectrumHeader);
 
 		dos.write(fileSignature);
@@ -59,7 +60,7 @@ public class SpectrumIO {
 		dos.writeLong(spectrumHeader.nkmers);
 	}
 
-	public static void writeKmer(DataOutputStream out,Kmer kmer) throws IOException {
+	public static void writeKmer(DataOutput out,Kmer kmer) throws IOException {
 		out.write(kmer.kmer);
 		out.writeLong(kmer.count);
 	}
