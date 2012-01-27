@@ -1,5 +1,6 @@
 package bfx.spectrum;
 
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,6 +9,8 @@ import java.io.OutputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+
+import bfx.spectrum.SpectrumIO.SpectrumHeader;
 
 public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 	private static Logger log = Logger.getLogger(MapAndMergeSpectrumBuilder.class);
@@ -84,7 +87,7 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 		int level=0;
 		int n = getNparts();
 		for(int i=n;i>1;i=(int)(i/2.0+0.5),level++) {
-			log.info(String.format("Level %d with %d parts",level,i));
+			//log.info(String.format("Level %d with %d parts",level,i));
 			mergeLevel(level,i);
 		}
 		lastLevel = level;
@@ -96,7 +99,6 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 	
 	@Override
 	public void save(OutputStream out) throws IOException {
-		mergeAll();
 		File lastFile = lastFile();
 		IOUtils.copyLarge(new FileInputStream(lastFile), out);
 		lastFile.delete();
@@ -111,7 +113,10 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 	public void finish() throws IOException {
 		// Save the last part
 		log.info(String.format("Kmers in the last part %d",spec.nkmers));
-		if (spec.nkmers>0) savePart();
+		if (spec.nkmers>0) savePart();		
+		mergeAll();
+		SpectrumHeader header = SpectrumIO.readHeader(new DataInputStream(new FileInputStream(lastFile())));
+		this.nkmers = header.nkmers;
 		log.info("Finished building spectrum");
 	}
 

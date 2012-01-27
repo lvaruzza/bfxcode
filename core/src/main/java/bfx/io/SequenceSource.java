@@ -66,6 +66,26 @@ public abstract class SequenceSource implements Iterable<Sequence> {
 	public static SequenceSource fromFile(String format,String filename) {
 		return new FileSequenceSource(format,new File(filename));
 	}	
+
+	/**
+	 * Create a SequenceSource backed by a file.
+	 * 
+	 * @param filename File Name
+	 * @return A FileSequenceSource
+	 */
+	public static SequenceSource fromFile(String filename) {
+		return new FileSequenceSource(new File(filename));
+	}	
+
+	/**
+	 * Create a SequenceSource backed by a file.
+	 * 
+	 * @param file File
+	 * @return A FileSequenceSource
+	 */
+	public static SequenceSource fromFile(File file) {
+		return new FileSequenceSource(file);
+	}	
 	
 	/**
 	 * Create a SequenceSource backed by a file.
