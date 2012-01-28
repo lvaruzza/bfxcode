@@ -55,7 +55,8 @@ public class SubSet extends Tool {
 		log.info(String.format("Started subsampling %.1f%% of sequences",percent*100.0));
 		log.info(TextUtils.doubleLine());
 		
-		ProgressCounter pc = getProgressCounter();
+		ProgressCounter pc = getProgressCounterFactory().get();
+		
 		src.setProgressCounter(pc);
 		pc.start("Reading Sequences");
 		Random rnd = new Random();

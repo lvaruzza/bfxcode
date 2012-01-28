@@ -81,7 +81,7 @@ public class SequenceStat extends Tool {
 		SequenceSource sequences = SequenceSource.fromFile(inputFormat,input,qual);
 
 		StatReport result = new StatReport();
-		ProgressCounter pc = getProgressCounter();
+		ProgressCounter pc = getProgressCounterFactory().get();
 		sequences.setProgressCounter(pc);
 		pc.start("Reading Sequences");
 		for (Sequence s: sequences) {

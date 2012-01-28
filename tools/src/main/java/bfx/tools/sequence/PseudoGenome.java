@@ -54,7 +54,7 @@ public class PseudoGenome extends Tool {
 		FileOutputStream gffout = new FileOutputStream(outputGFF);
 		GFFWriter gffw = new OSGFFWriter();
 		
-		ProgressCounter pc = getProgressCounter();
+		ProgressCounter pc = getProgressCounterFactory().get();
 		pc.start("Reading Sequences");
 		sequences.setProgressCounter(pc);
 		

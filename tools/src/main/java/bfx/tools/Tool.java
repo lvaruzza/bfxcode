@@ -4,14 +4,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-import com.beust.jcommander.Parameter;
-
 import bfx.process.ProgressCounter;
+import bfx.process.ProgressCounterFactory;
+
+import com.beust.jcommander.Parameter;
 
 
 
 public abstract class Tool {
-	protected ProgressCounter pc;
+	protected ProgressCounterFactory pcf;
 	
 	public abstract void run() throws Exception;
 	
@@ -40,11 +41,11 @@ public abstract class Tool {
 		}
 	}
 	
-	public void setProgressCounter(ProgressCounter pc) {
-		this.pc = pc;
+	public void setProgressCounterFactory(ProgressCounterFactory pcf) {
+		this.pcf = pcf;
 	}
 	
-	public ProgressCounter getProgressCounter() {
-		return pc;
+	public ProgressCounterFactory getProgressCounterFactory() {
+		return pcf;
 	}
 }

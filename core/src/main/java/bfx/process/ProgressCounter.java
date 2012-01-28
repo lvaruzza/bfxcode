@@ -14,7 +14,9 @@ public  class ProgressCounter extends Observable {
 	private long count = 0;
 	private long count2 = 0;
 	private long ticks = 0;
-
+	private long startTime;
+	private long elapsedTime;
+	
 	private String name;
 	
 	private boolean finish = false;
@@ -32,6 +34,7 @@ public  class ProgressCounter extends Observable {
 	
 	public void finish() {
 		this.finish = true;
+		elapsedTime = System.currentTimeMillis() - startTime;
 		this.setChanged();
 		this.notifyObservers();		
 	}
@@ -47,22 +50,21 @@ public  class ProgressCounter extends Observable {
 	public boolean isFinished() {
 		return finish;
 	}
-	
-	public void reset() {
-		count = 0;
-		this.finish = false;
-	}
-	
+		
 	public void setUpdateRate(long updateRate) {
 		this.updateRate = updateRate;
 	}
 	
 	public void start(String name) {
 		this.name = name;
-		reset();
+		startTime = System.currentTimeMillis();
 	}
 	
 	public String getProgressName() {
 		return name;
+	}
+	
+	public long getElspsedTimeInMillis() {
+		return elapsedTime;
 	}
 }

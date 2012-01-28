@@ -55,12 +55,10 @@ public class Main {
 	public static void run(Class<? extends Tool> klass,String... args) {
 		try {
 			log.info(String.format("Loading class '%s'",klass.getName()));
-			ProgressCounter pc = new ProgressCounter();
-			CLIProgressBar pb = new CLIProgressBar();
-			pc.addObserver(pb);
+			CLIProgressCounterFactory pcf = new CLIProgressCounterFactory();
 			
 			Tool tool = klass.newInstance();
-			tool.setProgressCounter(pc);
+			tool.setProgressCounterFactory(pcf);
 			
 			// Parse the other args
 			parseArgs(tool,Arrays.copyOfRange(args, 1, args.length));

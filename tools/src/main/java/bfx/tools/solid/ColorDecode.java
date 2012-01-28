@@ -36,7 +36,7 @@ public class ColorDecode extends Tool {
 		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
 		SequenceSink sink =  new FileSequenceSink(outputFormat,output,outputQual);
 
-		ProgressCounter pc = getProgressCounter();
+		ProgressCounter pc = getProgressCounterFactory().get();
 		pc.start(String.format("Conversion from Color Space to Base Space"));
 		
 		src.setProgressCounter(pc);

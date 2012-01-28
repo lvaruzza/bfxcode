@@ -43,15 +43,15 @@ public class ColorSpectrum extends Tool {
 		SequenceSource seqs = SequenceSource.fromFile(format, input);
 		File tempDir = new File(temp);
 		SpectrumBuilder spectrum = new MapAndMergeSpectrumBuilder(k,kmersInMemory,tempDir);
-		ProgressCounter pc = getProgressCounter();
+		ProgressCounter pc = getProgressCounterFactory().get();
 		pc.start("Creating Spectrum");
 		
 		seqs.setProgressCounter(pc);
 		spectrum.add(seqs,1,0);
 		spectrum.finish();
 		pc.finish();
-		
-		pc.reset();
+
+		pc = getProgressCounterFactory().get();
 		pc.start("Saving Spectrum");
 		spectrum.setProgressCounter(pc);		
 		spectrum.save(output);

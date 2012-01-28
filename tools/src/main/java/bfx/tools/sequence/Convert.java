@@ -37,7 +37,7 @@ public class Convert extends Tool {
 		inputFormat = sr.getFormatName();
 		outputFormat = sw.getFormatName();
 				
-		ProgressCounter pc = getProgressCounter();
+		ProgressCounter pc = getProgressCounterFactory().get();
 		sw.setProgressCounter(pc);
 		pc.start(String.format("Sequences conversion from %s format to %s format",inputFormat,outputFormat));
 		sw.write(output,outputQual,sr.read(input,qual));
