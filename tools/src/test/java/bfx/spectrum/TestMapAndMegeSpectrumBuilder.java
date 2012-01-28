@@ -5,14 +5,12 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import bfx.io.SequenceSource;
-import bfx.utils.TextUtils;
 
 public class TestMapAndMegeSpectrumBuilder {
-	private static Logger log = Logger.getLogger(TestMapAndMegeSpectrumBuilder.class);
+	//private static Logger log = Logger.getLogger(TestMapAndMegeSpectrumBuilder.class);
 	
 	/*@Test
 	public void test0() throws IOException {
