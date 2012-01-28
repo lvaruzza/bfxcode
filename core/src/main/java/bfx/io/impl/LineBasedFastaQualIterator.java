@@ -12,7 +12,7 @@ import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastaQualRepr;
 import bfx.impl.SequenceQual;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaQualIterator implements Iterator<Sequence> {
@@ -21,7 +21,7 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 	
 	private LineIterator liseq;
 	private LineIterator liqual;
-	private ProgressCounter pc;
+	private ProgressMeter pc;
 	
 	private ByteBuffer curseq;
 	private ByteBuffer curqual;
@@ -30,13 +30,13 @@ public class LineBasedFastaQualIterator implements Iterator<Sequence> {
 	private String header = "";
 	private boolean first = true;
 	
-	public LineBasedFastaQualIterator(Reader fastaReader, Reader qualReader,ProgressCounter pc) {
+	public LineBasedFastaQualIterator(Reader fastaReader, Reader qualReader,ProgressMeter pc) {
 		this.liseq = IOUtils.lineIterator(fastaReader);
 		this.liqual = IOUtils.lineIterator(qualReader);
 		this.pc = pc;
 	}
 
-	public LineBasedFastaQualIterator(InputStream fastaInput, InputStream qualInput,ProgressCounter pc) throws IOException {
+	public LineBasedFastaQualIterator(InputStream fastaInput, InputStream qualInput,ProgressMeter pc) throws IOException {
 		this.liseq = IOUtils.lineIterator(fastaInput,"ASCII");
 		this.liqual = IOUtils.lineIterator(qualInput,"ASCII");	
 		this.pc = pc;

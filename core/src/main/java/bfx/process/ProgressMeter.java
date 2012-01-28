@@ -9,7 +9,7 @@ import java.util.Observable;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  * 
  */
-public  class ProgressCounter extends Observable {
+public  class ProgressMeter extends Observable {
 	private long updateRate = 1;
 	private long count = 0;
 	private long count2 = 0;

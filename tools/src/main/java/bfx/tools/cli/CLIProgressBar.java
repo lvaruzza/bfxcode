@@ -7,7 +7,7 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.utils.TextUtils;
 
 public class CLIProgressBar implements Observer {
@@ -31,7 +31,7 @@ public class CLIProgressBar implements Observer {
 															.toFormatter();
 															
 	
-	private void printPerformance(ProgressCounter pc) {
+	private void printPerformance(ProgressMeter pc) {
 		long now = System.currentTimeMillis();
 		long elapsed = now - start;
 		Period period = new Period(elapsed);
@@ -42,7 +42,7 @@ public class CLIProgressBar implements Observer {
 		pc.setUpdateRate((long)(rate));		
 	}
 	
-	public void showProgress(ProgressCounter pc) {	
+	public void showProgress(ProgressMeter pc) {	
 		long ticks = pc.getTicks();
 		
 		if (pc.isFinished()) {
@@ -70,7 +70,7 @@ public class CLIProgressBar implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {		
-		ProgressCounter pc=(ProgressCounter)o;
+		ProgressMeter pc=(ProgressMeter)o;
 		showProgress(pc);		
 	}
 

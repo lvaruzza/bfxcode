@@ -8,7 +8,7 @@ import bfx.io.impl.BufferSequenceSource;
 import bfx.io.impl.FileSequenceSource;
 import bfx.io.impl.KmerIterable;
 import bfx.io.impl.KmerWithQualIterable;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.utils.BFXIteratorUtils;
 
 /**
@@ -20,7 +20,7 @@ import bfx.utils.BFXIteratorUtils;
  *
  */
 public abstract class SequenceSource implements Iterable<Sequence> {
-	protected ProgressCounter pc;
+	protected ProgressMeter pm;
 	
 	
 	/**
@@ -28,8 +28,8 @@ public abstract class SequenceSource implements Iterable<Sequence> {
 	 * 
 	 * @param pc ProgressCounter.
 	 */
-	public void setProgressCounter(ProgressCounter pc) {
-		this.pc = pc;
+	public void setProgressMeter(ProgressMeter pc) {
+		this.pm = pc;
 	}
 
 	@Override

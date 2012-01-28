@@ -3,7 +3,7 @@ package bfx.tools.sequence;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceWriter;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.tools.Tool;
 
 import com.beust.jcommander.Parameter;
@@ -37,11 +37,11 @@ public class Convert extends Tool {
 		inputFormat = sr.getFormatName();
 		outputFormat = sw.getFormatName();
 				
-		ProgressCounter pc = getProgressCounterFactory().get();
-		sw.setProgressCounter(pc);
-		pc.start(String.format("Sequences conversion from %s format to %s format",inputFormat,outputFormat));
+		ProgressMeter pm = getProgressMeterFactory().get();
+		sw.setProgressMeter(pm);
+		pm.start(String.format("Sequences conversion from %s format to %s format",inputFormat,outputFormat));
 		sw.write(output,outputQual,sr.read(input,qual));
-		pc.finish();
+		pm.finish();
 	}
 
 	@Override

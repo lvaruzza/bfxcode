@@ -11,7 +11,7 @@ import java.util.ServiceLoader;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.tools.Tool;
 import bfx.utils.TextUtils;
 
@@ -55,10 +55,10 @@ public class Main {
 	public static void run(Class<? extends Tool> klass,String... args) {
 		try {
 			log.info(String.format("Loading class '%s'",klass.getName()));
-			CLIProgressCounterFactory pcf = new CLIProgressCounterFactory();
+			CLIProgressMeterFactory pmf = new CLIProgressMeterFactory();
 			
 			Tool tool = klass.newInstance();
-			tool.setProgressCounterFactory(pcf);
+			tool.setProgressMeterFactory(pmf);
 			
 			// Parse the other args
 			parseArgs(tool,Arrays.copyOfRange(args, 1, args.length));

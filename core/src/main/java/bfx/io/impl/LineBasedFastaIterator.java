@@ -11,28 +11,28 @@ import org.apache.log4j.Logger;
 
 import bfx.Sequence;
 import bfx.impl.SequenceConstQual;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.utils.ByteBuffer;
 
 public class LineBasedFastaIterator implements Iterator<Sequence> {
 	private static Logger log = Logger.getLogger(LineBasedFastaIterator.class);
 	private LineIterator li;
 	private byte defaultQuality;
-	private ProgressCounter pc;
+	private ProgressMeter pc;
 	
 	private ByteBuffer curseq;
 	private String line = "";
 	private String header = "";
 	private boolean first = true;
 	
-	public LineBasedFastaIterator(Reader fastaReader, byte defaultQuality,ProgressCounter pc) {
+	public LineBasedFastaIterator(Reader fastaReader, byte defaultQuality,ProgressMeter pc) {
 		li =  IOUtils.lineIterator(fastaReader);
 		this.defaultQuality = defaultQuality;
 		this.pc = pc;
 		log.info("Progress Counter = " + pc);
 	}
 
-	public LineBasedFastaIterator(InputStream fastaInput, byte defaultQuality,ProgressCounter pc) throws IOException {
+	public LineBasedFastaIterator(InputStream fastaInput, byte defaultQuality,ProgressMeter pc) throws IOException {
 		li =  IOUtils.lineIterator(fastaInput,"ASCII");
 		this.defaultQuality = defaultQuality;
 		this.pc = pc;

@@ -13,24 +13,24 @@ import bfx.Sequence;
 import bfx.exceptions.SequenceProcessingRuntimeException;
 import bfx.impl.FastQRepr;
 import bfx.impl.SequenceQual;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.utils.ByteBuffer;
 
 public class MultiLineBasedFastQIterator implements Iterator<Sequence> {
 	//private static Logger log = Logger.getLogger(LineBasedFastQIterator.class);
 	private LineIterator li;
 	private QualRepr qualrepr;
-	private ProgressCounter pc;
+	private ProgressMeter pc;
 	private long sequenceCount;
 	
-	public MultiLineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding,ProgressCounter pc) {
+	public MultiLineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding,ProgressMeter pc) {
 		li =  IOUtils.lineIterator(fastaReader);
 		qualrepr = new FastQRepr(encoding);
 		this.pc = pc;
 		sequenceCount = 0;
 	}
 
-	public MultiLineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding,ProgressCounter pc) throws IOException {
+	public MultiLineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding,ProgressMeter pc) throws IOException {
 		li =  IOUtils.lineIterator(fastaInput,"ASCII");
 		qualrepr = new FastQRepr(encoding);
 		this.pc = pc;

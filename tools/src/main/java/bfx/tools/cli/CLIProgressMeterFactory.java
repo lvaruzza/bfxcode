@@ -2,7 +2,7 @@ package bfx.tools.cli;
 
 import bfx.process.ProgressMeter;
 
-public class CLIProgressCounterFactory implements
+public class CLIProgressMeterFactory implements
 		bfx.process.ProgressMeterFactory {
 
 	@Override

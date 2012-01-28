@@ -3,12 +3,12 @@ package bfx.spectrum;
 import java.io.PrintStream;
 import java.util.Iterator;
 
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 
 public abstract class Spectrum implements Iterable<Kmer>{
 	protected int k;
 	protected long nkmers;
-	protected ProgressCounter pc;
+	protected ProgressMeter pc;
 	
 	
 	protected Spectrum(int k,long nkmers) {
@@ -38,7 +38,7 @@ public abstract class Spectrum implements Iterable<Kmer>{
 	}
 
 
-	public void setProgressCounter(ProgressCounter pc) {
+	public void setProgressCounter(ProgressMeter pc) {
 		this.pc = pc;
 	}
 

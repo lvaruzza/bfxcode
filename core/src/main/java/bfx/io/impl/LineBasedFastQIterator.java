@@ -12,21 +12,21 @@ import bfx.QualRepr;
 import bfx.Sequence;
 import bfx.impl.FastQRepr;
 import bfx.impl.SequenceQual;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 
 public class LineBasedFastQIterator implements Iterator<Sequence> {
 	//private static Logger log = Logger.getLogger(LineBasedFastQIterator.class);
 	private LineIterator li;
 	private QualRepr qualrepr;
-	private ProgressCounter pc;
+	private ProgressMeter pc;
 	
-	public LineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding,ProgressCounter pc) {
+	public LineBasedFastQIterator(Reader fastaReader,FastQRepr.FastqEncoding encoding,ProgressMeter pc) {
 		li =  IOUtils.lineIterator(fastaReader);
 		qualrepr = new FastQRepr(encoding);
 		this.pc = pc;
 	}
 
-	public LineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding,ProgressCounter pc) throws IOException {
+	public LineBasedFastQIterator(InputStream fastaInput,FastQRepr.FastqEncoding encoding,ProgressMeter pc) throws IOException {
 		li =  IOUtils.lineIterator(fastaInput,"ASCII");
 		qualrepr = new FastQRepr(encoding);
 		this.pc = pc;

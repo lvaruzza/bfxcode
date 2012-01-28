@@ -3,7 +3,7 @@ package bfx.tools.solid;
 import java.io.File;
 
 import bfx.io.SequenceSource;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.spectrum.MapAndMergeSpectrumBuilder;
 import bfx.spectrum.SpectrumBuilder;
 import bfx.tools.Report;
@@ -43,19 +43,19 @@ public class ColorSpectrum extends Tool {
 		SequenceSource seqs = SequenceSource.fromFile(format, input);
 		File tempDir = new File(temp);
 		SpectrumBuilder spectrum = new MapAndMergeSpectrumBuilder(k,kmersInMemory,tempDir);
-		ProgressCounter pc = getProgressCounterFactory().get();
-		pc.start("Creating Spectrum");
+		ProgressMeter pm = getProgressMeterFactory().get();
+		pm.start("Creating Spectrum");
 		
-		seqs.setProgressCounter(pc);
+		seqs.setProgressMeter(pm);
 		spectrum.add(seqs,1,0);
 		spectrum.finish();
-		pc.finish();
+		pm.finish();
 
-		pc = getProgressCounterFactory().get();
-		pc.start("Saving Spectrum");
-		spectrum.setProgressCounter(pc);		
+		pm = getProgressMeterFactory().get();
+		pm.start("Saving Spectrum");
+		spectrum.setProgressCounter(pm);		
 		spectrum.save(output);
-		pc.finish();
+		pm.finish();
 		
 		Report result = spectrum.getReport();
 		result.write(getStdOut(reportOutput), reportFormat);

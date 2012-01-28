@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 import bfx.Sequence;
 import bfx.io.SequenceSource;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.tools.Report;
 import bfx.tools.Tool;
 
@@ -81,9 +81,9 @@ public class SequenceStat extends Tool {
 		SequenceSource sequences = SequenceSource.fromFile(inputFormat,input,qual);
 
 		StatReport result = new StatReport();
-		ProgressCounter pc = getProgressCounterFactory().get();
-		sequences.setProgressCounter(pc);
-		pc.start("Reading Sequences");
+		ProgressMeter pm = getProgressMeterFactory().get();
+		sequences.setProgressMeter(pm);
+		pm.start("Reading Sequences");
 		for (Sequence s: sequences) {
 			result.seqCount++;
 			result.totalLen += s.length();
@@ -109,7 +109,7 @@ public class SequenceStat extends Tool {
 			}			
 			result.averageQual = qualSum * 1.0 / result.seqCount;
 		}
-		pc.finish();
+		pm.finish();
 		
 		result.averageLength = ((double)result.totalLen) /  result.seqCount;
 		result.write(getStdOut(output), outputFormat);

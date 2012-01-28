@@ -13,7 +13,7 @@ import bfx.io.SequenceSource;
 import bfx.io.SequenceWriter;
 import bfx.io.impl.FastaSequenceWriter;
 import bfx.io.impl.OSGFFWriter;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.tools.Tool;
 import bfx.utils.BFXMapUtils;
 import bfx.utils.TextUtils;
@@ -54,9 +54,9 @@ public class PseudoGenome extends Tool {
 		FileOutputStream gffout = new FileOutputStream(outputGFF);
 		GFFWriter gffw = new OSGFFWriter();
 		
-		ProgressCounter pc = getProgressCounterFactory().get();
-		pc.start("Reading Sequences");
-		sequences.setProgressCounter(pc);
+		ProgressMeter pm = getProgressMeterFactory().get();
+		pm.start("Reading Sequences");
+		sequences.setProgressMeter(pm);
 		
 		for(Sequence s: sequences) {
 			int start = sb.getPosition();
@@ -68,7 +68,7 @@ public class PseudoGenome extends Tool {
 					BFXMapUtils.build("transcript_id",s.getId(),"gene_id",s.getId()));
 			gffw.write(gffout, gff);
 		}
-		pc.finish();
+		pm.finish();
 		
 		Sequence r = sb.getConstQual(name, (byte)0);
 		SequenceWriter sw = new FastaSequenceWriter();

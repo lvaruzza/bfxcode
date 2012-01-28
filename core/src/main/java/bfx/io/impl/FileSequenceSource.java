@@ -57,7 +57,7 @@ public class FileSequenceSource extends SequenceSource {
 		this.file1 = file1;
 		this.file2 = null;
 		reader = SequenceFormats.getReaderForFile(file1.getName(),format);
-		reader.setProgressCounter(pc);
+		reader.setProgressMeter(pm);
 	}
 	
 	public FileSequenceSource(String filename) {
@@ -73,7 +73,7 @@ public class FileSequenceSource extends SequenceSource {
 	
 	@Override
 	public Iterator<Sequence> iterator() {
-		reader.setProgressCounter(pc);
+		reader.setProgressMeter(pm);
 		try {
 			if (file2 == null) {
 				return reader.read(file1);

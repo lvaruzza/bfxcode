@@ -3,7 +3,7 @@ package bfx.io;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.utils.io.BaseSingleAndDualReader;
 
 
@@ -15,14 +15,14 @@ import bfx.utils.io.BaseSingleAndDualReader;
  */
 public abstract class SequenceReader extends BaseSingleAndDualReader<Iterator<Sequence>> {
 
-	protected ProgressCounter pc;
+	protected ProgressMeter pc;
 	
 	/**
 	 * Set ProgressCounter to be increment on each sequence.
 	 * 
 	 * @param pc ProgressCounter.
 	 */
-	public void setProgressCounter(ProgressCounter pc) {
+	public void setProgressMeter(ProgressMeter pc) {
 		this.pc = pc;
 	}
 	

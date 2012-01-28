@@ -10,7 +10,7 @@ import java.util.Iterator;
 import bfx.Sequence;
 import bfx.exceptions.FileProcessingIOException;
 import bfx.exceptions.MultipleFilesProcessingIOException;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.utils.io.BaseSingleAndDualWriter;
 
 
@@ -21,7 +21,7 @@ import bfx.utils.io.BaseSingleAndDualWriter;
  *
  */
 public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Sequence>> {
-	protected ProgressCounter pc;
+	protected ProgressMeter pc;
 
 	public void write(File file1, Sequence seq) throws IOException{
 		try {
@@ -50,7 +50,7 @@ public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Se
 	 * 
 	 * @param pc ProgressCounter.
 	 */
-	public void setProgressCounter(ProgressCounter pc) {
+	public void setProgressMeter(ProgressMeter pc) {
 		this.pc = pc;
 	}
 	

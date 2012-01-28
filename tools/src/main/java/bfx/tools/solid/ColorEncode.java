@@ -5,7 +5,7 @@ import bfx.io.SequenceSink;
 import bfx.io.SequenceSource;
 import bfx.io.impl.FileSequenceSink;
 import bfx.io.impl.FileSequenceSource;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.tools.Tool;
 
 import com.beust.jcommander.Parameter;
@@ -36,14 +36,14 @@ public class ColorEncode extends Tool {
 		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
 		SequenceSink sink =  new FileSequenceSink(outputFormat,output,outputQual);
 
-		ProgressCounter pc = getProgressCounterFactory().get();
-		pc.start(String.format("Conversion from Base Space to Color Space"));
-		src.setProgressCounter(pc);
+		ProgressMeter pm = getProgressMeterFactory().get();
+		pm.start(String.format("Conversion from Base Space to Color Space"));
+		src.setProgressMeter(pm);
 		for(Sequence seq: src) {
 			Sequence colorSeq = bfx.seqenc.Color.colorEncode(seq);
 			sink.write(colorSeq);
 		}
-		pc.finish();
+		pm.finish();
 	}
 
 	@Override

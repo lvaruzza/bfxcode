@@ -9,7 +9,7 @@ import bfx.io.SequenceSink;
 import bfx.io.SequenceSource;
 import bfx.io.impl.FileSequenceSink;
 import bfx.io.impl.FileSequenceSource;
-import bfx.process.ProgressCounter;
+import bfx.process.ProgressMeter;
 import bfx.tools.Tool;
 import bfx.utils.TextUtils;
 
@@ -55,16 +55,16 @@ public class SubSet extends Tool {
 		log.info(String.format("Started subsampling %.1f%% of sequences",percent*100.0));
 		log.info(TextUtils.doubleLine());
 		
-		ProgressCounter pc = getProgressCounterFactory().get();
+		ProgressMeter pm = getProgressMeterFactory().get();
 		
-		src.setProgressCounter(pc);
-		pc.start("Reading Sequences");
+		src.setProgressMeter(pm);
+		pm.start("Reading Sequences");
 		Random rnd = new Random();
 		for(Sequence seq: src) {
 			if (rnd.nextFloat() < percent)
 			sink.write(seq);
 		}
-		pc.finish();
+		pm.finish();
 		
 		log.info(TextUtils.doubleLine());
 		log.info("Finished.");
