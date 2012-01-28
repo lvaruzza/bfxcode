@@ -1,5 +1,6 @@
 package bfx.utils;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import org.apache.commons.lang.StringUtils;
@@ -60,5 +61,19 @@ public class TextUtils {
 
 	public static String banner(String message) {
 		return doubleLine() + "\n" + message + "\n" + doubleLine() + "\n";
+	}
+
+	private static String[] bytesUnits={" bytes"," kb"," Mb"," Gb"," Tb"};
+	private static DecimalFormat bytesDf = new DecimalFormat("#.##"); 
+	public static String formatBytes(double bytes) {
+		//System.out.println("bytes = " + bytes);
+		
+		if (bytes == 0) return "0 bytes";
+		if (bytes == 1) return "1 byte";
+		int idx = (int)(Math.log(bytes)/Math.log(2))/10;
+		if (idx > bytesUnits.length-1) idx=bytesUnits.length-1;
+		//System.out.println("idx = " + idx);
+		double x=bytes/Math.pow(2, idx*10);
+		return bytesDf.format(x) + bytesUnits[idx];
 	}	
 }
