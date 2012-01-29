@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import bfx.io.SequenceSource;
 import bfx.process.ProgressMeter;
+import bfx.process.ProgressMeterFactory;
 import bfx.tools.Report;
 
 public abstract class SpectrumBuilder {	
@@ -17,7 +18,8 @@ public abstract class SpectrumBuilder {
 	protected boolean finished = false;
 	protected int k;
 	protected long nkmers;
-	protected ProgressMeter pc;
+	protected ProgressMeterFactory pmf;
+	protected ProgressMeter pm;
 	
 	static public class SpectrumReport extends Report {
 		public long nkmers;
@@ -81,7 +83,14 @@ public abstract class SpectrumBuilder {
 		return finished;
 	}
 
-	public void setProgressCounter(ProgressMeter pc) {
-		this.pc = pc;
+	public void setProgressMeterFactory(ProgressMeterFactory pmf) {
+		this.pmf = pmf;
+	}
+
+	public void start() {
+		if (pmf!=null) {
+			this.pm = pmf.get();
+			pm.start("Building Spectrum");
+		}
 	}
 }

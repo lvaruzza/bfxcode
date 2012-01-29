@@ -50,6 +50,7 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 			savePart();
 			this.spec = new MemorySpectrumBuilder(k);
 		}
+		if (pm!=null) pm.incr(1);
 	}
 
 	public void merge(File a,File b,File out) throws IOException {
@@ -69,7 +70,7 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 			File b=new File(getPartName(level,2*i+1));
 			File out=new File(getPartName(level+1,i));
 			merge(a,b,out);
-			if (pc!=null) pc.incr(incr);
+			if (pm!=null) pm.incr(incr);
 		}
 		
 		if (n%2==1) {
@@ -112,12 +113,15 @@ public class MapAndMergeSpectrumBuilder extends SpectrumBuilder{
 	@Override
 	public void finish() throws IOException {
 		// Save the last part
-		log.info(String.format("Kmers in the last part %d",spec.nkmers));
-		if (spec.nkmers>0) savePart();		
+		//log.info(String.format("Kmers in the last part %d",spec.nkmers));
+		if (spec.nkmers>0) savePart();
+		if (pm!=null) pm.finish();
+		if (pmf!=null) pm=pmf.get();
+		if (pm!=null) pm.start("Merging parts");
 		mergeAll();
 		SpectrumHeader header = SpectrumIO.readHeader(new DataInputStream(new FileInputStream(lastFile())));
 		this.nkmers = header.nkmers;
-		log.info("Finished building spectrum");
+		if (pm!=null) pm.finish();
 	}
 
 	public int getNparts() {

@@ -49,8 +49,7 @@ public class CLIProgressBar implements Observer {
 			System.out.print('.');
 			System.out.print(TextUtils.times(' ', (int)(lineSize-ticks%lineSize)-1));
 			printPerformance(pc);
-			System.out.println();
-			System.out.println(TextUtils.banner("Finished " + pc.getProgressName()));
+			System.out.println("Finished " + pc.getProgressName() +".\n");
 			System.out.flush();
 			start = -1;
 			return;
@@ -58,7 +57,7 @@ public class CLIProgressBar implements Observer {
 		
 		if (start==-1) {
 			start = System.currentTimeMillis();
-			System.out.println(TextUtils.banner("Started " + pc.getProgressName()));
+			System.out.println("\nStarted " + pc.getProgressName() + ":");
 			System.out.flush();
 		}
 		System.out.print('*');

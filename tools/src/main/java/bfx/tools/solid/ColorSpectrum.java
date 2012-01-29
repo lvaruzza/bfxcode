@@ -42,22 +42,20 @@ public class ColorSpectrum extends Tool {
 	public void run() throws Exception {
 		SequenceSource seqs = SequenceSource.fromFile(format, input);
 		File tempDir = new File(temp);
-		SpectrumBuilder spectrum = new MapAndMergeSpectrumBuilder(k,kmersInMemory,tempDir);
+		//SpectrumBuilder spectrumBuilder = new MemorySpectrumBuilder(k);
+		SpectrumBuilder spectrumBuilder = new MapAndMergeSpectrumBuilder(k,kmersInMemory,tempDir);
+		spectrumBuilder.setProgressMeterFactory(getProgressMeterFactory());
+		
 		ProgressMeter pm = getProgressMeterFactory().get();
 		pm.start("Creating Spectrum");
 		
-		seqs.setProgressMeter(pm);
-		spectrum.add(seqs,1,0);
-		spectrum.finish();
-		pm.finish();
+		spectrumBuilder.start();
+		spectrumBuilder.add(seqs,1,0);
+		spectrumBuilder.finish();
 
-		pm = getProgressMeterFactory().get();
-		pm.start("Saving Spectrum");
-		spectrum.setProgressCounter(pm);		
-		spectrum.save(output);
-		pm.finish();
+		spectrumBuilder.save(output);
 		
-		Report result = spectrum.getReport();
+		Report result = spectrumBuilder.getReport();
 		result.write(getStdOut(reportOutput), reportFormat);
 	}
 

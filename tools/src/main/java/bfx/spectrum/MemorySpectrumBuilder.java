@@ -33,16 +33,20 @@ public class MemorySpectrumBuilder extends SpectrumBuilder  {
 			map.put(seq,1l);
 			nkmers++;
 		}
+		if (pm!=null) pm.incr(1);
 	}
 
 	public void save(OutputStream out) throws IOException {
+		if(pmf!=null) pm = pmf.get();
+		if (pm!=null) pm.start("Saving Spectrum");
 		DataOutputStream dos = new DataOutputStream(out);
 		SpectrumIO.writeHeader(dos,new SpectrumIO.SpectrumHeader(k,nkmers));
 		for(Entry<byte[],Long> pair: map.entrySet()) {
 			SpectrumIO.writeKmer(dos, new Kmer(pair.getKey(),pair.getValue()));
-			if (pc!=null) pc.incr(1);
+			if (pm!=null) pm.incr(1);
 		}
 		out.close();
+		if (pm!=null) pm.finish();
 	};
 	
 	public Spectrum getSpectrum() {		
@@ -53,6 +57,7 @@ public class MemorySpectrumBuilder extends SpectrumBuilder  {
 	
 	@Override
 	public void finish() {
+		if (pm!=null) pm.finish();
 		finished = true;
 		System.gc();
 		log.info(String.format("Memory Spectrum Used memory = %s",TextUtils.formatBytes(RuntimeUtils.usedMemory())));
