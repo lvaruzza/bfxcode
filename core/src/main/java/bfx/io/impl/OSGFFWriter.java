@@ -55,13 +55,19 @@ public class OSGFFWriter extends GFFWriter {
 		
 		for(Entry<String,String> attr:attributes.entrySet()) {
 			out.write(attr.getKey().getBytes());
-			out.write('=');
-			out.write(attr.getValue().getBytes());
+			out.write("=\"".getBytes());
+			out.write(escapeString(attr.getValue()).getBytes());
+			out.write('"');
 			if (++i != size)
 				out.write(';');
 		}
 	}
 
+	public String escapeString(String in) {
+		//TODO
+		return in;
+	}
+	
 	@Override
 	public void write(Writer writer, Iterator<GFF> data) throws IOException {
 		// TODO Auto-generated method stub
