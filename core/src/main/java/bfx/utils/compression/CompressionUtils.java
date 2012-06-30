@@ -61,6 +61,40 @@ public class CompressionUtils {
 	}
 	
 	/**
+	 * Open a file for input or return the stdin if the filename is '-'
+	 * 
+	 * @param filename - File name
+	 * @return A InputStrem from the file or the stdin. If file extension contains 
+	 * an extension of a compressed file, it will return appropriated decompressed
+	 * stream.
+	 * @throws IOException
+	 */
+	static public InputStream fileOrStdIn(String filename) throws IOException {
+		if (filename.equals("-")) {
+			log.info("Reading from stdin");
+			return System.in;
+		} else
+			return openInputStream(filename);
+	}
+
+	/**
+	 * Open a file for output or return the stdout if the filename is '-'
+	 * 
+	 * @param filename - File name
+	 * @return A OutputStrem from the file or the stdou. If file extension contains 
+	 * an extension of a compressed file, it will return appropriated compressing
+	 * stream.
+	 * @throws IOException
+	 */
+	static public OutputStream fileOrStdOut(String filename) throws IOException {
+		if (filename.equals("-")) {
+			log.info("Writing to stdout");
+			return System.out;
+		} else
+			return openOutputStream(filename);
+	}
+	
+	/**
 	 * Return the appropriated InputtStream based on file extension
 	 * 
 	 * @param file File to be read
