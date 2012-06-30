@@ -11,12 +11,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfx.utils.ByteUtils;
 
 public class SpectrumIO {
-	private static Logger log = Logger.getLogger(SpectrumIO.class);
+	private static Logger log = LoggerFactory.getLogger(SpectrumIO.class);
 	private static Comparator<byte[]> cmp = new ByteUtils.BytesComparator();
 		
 	public static byte[] fileSignature = "SPEC".getBytes();

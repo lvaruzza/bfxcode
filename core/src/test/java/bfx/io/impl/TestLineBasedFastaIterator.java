@@ -6,7 +6,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ import bfx.io.SequenceReader;
 import bfx.utils.io.TableReader;
 
 public class TestLineBasedFastaIterator {
-	private static Logger log = Logger.getLogger(TestLineBasedFastaIterator.class);
+	private static Logger log = LoggerFactory.getLogger(TestLineBasedFastaIterator.class);
 	
 	SequenceReader reader;
 	TableReader tblReader;
@@ -30,14 +31,14 @@ public class TestLineBasedFastaIterator {
 	public void testReadFromString() throws IOException {
 		Iterator<Sequence> it = reader.readString(">1\nACGT\nCGTT\n>2\nCCCCCC");
 		Sequence seq1 = it.next();
-		log.debug(seq1);		
+		log.debug(seq1.toString());		
 		assertEquals("1",seq1.getId());
 		assertEquals("ACGTCGTT",seq1.getSeqAsString());
 		
 		Sequence seq2 = it.next();
 		assertEquals("2",seq2.getId());
 		assertEquals("CCCCCC",seq2.getSeqAsString());
-		log.debug(seq2);
+		log.debug(seq2.toString());
 	}
 	
 	private void testReadFromFile(String filename,String checkname) throws IOException {

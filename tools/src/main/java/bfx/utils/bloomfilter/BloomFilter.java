@@ -20,12 +20,13 @@ package bfx.utils.bloomfilter;
 
 import java.nio.ByteBuffer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class BloomFilter extends Filter
 {
-    private static final Logger logger = Logger.getLogger(BloomFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(BloomFilter.class);
     private static final int EXCESS = 20;
     static BloomFilterSerializer serializer_ = new BloomFilterSerializer();
 

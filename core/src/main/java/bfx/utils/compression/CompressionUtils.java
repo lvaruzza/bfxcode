@@ -11,7 +11,8 @@ import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utils for handling compressed files.
@@ -20,7 +21,7 @@ import org.apache.log4j.Logger;
  *
  */
 public class CompressionUtils {
-	private static Logger log = Logger.getLogger(CompressionUtils.class);
+	private static Logger log = LoggerFactory.getLogger(CompressionUtils.class);
 	
 	// TODO: improve extension handling. Test extensions against a list of 
 	// known extensions

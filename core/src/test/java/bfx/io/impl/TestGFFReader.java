@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ import bfx.utils.BFXIteratorUtils;
 import bfx.utils.BFXMapUtils;
 
 public class TestGFFReader {
-	private static Logger log = Logger.getLogger(TestGFFReader.class);
+	private static Logger log = LoggerFactory.getLogger(TestGFFReader.class);
 	
 	private LineBasedGFFReader reader;
 	private Iterator<GFF>  it;
@@ -40,7 +41,7 @@ public class TestGFFReader {
 	public void testReadFirst() throws IOException, EmptyIteratorException, EmptyIteratorException {
 		System.out.println();
 		GFF align = BFXIteratorUtils.first(it);
-		log.debug(align);
+		log.debug(align.toString());
 	}
 	
 	private void testParseAttrs1(String line,String geneId,String transcriptId) {

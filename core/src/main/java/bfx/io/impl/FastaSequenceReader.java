@@ -7,7 +7,8 @@ import java.io.Reader;
 import java.util.Iterator;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfx.Sequence;
 import bfx.io.SequenceReader;
@@ -20,7 +21,7 @@ import bfx.utils.compression.CompressionUtils;
  *
  */
 public class FastaSequenceReader extends SequenceReader {
-	private static Logger log = Logger.getLogger(FastaSequenceReader.class);
+	private static Logger log = LoggerFactory.getLogger(FastaSequenceReader.class);
 	
 	private byte defaultQuality = 0;
 	

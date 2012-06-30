@@ -7,8 +7,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
-import org.junit.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+ import org.junit.Before;
 import org.junit.Test;
 
 import bfx.Sequence;
@@ -17,7 +18,7 @@ import bfx.utils.io.TableReader;
 
 
 public class TestLineBasedFastQIterator {
-	private static Logger log = Logger.getLogger(TestLineBasedFastQIterator.class);
+	private static Logger log = LoggerFactory.getLogger(TestLineBasedFastQIterator.class);
 	
 	SequenceReader reader;
 	TableReader tblReader;
@@ -37,7 +38,7 @@ public class TestLineBasedFastQIterator {
 				"5557");
 		
 		Sequence seq1 = it.next();
-		log.debug(seq1);
+		log.debug(seq1.toString());
 		assertEquals("ACGT",seq1.getSeqAsString());
 		assertEquals("20 20 20 22",seq1.getQualAsString());
 	}

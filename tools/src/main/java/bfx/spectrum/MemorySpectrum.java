@@ -9,7 +9,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfx.exceptions.FileProcessingIOException;
 import bfx.spectrum.SpectrumIO.SpectrumHeader;
@@ -19,7 +20,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 
 public class MemorySpectrum extends Spectrum {
-	private static Logger log = Logger.getLogger(MemorySpectrum.class);
+	private static Logger log = LoggerFactory.getLogger(MemorySpectrum.class);
 	
 	private TreeMap<byte[],Long> map = new TreeMap<byte[],Long>(new ByteUtils.BytesComparator());
 

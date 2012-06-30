@@ -8,18 +8,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import bfx.process.ProgressMeter;
 import bfx.tools.Tool;
 import bfx.utils.TextUtils;
+import ch.qos.logback.classic.Level;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 public class Main {
-	private static Logger log = Logger.getLogger(Main.class);
+	private static Logger log = LoggerFactory.getLogger(Main.class);
 	
 	private static ServiceLoader<Tool> toolLoader = ServiceLoader.load(Tool.class);
 	
@@ -35,7 +35,7 @@ public class Main {
 		jc.setProgramName("bfx");
 		try {
 			jc.parse(args);
-			Logger root = Logger.getRootLogger();
+			ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
 			if (tool.verbose) {
 			      root.setLevel(Level.DEBUG);
 			 } else {

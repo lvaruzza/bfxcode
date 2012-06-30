@@ -2,7 +2,8 @@ package bfx.tools.sequence;
 
 import java.util.Random;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfx.Sequence;
 import bfx.io.SequenceSink;
@@ -16,7 +17,7 @@ import bfx.utils.TextUtils;
 import com.beust.jcommander.Parameter;
 
 public class SubSet extends Tool {
-	private static Logger log = Logger.getLogger(SubSet.class);
+	private static Logger log = LoggerFactory.getLogger(SubSet.class);
 	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
 	public String input;

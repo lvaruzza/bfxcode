@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfx.io.SequenceSource;
 import bfx.process.ProgressMeter;
@@ -13,7 +14,7 @@ import bfx.process.ProgressMeterFactory;
 import bfx.tools.Report;
 
 public abstract class SpectrumBuilder {	
-	private static Logger log = Logger.getLogger(Spectrum.class);
+	private static Logger log = LoggerFactory.getLogger(Spectrum.class);
 	
 	protected boolean finished = false;
 	protected int k;

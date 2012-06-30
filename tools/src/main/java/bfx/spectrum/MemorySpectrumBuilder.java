@@ -6,14 +6,15 @@ import java.io.OutputStream;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfx.utils.ByteUtils;
 import bfx.utils.RuntimeUtils;
 import bfx.utils.TextUtils;
 
 public class MemorySpectrumBuilder extends SpectrumBuilder  {
-	private static Logger log = Logger.getLogger(MemorySpectrumBuilder.class);
+	private static Logger log = LoggerFactory.getLogger(MemorySpectrumBuilder.class);
 	
 	private TreeMap<byte[],Long> map = new TreeMap<byte[],Long>(new ByteUtils.BytesComparator());
 	

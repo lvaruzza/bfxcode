@@ -1,13 +1,14 @@
 package bfx;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 
 import bfx.Sequence;
 import static org.junit.Assert.*;
 
 public class TestSequence {
-	private static Logger log = Logger.getLogger(TestSequence.class);
+	private static Logger log = LoggerFactory.getLogger(TestSequence.class);
 	
 	private void testHeader(String header,String id,String comment) {
 		log.debug(String.format("Testing '%s'",header));

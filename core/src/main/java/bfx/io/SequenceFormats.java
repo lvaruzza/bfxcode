@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfx.utils.BFXMapUtils;
 import bfx.utils.compression.CompressionUtils;
@@ -19,7 +20,7 @@ import bfx.utils.compression.CompressionUtils;
  *
  */
 public class SequenceFormats {
-	private static Logger log = Logger.getLogger(SequenceFormats.class);
+	private static Logger log = LoggerFactory.getLogger(SequenceFormats.class);
 	
 	private static Map<String,SequenceReader> extension2reader = new HashMap<String,SequenceReader>();
 	private static Map<String,SequenceWriter> extension2writer = new HashMap<String,SequenceWriter>();

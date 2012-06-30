@@ -6,11 +6,13 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfx.io.SequenceSource;
 
 public class TestMapAndMegeSpectrumBuilder {
-	//private static Logger log = Logger.getLogger(TestMapAndMegeSpectrumBuilder.class);
+	private static Logger log = LoggerFactory.getLogger(TestMapAndMegeSpectrumBuilder.class);
 	
 	/*@Test
 	public void test0() throws IOException {
