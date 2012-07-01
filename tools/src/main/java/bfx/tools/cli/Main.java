@@ -26,7 +26,7 @@ public class Main {
 	private static Map<String,Class<? extends Tool>> commands = new HashMap<String,Class<? extends Tool>>();;
 	
 	public static void addCommand(String name,Class<? extends Tool> klass) {
-		System.err.println(String.format("Registering command '%s' to class '%s'",name,klass.getName()));
+		log.debug(String.format("Registering command '%s' to class '%s'",name,klass.getName()));
 		commands.put(name,klass);
 	}
 	
