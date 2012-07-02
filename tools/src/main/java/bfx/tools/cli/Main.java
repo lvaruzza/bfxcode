@@ -3,7 +3,6 @@ package bfx.tools.cli;
 import static java.lang.System.err;
 import static java.lang.System.exit;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -12,12 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import bfx.tools.Tool;
-import bfx.utils.TextUtils;
-import ch.qos.logback.classic.Level;
 
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.ParameterException;
-
+/**
+ * Entry point for executing the Tools
+ * 
+ * This class will load the list of available tools (searching the class paht using the ServiceLoader)
+ * and them call CLIToolRunner to run the command.
+ * 
+ * @author varuzza
+ *
+ */
 public class Main {
 	private static Logger log = LoggerFactory.getLogger(Main.class);
 	
@@ -25,57 +28,11 @@ public class Main {
 	
 	private static Map<String,Class<? extends Tool>> commands = new HashMap<String,Class<? extends Tool>>();;
 	
-	public static void addCommand(String name,Class<? extends Tool> klass) {
+	private static void addCommand(String name,Class<? extends Tool> klass) {
 		log.debug(String.format("Registering command '%s' to class '%s'",name,klass.getName()));
 		commands.put(name,klass);
 	}
 	
-	public static void parseArgs(Tool tool,String... args) {
-		JCommander jc = new JCommander(tool);
-		jc.setProgramName("bfx");
-		try {
-			jc.parse(args);
-			ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-			if (tool.verbose) {
-			      root.setLevel(Level.DEBUG);
-			 } else {
-			      root.setLevel(Level.INFO);				 
-			 }
-		} catch(ParameterException e) {
-			System.err.println(TextUtils.doubleLine());
-			System.err.print("Command Line error: ");
-			System.err.println(e.getMessage());
-			System.err.println(TextUtils.line());
-			jc.usage();			
-			System.err.println(TextUtils.doubleLine());
-			System.exit(-1);
-		}
-	}
-	
-	/**
-	 * Create a instance of klass, pass args and run it
-	 * 
-	 * @param klass - A class which extends Tool
-	 * @param args - Commnad line argnuments
-	 * 
-	 */
-	public static void run(Class<? extends Tool> klass,String... args) {
-		try {
-			log.info(String.format("Loading class '%s'",klass.getName()));
-			CLIProgressMeterFactory pmf = new CLIProgressMeterFactory();
-			
-			Tool tool = klass.newInstance();
-			tool.setProgressMeterFactory(pmf);
-			
-			// Parse the other args
-			parseArgs(tool,Arrays.copyOfRange(args, 1, args.length));
-
-			tool.run();			
-		} catch(Exception e) {
-			err.println(String.format("Error running tool '%s': %s",args[0],e.getMessage()));
-			e.printStackTrace();
-		}
-	}
 	/**
 	 * 
 	 * The first argument is the tool to be executed.
@@ -95,7 +52,7 @@ public class Main {
 		} else {
 			if (commands.containsKey(args[0])) {
 				Class<? extends Tool> klass = commands.get(args[0]);				
-				run(klass,args);
+				CLIToolRunner.run(klass,args);
 			} else {
 				err.println(String.format("Invalid tool name '%s'",args[0]));
 				listValidCommands();				
@@ -105,6 +62,7 @@ public class Main {
 		
 	}
 
+	
 	private static void listValidCommands() {
 		System.err.println("Valid commands:");
 		for(String cmd: commands.keySet() ) {
