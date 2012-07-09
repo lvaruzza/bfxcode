@@ -62,7 +62,7 @@ public class CLIToolRunner {
 			tool.setProgressMeterFactory(pmf);
 			
 			// Parse the other args
-			parseArgs(tool,Arrays.copyOfRange(args, 1, args.length));
+			parseArgs(tool,args);
 
 			tool.run();			
 		} catch(Exception e) {

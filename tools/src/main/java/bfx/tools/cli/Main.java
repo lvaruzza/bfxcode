@@ -3,6 +3,7 @@ package bfx.tools.cli;
 import static java.lang.System.err;
 import static java.lang.System.exit;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -52,7 +53,7 @@ public class Main {
 		} else {
 			if (commands.containsKey(args[0])) {
 				Class<? extends Tool> klass = commands.get(args[0]);				
-				CLIToolRunner.run(klass,args);
+				CLIToolRunner.run(klass,Arrays.copyOfRange(args, 1, args.length));
 			} else {
 				err.println(String.format("Invalid tool name '%s'",args[0]));
 				listValidCommands();				
