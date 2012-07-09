@@ -71,7 +71,7 @@ public class CompressionUtils {
 	 * @throws IOException
 	 */
 	static public InputStream fileOrStdIn(String filename) throws IOException {
-		if (filename.equals("-")) {
+		if (filename == null || filename.equals("-")) {
 			log.info("Reading from stdin");
 			return System.in;
 		} else
@@ -88,7 +88,7 @@ public class CompressionUtils {
 	 * @throws IOException
 	 */
 	static public OutputStream fileOrStdOut(String filename) throws IOException {
-		if (filename.equals("-")) {
+		if (filename == null || filename.equals("-")) {
 			log.info("Writing to stdout");
 			return System.out;
 		} else

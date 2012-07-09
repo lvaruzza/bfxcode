@@ -10,6 +10,7 @@ import bfx.exceptions.MultipleFilesProcessingRuntimeException;
 import bfx.io.SequenceFormats;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceSource;
+import bfx.utils.compression.CompressionUtils;
 
 public class FileSequenceSource extends SequenceSource {
 
@@ -60,25 +61,35 @@ public class FileSequenceSource extends SequenceSource {
 		reader.setProgressMeter(pm);
 	}
 	
-	public FileSequenceSource(String filename) {
+
+	
+	public FileSequenceSource(final String filename) {
 		setup(new File(filename));
 	}
-
-	public FileSequenceSource(String format,String filename1,String filename2) {
+	
+	public FileSequenceSource(final String format,final String filename1,final String filename2) {
 		if (filename2 == null)
 			setup(format,new File(filename1));
 		else
 			setup(format,new File(filename1),new File(filename2));
 	}
 	
+	public FileSequenceSource(String format, String filename) {
+		setup(format,new File(filename));
+	}
+
 	@Override
 	public Iterator<Sequence> iterator() {
 		reader.setProgressMeter(pm);
 		try {
 			if (file2 == null) {
-				return reader.read(file1);
+				if (file1 == null)
+					return reader.read(System.in);
+				else
+					return reader.read(CompressionUtils.openInputStream(file1));
 			} else { 
-				return reader.read(file1,file2);
+				return reader.read(CompressionUtils.openInputStream(file1),
+								   CompressionUtils.openInputStream(file2));
 			}
 		} catch(IOException e) {
 			if (file2 == null)

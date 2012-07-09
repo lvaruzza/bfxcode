@@ -1,11 +1,13 @@
 package bfx.io;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Iterator;
 
 import bfx.Sequence;
 import bfx.io.impl.BufferSequenceSource;
 import bfx.io.impl.FileSequenceSource;
+import bfx.io.impl.InputStreamSequenceSource;
 import bfx.io.impl.KmerIterable;
 import bfx.io.impl.KmerWithQualIterable;
 import bfx.process.ProgressMeter;
@@ -77,6 +79,19 @@ public abstract class SequenceSource implements Iterable<Sequence> {
 		return new FileSequenceSource(new File(filename));
 	}	
 
+	
+	public static SequenceSource fromFileOrStdin(String format,String filename) {
+		if (filename == null || filename.equals("-"))
+			return new InputStreamSequenceSource(format,System.in);
+		else
+			return new FileSequenceSource(format,filename);
+	}
+
+	public static SequenceSource fromStream(String format,InputStream input) {
+		return new InputStreamSequenceSource(format,input);		
+	}
+
+	
 	/**
 	 * Create a SequenceSource backed by a file.
 	 * 

@@ -29,6 +29,9 @@ public class SequenceStat extends Tool {
 		
 		private static DecimalFormat df = new DecimalFormat();
 		
+		/**
+		 * Resulting Report
+		 */
 		public StatReport() {
 			symbols = new TreeMap<Character,Long>();
 			minSequenceLength = Integer.MAX_VALUE;

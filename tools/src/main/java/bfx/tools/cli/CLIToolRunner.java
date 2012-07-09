@@ -4,6 +4,7 @@ import static java.lang.System.err;
 
 import java.util.Arrays;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +77,8 @@ public class CLIToolRunner {
 	 * @param args
 	 */
 	public static void run(final Class<? extends Tool> klass,final String args) {
-		run(klass,args.split("\\s+"));
+		String[] splited = args.split("\\s+");
+		log.info(StringUtils.join(splited, ","));
+		run(klass,splited);
 	}
 }
