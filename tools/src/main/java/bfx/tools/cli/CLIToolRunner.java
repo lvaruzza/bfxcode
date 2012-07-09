@@ -2,8 +2,6 @@ package bfx.tools.cli;
 
 import static java.lang.System.err;
 
-import java.util.Arrays;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,7 +64,8 @@ public class CLIToolRunner {
 
 			tool.run();			
 		} catch(Exception e) {
-			err.println(String.format("Error running tool '%s': %s",args[0],e.getMessage()));
+			err.println(String.format("Error running tool '%s': %s",
+					klass.getName(),e.getMessage()));
 			e.printStackTrace();
 		}
 	}
