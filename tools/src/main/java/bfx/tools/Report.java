@@ -4,22 +4,39 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * General Report supporting several output formats.
+ * 
+ * Should be inherit by the concrete Reports
+ * @author varuzza
+ *
+ */
 public abstract class Report {
-	/*
+	/**
 	 * Write the report in Human Readable Format
+	 * 
+	 * @param out - Output Writer
+	 * 
 	 */
 	public abstract void writeHuman(PrintWriter out);
 
+	/**
+	 * List of supported formats
+	 * @author varuzza
+	 *
+	 */
 	public static enum Format {
 		JSON, HUMAN
 	};
 
-	private static ObjectMapper mapper = new ObjectMapper();
-
-	public void writeJSON(OutputStream out) throws IOException {
-		out.write(mapper.writeValueAsBytes(this));
+	protected ObjectMapper getMapper() {
+		return new ObjectMapper();
+	}
+	
+	public void writeJSON(final OutputStream out) throws IOException {
+		out.write(getMapper().writeValueAsBytes(this));
 		out.write('\n');
 		out.flush();
 	}
