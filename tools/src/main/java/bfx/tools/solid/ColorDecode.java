@@ -1,5 +1,7 @@
 package bfx.tools.solid;
 
+import java.util.Arrays;
+
 import bfx.Sequence;
 import bfx.io.SequenceSink;
 import bfx.io.SequenceSource;
@@ -31,6 +33,9 @@ public class ColorDecode extends Tool {
 	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")
 	public String outputFormat;
 	
+	@Parameter(names={"--trim","-T"},description="")
+	public boolean trimFirst = false;
+	
 	@Override
 	public void run() throws Exception {
 		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
@@ -42,7 +47,13 @@ public class ColorDecode extends Tool {
 		src.setProgressMeter(pm);
 		for(Sequence seq: src) {
 			Sequence baseSeq = bfx.seqenc.Color.colorDecode(seq);
-			sink.write(baseSeq);
+			if (trimFirst) {
+				byte[] s = baseSeq.getSeq();
+				Sequence trimmed = baseSeq.changeSeq(Arrays.copyOfRange(s, 1, s.length));
+				sink.write(trimmed);
+			} else {
+				sink.write(baseSeq);
+			}
 		}
 		pm.finish();
 	}
