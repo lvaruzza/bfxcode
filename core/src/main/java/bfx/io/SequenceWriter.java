@@ -68,4 +68,10 @@ public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Se
 	 * @return Format name
 	 */
 	abstract public String getFormatName();
+	
+	
+	@Override
+	public String toString() {
+		return String.format("<SequenceWriter for %s format>",getFormatName());
+	}
 }
