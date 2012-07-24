@@ -1,5 +1,7 @@
 package bfx.tools.solid;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import bfx.Sequence;
 import bfx.io.SequenceSink;
 import bfx.io.SequenceSource;
@@ -30,6 +32,9 @@ public class ColorEncode extends Tool {
 	
 	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")
 	public String outputFormat;
+
+	@Parameter(names = {"--prefix","-P"}, description = "Add a prefix character before every color-space sequence")
+	public String prefix = null;
 	
 	@Override
 	public void run() throws Exception {
@@ -41,7 +46,16 @@ public class ColorEncode extends Tool {
 		src.setProgressMeter(pm);
 		for(Sequence seq: src) {
 			Sequence colorSeq = bfx.seqenc.Color.colorEncode(seq);
-			sink.write(colorSeq);
+			if (prefix == null) {
+				if (prefix.length() != 1)
+					throw new RuntimeException("You can only add a single letter prefix (to be consistent with SOLiD data)");
+				byte prfx = (byte)prefix.charAt(0);
+				Sequence prefixed = colorSeq.changeSeq(ArrayUtils.add(colorSeq.getSeq(),0,prfx));
+				sink.write(prefixed);
+			} else {
+				sink.write(colorSeq);
+			}
+			
 		}
 		pm.finish();
 	}
