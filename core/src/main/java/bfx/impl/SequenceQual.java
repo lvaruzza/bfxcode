@@ -62,4 +62,13 @@ public class SequenceQual extends Sequence {
 	public Sequence changeSeq(byte[] newseq) {
 		return new SequenceQual(this.getId(),this.getComments(),newseq,getQual());
 	}
+
+	@Override
+	public double meanQuality() {
+		int sum = 0;
+		for(int i=0;i<qual.length;i++) {
+			sum += qual[i];
+		}
+		return sum*1.0/qual.length;
+	}
 }

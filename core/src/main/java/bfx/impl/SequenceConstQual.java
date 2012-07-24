@@ -77,4 +77,9 @@ public class SequenceConstQual extends Sequence {
 		return "Sequence [Id=" + getId() + ", seq=" +
 				getSeqAsString() + ", qual=" + qual + "]";
 	}
+
+	@Override
+	public double meanQuality() {
+		return (double)qual;
+	}
 }

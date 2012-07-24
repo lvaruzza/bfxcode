@@ -312,5 +312,8 @@ public abstract class Sequence {
 	 */
 	public static Sequence make(String text, String qual) {
 		return new SequenceQual("", text, qual);
-	}	
+	}
+
+
+	abstract public double meanQuality();
 }
