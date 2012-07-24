@@ -30,9 +30,7 @@ public class FileSequenceSink extends SequenceSink {
 	private SequenceWriter writer;
 	
 	private void setup(File file1,File file2) {
-		this.file1 = file1;
-		this.file2 = file2;
-		writer = SequenceFormats.getWriterForFile(file1.getName());
+		setup(null,file1,file2);
 	}
 
 	private void setup(String format,File file1,File file2) {
