@@ -1,7 +1,9 @@
 package bfx.tools.sequence;
 
-import java.util.Random;
+import java.io.File;
+import java.io.PrintWriter;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,12 +13,25 @@ import bfx.io.SequenceSource;
 import bfx.io.impl.FileSequenceSink;
 import bfx.io.impl.FileSequenceSource;
 import bfx.process.ProgressMeter;
+import bfx.tools.Report;
 import bfx.tools.Tool;
 import bfx.utils.TextUtils;
 
 import com.beust.jcommander.Parameter;
 
 public class Filter extends Tool {
+	
+	public static class FilterReport extends Report{
+		public long total;
+		public long filtered;
+		
+		@Override
+		public void writeHuman(PrintWriter out) {
+			out.println(String.format("Total\t%d",total));
+			out.println(String.format("Filtered\t%d (%.1f)",filtered,filtered*100.0/total));
+		}
+	}
+	
 	private static Logger log = LoggerFactory.getLogger(Filter.class);
 	
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
@@ -38,7 +53,7 @@ public class Filter extends Tool {
 	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")
 	public String outputFormat;
 
-	@Parameter(names = {"--outputFormat","-q"}, description = "Minimal Mean Quality")
+	@Parameter(names = {"--minMeanQaul","--mean"}, description = "Minimal Mean Quality")
 	public float mmq;
 
 	@Override
@@ -46,14 +61,35 @@ public class Filter extends Tool {
 		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
 		SequenceSink sink =  new FileSequenceSink(outputFormat,output,outputQual);
 				
+		ProgressMeter pm = getProgressMeterFactory().get();
+		
+		src.setProgressMeter(pm);
+		FilterReport report = new FilterReport();
+		
 		for(Sequence seq: src) {
-			if (seq.meanQuality() >= mmq)
+			double m = seq.meanQuality(); 
+			log.debug(String.format("%s MQ=%.1f",seq.getId(),m));
+			if ( m >= mmq) {
 				sink.write(seq);
+			} else {
+				report.filtered++;
+			}
+			report.total++;
 		}
+		// in case of all filtered, zeroe the output file.
+		if (report.filtered == report.total) {
+			FileUtils.openOutputStream(new File(output)).write("".getBytes());
+			if (outputQual!=null) {
+				FileUtils.openOutputStream(new File(outputQual)).write("".getBytes());
+			}
+		}
+		pm.finish();
 		
 		log.info(TextUtils.doubleLine());
 		log.info("Finished.");
 		log.info(TextUtils.doubleLine());
+		
+		report.write(System.out, Report.Format.HUMAN);
 	}
 
 	@Override
