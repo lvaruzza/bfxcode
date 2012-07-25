@@ -79,7 +79,7 @@ public class Filter extends Tool {
 		for(Sequence seq: src) {
 			double m = seq.meanQuality(); 
 			if (logQualOut != null)
-				logQualOut.println(String.format("%s\t%.2f\t%b",seq.getId(),m,m>=mmq));
+				logQualOut.println(String.format("%s\t%.2f\t%d",seq.getId(),m,m>=mmq ? 1 : 0));
 			if ( m >= mmq) {
 				sink.write(seq);
 			} else {
