@@ -1,6 +1,8 @@
 package bfx.tools.sequence;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 
 import org.apache.commons.io.FileUtils;
@@ -56,6 +58,9 @@ public class Filter extends Tool {
 	@Parameter(names = {"--minMeanQaul","--mean"}, description = "Minimal Mean Quality")
 	public float mmq;
 
+	@Parameter(names = {"--logQual"}, description = "Log qual values to file")
+	public String logQual;
+	
 	@Override
 	public void run() throws Exception {
 		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
@@ -66,9 +71,15 @@ public class Filter extends Tool {
 		src.setProgressMeter(pm);
 		FilterReport report = new FilterReport();
 		
+		PrintStream logQualOut = null;
+		
+		if(logQual != null)
+			logQualOut = new PrintStream(new FileOutputStream(logQual));
+		
 		for(Sequence seq: src) {
 			double m = seq.meanQuality(); 
-			log.debug(String.format("%s MQ=%.1f",seq.getId(),m));
+			if (logQualOut != null)
+				logQualOut.println(String.format("%s\t%.2f\t%d",seq.getId(),m,m>=mmq));
 			if ( m >= mmq) {
 				sink.write(seq);
 			} else {
@@ -76,6 +87,8 @@ public class Filter extends Tool {
 			}
 			report.total++;
 		}
+		if (logQualOut != null) logQualOut.close();
+		
 		// in case of all filtered, zeroe the output file.
 		if (report.filtered == report.total) {
 			FileUtils.openOutputStream(new File(output)).write("".getBytes());
