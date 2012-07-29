@@ -4,11 +4,26 @@
 	<groupId>bfxcode</groupId>
 	<artifactId>tools</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
+	
+	<repositories>
+		<repository>
+			<id>Scala Tools</id>
+			<url>https://oss.sonatype.org/content/groups/scala-tools/</url>
+		</repository>
+	</repositories>
+	
 	<dependencies>
+	
 		<dependency>
 			<groupId>bfxcode</groupId>
 			<artifactId>core</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.weiglewilczek.slf4s</groupId>
+			<artifactId>slf4s_2.9.1</artifactId>
+			<version>1.0.7</version>
 		</dependency>
 
 		<dependency>
@@ -31,6 +46,23 @@
 			<artifactId>joda-time</artifactId>
 			<version>2.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-scala</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.13</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.3.0</version>
+		</dependency>		
 	</dependencies>
 
 	<properties>
@@ -41,6 +73,24 @@
 		<!-- <sourceEncoding>UTF-8</sourceEncoding> -->
 
 		<plugins>
+				<plugin>
+				<groupId>org.scala-tools</groupId>
+				<artifactId>maven-scala-plugin</artifactId>
+				<version>2.15.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<scalaVersion>2.9.2</scalaVersion>
+				</configuration>
+
+			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -54,8 +104,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 

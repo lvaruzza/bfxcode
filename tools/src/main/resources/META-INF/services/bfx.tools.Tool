@@ -6,3 +6,5 @@ bfx.tools.solid.ColorDecode
 bfx.tools.solid.ColorEncode
 bfx.tools.solid.ColorSpectrum
 bfx.tools.spectrum.SpectrumDumper
+bfx.tools.blast.BlastHitCount
+bfx.tools.assembly.AssemblyStats
