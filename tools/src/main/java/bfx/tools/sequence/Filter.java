@@ -56,7 +56,7 @@ public class Filter extends Tool {
 	public String outputFormat;
 
 	@Parameter(names = {"--minMeanQaul","--mean"}, description = "Minimal Mean Quality")
-	public float mmq;
+	public float mmq = 0;
 
 	@Parameter(names = {"--logQual"}, description = "Log qual values to file")
 	public String logQual;
