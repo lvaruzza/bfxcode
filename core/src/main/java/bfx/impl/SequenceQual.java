@@ -1,6 +1,8 @@
 package bfx.impl;
 
 import bfx.Sequence;
+import bfx.utils.stat.OnlineMean;
+import bfx.utils.stat.UnivariableStat;
 
 public class SequenceQual extends Sequence {
 	//private static Logger log = Logger.getLogger(SequenceQualImpl.class);
@@ -65,10 +67,10 @@ public class SequenceQual extends Sequence {
 
 	@Override
 	public double meanQuality() {
-		int sum = 0;
+		UnivariableStat mean = new OnlineMean();
 		for(int i=0;i<qual.length;i++) {
-			sum += qual[i];
+			mean.add(qual[i]);
 		}
-		return sum*1.0/qual.length;
+		return mean.get();
 	}
 }
