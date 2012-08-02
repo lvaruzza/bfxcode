@@ -55,9 +55,15 @@ public class Filter extends Tool {
 	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")
 	public String outputFormat;
 
-	@Parameter(names = {"--minMeanQaul","--mean"}, description = "Minimal Mean Quality")
-	public float mmq = 0;
+	@Parameter(names = {"-e"}, description = "Filter by a generic Filter Expression (advanced)")
+	public String filterExpr;
 
+	@Parameter(names = {"-Q"}, description = "Filter by minimum mean quality")
+	public Float minQuality = null;
+
+	@Parameter(names = {"-L"}, description = "Filter by minimum read length")
+	public Integer minLength = null;
+	
 	@Parameter(names = {"--logQual"}, description = "Log qual values to file")
 	public String logQual;
 	
@@ -73,14 +79,31 @@ public class Filter extends Tool {
 		
 		PrintStream logQualOut = null;
 		
+		FilterCompiler compiler = new FilterCompiler();
+		
+		FilterExpr filter;
+		
+		if (filterExpr != null) { 
+			filter = compiler.compile(filterExpr);
+		} else {
+			if (minQuality != null && minLength != null) {
+				filter = compiler.compile(String.format("length >= %d && meanQuality >= %f",minLength,minQuality));
+			} else if (minQuality != null) {
+				filter = compiler.compile(String.format("meanQuality >= %f",minQuality));
+			} else if (minLength != null) {
+				filter = compiler.compile(String.format("length >= %d",minLength));
+			} else
+				throw new RuntimeException("You need to specify -Q, -L or -e in command line.");
+		}
+		
 		if(logQual != null)
 			logQualOut = new PrintStream(new FileOutputStream(logQual));
 		
 		for(Sequence seq: src) {
 			double m = seq.meanQuality(); 
 			if (logQualOut != null)
-				logQualOut.println(String.format("%s\t%.2f\t%d",seq.getId(),m,m>=mmq ? 1 : 0));
-			if ( m >= mmq) {
+				logQualOut.println(String.format("%s\t%.2f\t%d",seq.getId(),m,filter.filter(seq) ? 1 : 0));
+			if ( filter.filter(seq)) {
 				sink.write(seq);
 			} else {
 				report.filtered++;

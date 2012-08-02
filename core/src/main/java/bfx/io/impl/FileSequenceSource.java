@@ -2,6 +2,7 @@ package bfx.io.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 
 import bfx.Sequence;
@@ -77,6 +78,7 @@ public class FileSequenceSource extends SequenceSource {
 	public FileSequenceSource(String format, String filename) {
 		setup(format,new File(filename));
 	}
+
 
 	@Override
 	public Iterator<Sequence> iterator() {

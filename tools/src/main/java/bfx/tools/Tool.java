@@ -52,6 +52,14 @@ public abstract class Tool {
 		return CompressionUtils.fileOrStdOut(filename);
 	}
 
+	public OutputStream maybeOutput(String filename) throws IOException {
+		return (filename == null) ? null : CompressionUtils.openOutputStream(filename);
+	}
+	
+	public InputStream maybeInput(String filename) throws IOException {
+		return (filename == null) ? null : CompressionUtils.openInputStream(filename);
+	}
+	
 	/**
 	 * Return a FileInputStrem from filename or stdin if filename is null or "-"
 	 * If filename ends of a  compressed file extension it will return the proper 
