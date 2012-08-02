@@ -1,5 +1,8 @@
 package bfx.utils;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
@@ -75,5 +78,23 @@ public class TextUtils {
 		//System.out.println("idx = " + idx);
 		double x=bytes/Math.pow(2, idx*10);
 		return bytesDf.format(x) + bytesUnits[idx];
-	}	
+	}
+	
+	public static String digest(String text,String algorithm) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance(algorithm);
+	        digest.reset();
+			return String.format("%032x",new BigInteger(1,digest.digest(text.getBytes())));
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException("Missing MD5 algorithm",e);
+		}		
+	}
+
+	public static String md5(String text) {
+		return digest(text,"sha1");
+	}
+	
+	public static String sha1(String text) {
+		return digest(text,"sha1");
+	}
 }
