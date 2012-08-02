@@ -1,4 +1,4 @@
-package bfx.tools.sequence;
+package bfx.tools.sequence.filter;
 
 import java.io.File;
 import java.io.FileOutputStream;
