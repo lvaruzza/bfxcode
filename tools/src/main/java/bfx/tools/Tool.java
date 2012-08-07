@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import bfx.io.SequenceSink;
+import bfx.io.impl.FileSequenceSink;
+import bfx.io.impl.StreamSequenceSink;
 import bfx.process.ProgressMeterFactory;
 import bfx.utils.compression.CompressionUtils;
 
@@ -59,6 +62,19 @@ public abstract class Tool {
 	public InputStream maybeInput(String filename) throws IOException {
 		return (filename == null) ? null : CompressionUtils.openInputStream(filename);
 	}
+	
+	protected SequenceSink getSequenceSink(String outputFormat, String output,
+			String outputQual) {
+		
+		if (output == null) { 
+			getProgressMeterFactory().disable();
+			return new StreamSequenceSink(outputFormat);
+		} else {
+			return new FileSequenceSink(outputFormat, output, outputQual);
+		}
+	}
+
+
 	
 	/**
 	 * Return a FileInputStrem from filename or stdin if filename is null or "-"

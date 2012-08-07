@@ -115,7 +115,7 @@ public class FastQSequenceWriter extends SequenceWriter {
 	}
 
 	@Override
-	public String[] getPreferedExtensions() {
+	public String[] getPreferedExtensionsList() {
 		return FastQSequenceReader.fastQExtensions;
 	}
 

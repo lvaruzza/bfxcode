@@ -91,7 +91,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<scalaVersion>2.9.2</scalaVersion>
+					<scalaVersion>2.9.1</scalaVersion>
 				</configuration>
 
 			</plugin>
@@ -187,6 +187,7 @@
 										</versionRange>
 										<goals>
 											<goal>compile</goal>
+											<goal>testCompile</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

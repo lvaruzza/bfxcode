@@ -160,7 +160,7 @@ public class FastaSequenceWriter extends SequenceWriter {
 	}
 
 	@Override
-	public String[] getPreferedExtensions() {
+	public String[] getPreferedExtensionsList() {
 		return FastaSequenceReader.fastaExtensions;
 	}
 

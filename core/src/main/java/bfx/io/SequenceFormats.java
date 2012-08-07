@@ -38,7 +38,7 @@ public class SequenceFormats {
 		
 		for(SequenceWriter writer: sequenceWriterLoader) {
 			log.debug("Registering sequence writer: " + writer.getClass().getName());
-			for(String ext: writer.getPreferedExtensions()) {
+			for(String ext: writer.getPreferedExtensionsList()) {
 				extension2writer.put(ext,writer);
 			}
 		}		
@@ -130,5 +130,10 @@ public class SequenceFormats {
 		SequenceWriter writer = getWriter(ext);
 		log.info("Using SequenceReader: " + writer.getClass().getName());
 		return writer;
+	}
+
+	public static String getFormatForFile(String filename) {
+		String ext = FilenameUtils.getExtension(CompressionUtils.uncompressedFilename(filename));
+		
 	}
 }

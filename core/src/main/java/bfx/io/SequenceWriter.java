@@ -25,7 +25,9 @@ public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Se
 
 	public void write(File file1, Sequence seq) throws IOException{
 		try {
-			write(new FileOutputStream(file1),seq);
+			OutputStream out = new FileOutputStream(file1);
+			write(out,seq);
+			out.close();
 		} catch(IOException e) {
 			throw new FileProcessingIOException(e,file1);
 		}
@@ -33,7 +35,11 @@ public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Se
 	
 	public void write(File file1, File file2, Sequence seq) throws IOException{
 		try {
-			write(new FileOutputStream(file1),file2==null ? null : new FileOutputStream(file2),seq);
+			OutputStream out1 = new FileOutputStream(file1);
+			OutputStream out2 = file2==null ? null : new FileOutputStream(file2); 
+			write(out1,out2,seq);
+			out1.close();
+			if (out2!=null) out2.close();
 		} catch(IOException e) {
 			throw new MultipleFilesProcessingIOException(e,file1,file2);
 		}
@@ -60,7 +66,7 @@ public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Se
 	 *   
 	 * @return List of file extensions.
 	 */
-	abstract public String[] getPreferedExtensions();
+	abstract public String[] getPreferedExtensionsList();
 	
 	/**
 	 * Name for this format
@@ -73,5 +79,9 @@ public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Se
 	@Override
 	public String toString() {
 		return String.format("<SequenceWriter for %s format>",getFormatName());
+	}
+
+	public String getPreferedExtension() {
+		return getPreferedExtensionsList()[0];
 	}
 }
