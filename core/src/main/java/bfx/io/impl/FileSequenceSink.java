@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import bfx.Sequence;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceSink;
 import bfx.io.SequenceWriter;
 
@@ -36,14 +36,14 @@ public class FileSequenceSink extends SequenceSink {
 	private void setup(String format,File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
-		writer = SequenceFormats.getWriterForFile(file1.getName(),format);
+		writer = SequenceFormat.getWriterForFile(file1.getName(),format);
 		log.debug(String.format("New writer %s for files %s and %s",writer,file1,file2));
 	}
 	
 	private void setup(File file1) {
 		this.file1 = file1;
 		this.file2 = null;
-		writer = SequenceFormats.getWriterForFile(file1.getName());
+		writer = SequenceFormat.getWriterForFile(file1.getName());
 		log.debug(String.format("New writer %s for file %s",writer,file1));
 	}
 	

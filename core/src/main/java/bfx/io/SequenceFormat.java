@@ -19,29 +19,20 @@ import bfx.utils.compression.CompressionUtils;
  * @author Leonardo Varuzza <varuzza@gmail.com>
  *
  */
-public class SequenceFormats {
-	private static Logger log = LoggerFactory.getLogger(SequenceFormats.class);
+abstract public class SequenceFormat {
+	private static Logger log = LoggerFactory.getLogger(SequenceFormat.class);
 	
-	private static Map<String,SequenceReader> extension2reader = new HashMap<String,SequenceReader>();
-	private static Map<String,SequenceWriter> extension2writer = new HashMap<String,SequenceWriter>();
+	private static Map<String,SequenceFormat> extension2format = new HashMap<String,SequenceFormat>();
 			
-	private static ServiceLoader<SequenceReader> sequenceReaderLoader = ServiceLoader.load(SequenceReader.class);
-	private static ServiceLoader<SequenceWriter> sequenceWriterLoader = ServiceLoader.load(SequenceWriter.class);
+	private static ServiceLoader<SequenceFormat> sequenceFormats = ServiceLoader.load(SequenceFormat.class);
 	
 	static {
-		for(SequenceReader reader: sequenceReaderLoader) {
-			log.debug("Registering sequence reader: " + reader.getClass().getName());
-			for(String ext: reader.getPreferedExtensions()) {
-				extension2reader.put(ext,reader);
+		for(SequenceFormat fmt: sequenceFormats) {
+			log.debug("Registering sequence format: " + fmt.getClass().getName());
+			for(String ext: fmt.getPreferredExtesionsList()) {
+				extension2format.put(ext,fmt);
 			}
 		}
-		
-		for(SequenceWriter writer: sequenceWriterLoader) {
-			log.debug("Registering sequence writer: " + writer.getClass().getName());
-			for(String ext: writer.getPreferedExtensionsList()) {
-				extension2writer.put(ext,writer);
-			}
-		}		
 	}
 
 	
@@ -53,11 +44,15 @@ public class SequenceFormats {
 	 */
 	public static SequenceReader getReader(String  formatName) {
 		assert(formatName!=null);
-		if (!extension2reader.containsKey(formatName)) {
-			log.debug("Extensions: " + BFXMapUtils.toString(extension2reader));
+		if (!extension2format.containsKey(formatName)) {
 			throw new RuntimeException(String.format("Unknown file format '%s' : Could not create an appropriate sequence reader.",formatName));
 		}
-		return extension2reader.get(formatName);
+		SequenceFormat fmt = extension2format.get(formatName);
+		if (fmt.getReader() == null) {
+			throw new RuntimeException(String.format("Format %s does not have a reader", fmt.getName()));
+		}  else {
+			return fmt.getReader();
+		}
 	}
 	
 	/**
@@ -98,11 +93,15 @@ public class SequenceFormats {
 	 * @return SequenceWriter for formatName
 	 */
 	public static SequenceWriter getWriter(String formatName) {
-		if (!extension2reader.containsKey(formatName)) {
-			log.debug("Extensions: " + BFXMapUtils.toString(extension2writer));
+		if (!extension2format.containsKey(formatName)) {
 			throw new RuntimeException(String.format("Unknown file format '%s': Could not create an appropriate sequence writer.",formatName));
 		}
-		return extension2writer.get(formatName);
+		SequenceFormat fmt = extension2format.get(formatName);
+		if (fmt.getWriter() == null) {
+			throw new RuntimeException(String.format("Format %s does not have a writer", fmt.getName()));
+		}  else {
+			return fmt.getWriter();
+		}
 	}
 	
 	/**
@@ -132,8 +131,31 @@ public class SequenceFormats {
 		return writer;
 	}
 
-	public static String getFormatForFile(String filename) {
-		String ext = FilenameUtils.getExtension(CompressionUtils.uncompressedFilename(filename));
-		
+	public static SequenceFormat getFormat(String extension) {
+		if (!extension2format.containsKey(extension)) {
+			throw new RuntimeException(String.format("Unknown sequence format for extension '%s'",extension));
+		}
+		return extension2format.get(extension);
 	}
+	
+	public static SequenceFormat getFormatForFile(String filename) {
+		String ext = FilenameUtils.getExtension(CompressionUtils.uncompressedFilename(filename));
+		return getFormat(ext);
+	}
+	
+	
+	abstract public SequenceReader getReader();
+	abstract public SequenceWriter getWriter();
+	abstract public String getName();
+	
+	/**
+	 * Return a list of life extensions associated with this SequenceReader.
+	 *   
+	 * @return List of file extensions.
+	 */
+	abstract public String[] getPreferredExtesionsList();
+	abstract public String getPreferredExtesion();
+
+	
+	
 }

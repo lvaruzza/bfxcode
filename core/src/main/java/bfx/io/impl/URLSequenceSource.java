@@ -8,7 +8,7 @@ import java.util.Iterator;
 import bfx.Sequence;
 import bfx.exceptions.MultipleURLsProcessingRuntimeException;
 import bfx.exceptions.URLProcessingRuntimeException;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceSource;
 
@@ -21,25 +21,25 @@ public class URLSequenceSource extends SequenceSource {
 	public URLSequenceSource(String format,URL url1) {
 		this.url1 = url1;
 		this.url2 = null;
-		reader = SequenceFormats.getReaderForFile(url1.getPath(), format);
+		reader = SequenceFormat.getReaderForFile(url1.getPath(), format);
 	}
 
 	public URLSequenceSource(String format,URL url1,URL url2) {
 		this.url1 = url1;
 		this.url2 = url2;
-		reader = SequenceFormats.getReaderForFile(url1.getPath(), format);
+		reader = SequenceFormat.getReaderForFile(url1.getPath(), format);
 	}
 
 	public URLSequenceSource(URL url1,URL url2) {
 		this.url1 = url1;
 		this.url2 = url2;
-		reader = SequenceFormats.getReaderForFile(url1.getPath());
+		reader = SequenceFormat.getReaderForFile(url1.getPath());
 	}
 
 	public URLSequenceSource(URL url1) {
 		this.url1 = url1;
 		this.url2 = null;
-		reader = SequenceFormats.getReaderForFile(url1.getPath());
+		reader = SequenceFormat.getReaderForFile(url1.getPath());
 	}
 	
 	public URLSequenceSource(String url1,String url2) throws MalformedURLException {

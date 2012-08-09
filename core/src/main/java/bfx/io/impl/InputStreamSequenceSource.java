@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import bfx.Sequence;
 import bfx.exceptions.IterableAlreadyUsed;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceSource;
 
@@ -23,12 +23,12 @@ public class InputStreamSequenceSource extends SequenceSource {
 	private InputStream input;
 
 	public InputStreamSequenceSource(final String format) {
-		reader = SequenceFormats.getReader(format);
+		reader = SequenceFormat.getReader(format);
 		input = System.in;
 	}
 	
 	public InputStreamSequenceSource(final String format,final InputStream input) {
-		reader = SequenceFormats.getReader(format);
+		reader = SequenceFormat.getReader(format);
 		this.input = input;
 	}
 	

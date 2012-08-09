@@ -26,12 +26,6 @@ public abstract class SequenceReader extends BaseSingleAndDualReader<Iterator<Se
 		this.pc = pc;
 	}
 	
-	/**
-	 * Return a list of life extensions associated with this SequenceReader.
-	 *   
-	 * @return List of file extensions.
-	 */
-	abstract public String[] getPreferedExtensions();
 	
 	
 	/**

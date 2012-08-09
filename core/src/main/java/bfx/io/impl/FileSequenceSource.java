@@ -8,7 +8,7 @@ import java.util.Iterator;
 import bfx.Sequence;
 import bfx.exceptions.FileProcessingRuntimeException;
 import bfx.exceptions.MultipleFilesProcessingRuntimeException;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceSource;
 import bfx.utils.compression.CompressionUtils;
@@ -27,7 +27,7 @@ public class FileSequenceSource extends SequenceSource {
 	private void setup(File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
-		reader = SequenceFormats.getReaderForFile(file1.getName());
+		reader = SequenceFormat.getReaderForFile(file1.getName());
 	}
 
 	public FileSequenceSource(String format,File file1,File file2) {
@@ -37,7 +37,7 @@ public class FileSequenceSource extends SequenceSource {
 	public void setup(String format,File file1,File file2) {
 		this.file1 = file1;
 		this.file2 = file2;
-		reader = SequenceFormats.getReaderForFile(file1.getName(),format);
+		reader = SequenceFormat.getReaderForFile(file1.getName(),format);
 	}
 	
 	public FileSequenceSource(File file1) {
@@ -47,7 +47,7 @@ public class FileSequenceSource extends SequenceSource {
 	public void setup(File file1) {
 		this.file1 = file1;
 		this.file2 = null;
-		reader = SequenceFormats.getReaderForFile(file1.getName());
+		reader = SequenceFormat.getReaderForFile(file1.getName());
 	}
 
 	
@@ -58,7 +58,7 @@ public class FileSequenceSource extends SequenceSource {
 	public void setup(String format,File file1) {
 		this.file1 = file1;
 		this.file2 = null;
-		reader = SequenceFormats.getReaderForFile(file1.getName(),format);
+		reader = SequenceFormat.getReaderForFile(file1.getName(),format);
 		reader.setProgressMeter(pm);
 	}
 	

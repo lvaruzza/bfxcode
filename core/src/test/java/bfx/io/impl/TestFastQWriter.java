@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import bfx.Sequence;
 import bfx.impl.SequenceConstQual;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceWriter;
 import bfx.utils.TextUtils;
 import static org.junit.Assert.*;
@@ -15,10 +15,10 @@ import static org.junit.Assert.*;
 public class TestFastQWriter {
 	@Test
 	public void testGetWriter() {
-		SequenceWriter sw1 = SequenceFormats.getWriterForFile("test.fastq", "fasta");
+		SequenceWriter sw1 = SequenceFormat.getWriterForFile("test.fastq", "fasta");
 		assertEquals("bfx.io.impl.FastQSequenceWriter",sw1.getClass().getName());
 
-		SequenceWriter sw2 = SequenceFormats.getWriterForFile("test.fastq", null);
+		SequenceWriter sw2 = SequenceFormat.getWriterForFile("test.fastq", null);
 		assertEquals("bfx.io.impl.FastQSequenceWriter",sw2.getClass().getName());
 	}
 	

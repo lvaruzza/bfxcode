@@ -159,11 +159,6 @@ public class FastaSequenceWriter extends SequenceWriter {
 		writeQual(out2,seq);	
 	}
 
-	@Override
-	public String[] getPreferedExtensionsList() {
-		return FastaSequenceReader.fastaExtensions;
-	}
-
 
 	@Override
 	public void write(Writer out1, Writer out2, Sequence seq)

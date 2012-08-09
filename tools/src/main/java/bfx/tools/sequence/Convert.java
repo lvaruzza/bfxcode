@@ -1,6 +1,6 @@
 package bfx.tools.sequence;
 
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceWriter;
 import bfx.process.ProgressMeter;
@@ -31,8 +31,8 @@ public class Convert extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SequenceReader sr = SequenceFormats.getReaderForFile(input,inputFormat);
-		SequenceWriter sw = SequenceFormats.getWriterForFile(output,outputFormat);
+		SequenceReader sr = SequenceFormat.getReaderForFile(input,inputFormat);
+		SequenceWriter sw = SequenceFormat.getWriterForFile(output,outputFormat);
 
 		inputFormat = sr.getFormatName();
 		outputFormat = sw.getFormatName();

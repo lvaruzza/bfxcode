@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import bfx.Sequence;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceSink;
 import bfx.io.SequenceWriter;
 
@@ -37,7 +37,7 @@ public class StreamSequenceSink extends SequenceSink {
 	public StreamSequenceSink(String format,OutputStream out1,OutputStream out2) {
 		this.out1 = out1;
 		this.out2 = out2;
-		writer = SequenceFormats.getWriter(format);
+		writer = SequenceFormat.getWriter(format);
 		log.debug(String.format("New writer %s",writer));
 	}
 	
@@ -52,7 +52,7 @@ public class StreamSequenceSink extends SequenceSink {
 	public StreamSequenceSink(String format) {
 		this.out1 = System.out;
 		this.out2 = null;
-		writer = SequenceFormats.getWriter(format);
+		writer = SequenceFormat.getWriter(format);
 		log.debug(String.format("New writer %s for STDOUT",writer));
 	}
 
@@ -65,7 +65,7 @@ public class StreamSequenceSink extends SequenceSink {
 	public StreamSequenceSink(String format,OutputStream out2) {
 		this.out1 = out1;
 		this.out2 = null;
-		writer = SequenceFormats.getWriter(format);
+		writer = SequenceFormat.getWriter(format);
 		log.debug(String.format("New writer %s",writer));
 	}
 	

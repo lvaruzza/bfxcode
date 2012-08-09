@@ -81,14 +81,7 @@ public class FastaSequenceReader extends SequenceReader {
 		else
 			return read(fastaReader);
 	}
-	
-
-	public static String[] fastaExtensions = {"fasta","fa","csfasta"};
-	@Override
-	public String[] getPreferedExtensions() {
-		return fastaExtensions;
-	}
-	
+		
 	@Override
 	public String getFormatName() {
 		return "fasta";

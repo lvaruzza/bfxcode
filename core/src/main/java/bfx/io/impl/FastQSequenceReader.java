@@ -59,12 +59,6 @@ public class FastQSequenceReader extends SequenceReader {
 		return read(fastqReader);
 	}
 
-	public static String[] fastQExtensions = {"fastq","fq","csfastq"};
-
-	@Override
-	public String[] getPreferedExtensions() {
-		return fastQExtensions;
-	}
 	
 	@Override
 	public String getFormatName() {

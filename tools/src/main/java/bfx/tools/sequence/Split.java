@@ -3,7 +3,7 @@ package bfx.tools.sequence;
 import java.io.File;
 
 import bfx.Sequence;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceSource;
 import bfx.io.SequenceWriter;
 import bfx.io.impl.FileSequenceSource;
@@ -34,7 +34,7 @@ public class Split extends Tool {
 	@Override
 	public void run() throws Exception {
 		SequenceSource src = new FileSequenceSource(inputFormat, input, qual);
-	
+		
 		if (outputFormat==null) {
 			// TODO: create this method
 			//outputFormat = SequenceFormats.getFormatForFile(input);
@@ -44,11 +44,12 @@ public class Split extends Tool {
 		ProgressMeter pm = this.getProgressMeterFactory().get();
 		src.setProgressMeter(pm);
 
-		SequenceWriter sw = SequenceFormats.getWriter(outputFormat);
+		SequenceWriter sw = SequenceFormat.getWriter(outputFormat);
 		
 		pm.start("Reading input file");
 		for(Sequence seq: src) {
-			sw.write(new File(seq.getId() + "." + sw.getPreferedExtension()),seq);
+			// TODO
+			//sw.write(new File(seq.getId() + "." + sw.getPreferedExtension()),seq);
 		}
 		pm.finish();
 	}

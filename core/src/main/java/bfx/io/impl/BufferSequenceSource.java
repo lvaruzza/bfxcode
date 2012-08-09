@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceSource;
 
@@ -16,7 +16,7 @@ public class BufferSequenceSource extends SequenceSource {
 	
 	public BufferSequenceSource(String formatName,byte[] buffer) {
 		this.buffer=buffer;
-		this.reader=SequenceFormats.getReader(formatName);
+		this.reader=SequenceFormat.getReader(formatName);
 	}
 	
 	@Override

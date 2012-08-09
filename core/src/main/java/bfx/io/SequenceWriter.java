@@ -62,13 +62,6 @@ public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Se
 	
 	
 	/**
-	 * Return a list of life extensions associated with this SequenceWriter.
-	 *   
-	 * @return List of file extensions.
-	 */
-	abstract public String[] getPreferedExtensionsList();
-	
-	/**
 	 * Name for this format
 	 * 
 	 * @return Format name
@@ -79,9 +72,5 @@ public abstract class SequenceWriter extends BaseSingleAndDualWriter<Iterator<Se
 	@Override
 	public String toString() {
 		return String.format("<SequenceWriter for %s format>",getFormatName());
-	}
-
-	public String getPreferedExtension() {
-		return getPreferedExtensionsList()[0];
 	}
 }

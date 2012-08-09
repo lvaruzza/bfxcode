@@ -9,17 +9,17 @@ import org.junit.Test;
 
 import bfx.Sequence;
 import bfx.impl.SequenceConstQual;
-import bfx.io.SequenceFormats;
+import bfx.io.SequenceFormat;
 import bfx.io.SequenceWriter;
 import bfx.utils.TextUtils;
 
 public class TestFastaWriter {
 	@Test
 	public void testGetWriter() {
-		SequenceWriter sw1 = SequenceFormats.getWriterForFile("test.fasta", "fasta");
+		SequenceWriter sw1 = SequenceFormat.getWriterForFile("test.fasta", "fasta");
 		assertEquals("bfx.io.impl.FastaSequenceWriter",sw1.getClass().getName());
 
-		SequenceWriter sw2 = SequenceFormats.getWriterForFile("test.fasta", null);
+		SequenceWriter sw2 = SequenceFormat.getWriterForFile("test.fasta", null);
 		assertEquals("bfx.io.impl.FastaSequenceWriter",sw2.getClass().getName());
 	}
 	
