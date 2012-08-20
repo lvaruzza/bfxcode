@@ -1,4 +1,4 @@
-REAL=`readlink $0`
+REAL=`perl -e 'use Cwd "abs_path";print abs_path(shift)' $0`
 PWD=`dirname $REAL`
 VERSION=`cat $PWD/VERSION`
 java -Xmx1024M -jar $PWD/target/tools-$VERSION.jar $*
