@@ -45,6 +45,7 @@ abstract public class SequenceFormat {
 	public static SequenceReader getReader(String  formatName) {
 		assert(formatName!=null);
 		if (!extension2format.containsKey(formatName)) {
+			log.info(BFXMapUtils.toString(extension2format));
 			throw new RuntimeException(String.format("Unknown file format '%s' : Could not create an appropriate sequence reader.",formatName));
 		}
 		SequenceFormat fmt = extension2format.get(formatName);

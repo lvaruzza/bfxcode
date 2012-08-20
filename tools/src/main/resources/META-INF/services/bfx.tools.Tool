@@ -3,6 +3,7 @@ bfx.tools.sequence.Convert
 bfx.tools.sequence.SubSet
 bfx.tools.sequence.Lengths
 bfx.tools.sequence.Split
+bfx.tools.sequence.CutNCBINames
 bfx.tools.sequence.filter.Filter
 bfx.tools.solid.ColorDecode
 bfx.tools.solid.ColorEncode

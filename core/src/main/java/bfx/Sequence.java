@@ -316,4 +316,12 @@ public abstract class Sequence {
 
 
 	abstract public double meanQuality();
+
+
+	public Sequence changeHeader(String id, String comments) {
+		Sequence r = this.changeSeq(getSeq());
+		r.id = id;
+		r.comments = comments;
+		return r;
+	}
 }

@@ -51,7 +51,7 @@ public class Lengths extends Tool {
 
 	@Override
 	public String getName() {
-		return "length";
+		return "lengths";
 	}
 
 }

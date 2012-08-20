@@ -38,6 +38,7 @@ class NStat (@BeanProperty val L:Int,
 class AssemblyStatReport(@BeanProperty val smallest: Int,
   @BeanProperty val largest: Int,
   @BeanProperty val ncontigs: Int,
+  @BeanProperty val totalBases: Int,
   @BeanProperty val nstat: java.util.Map[Int, NStat]) extends Report {
 
   /*override def getMapper = {
@@ -48,9 +49,10 @@ class AssemblyStatReport(@BeanProperty val smallest: Int,
   }*/
 
   override def writeHuman(out: PrintWriter) {
-    out.println("Smallest Contig:\t%d" format smallest)
-    out.println(" Largest Contig:\t%d" format largest)
+    out.println(" Smallest Contig:\t%d" format smallest)
+    out.println("  Largest Contig:\t%d" format largest)
     out.println("Number of contgs:\t%d" format ncontigs)
+    out.println("     Total Bases:\t%d" format totalBases)
     out.println;
     out.println("Contig Size Statisitcs:")
     out.println("x\tNx\tLx")
@@ -229,13 +231,14 @@ class AssemblyStats extends Tool {
     val psum = lengths.scan(0)(_ + _)
     val smallest = lengths.last
     val largest = lengths.head
-
+    
     val sum = psum.last
     val nstats = calculateNstats(sum, psum, lengths)
     
     val report = new AssemblyStatReport(smallest,
       largest,
       lengths.length,
+      sum,
       nstats.asJava)
 
     if(Option(cumulativeLenGraph).isDefined) {
