@@ -44,7 +44,7 @@ public class CutNCBINames extends Tool {
 		
 		src.setProgressMeter(pm);
 		for(Sequence seq: src) {
-			String[] parts = seq.getId().split("|");
+			String[] parts = seq.getId().split("\\|");
 			Sequence result = seq.changeHeader(parts[3],"");
 			sink.write(result);
 		}
