@@ -8,6 +8,7 @@ import java.util.Arrays;
 import bfx.impl.FastaQualRepr;
 import bfx.impl.SequenceConstQual;
 import bfx.impl.SequenceQual;
+import bfx.utils.TextUtils;
 
 /**
  * 
@@ -124,9 +125,9 @@ public abstract class Sequence {
 
 	@Override
 	public String toString() {
-		return "Sequence [Id=" + getId() + ", seq=" +
-				getSeqAsString() + ", qual="
-				+ Arrays.toString(getQual()) + "]";
+		return "Sequence [Id=" + getId() + "(" + getComments() + "),\n\tseq=" +
+				TextUtils.limit(80,getSeqAsString()) + ",\n\t qual="
+				+ TextUtils.limit(80,Arrays.toString(getQual())) + "]";
 	}
 
 	/**

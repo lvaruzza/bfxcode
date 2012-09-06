@@ -10,6 +10,7 @@ import bfx.io.impl.StreamSequenceSink;
 import bfx.process.ProgressMeterFactory;
 import bfx.utils.compression.CompressionUtils;
 
+import com.beust.jcommander.IVariableArity;
 import com.beust.jcommander.Parameter;
 
 
@@ -20,7 +21,7 @@ import com.beust.jcommander.Parameter;
  * @author varuzza
  *
  */
-public abstract class Tool {
+public  abstract class Tool {
 	protected ProgressMeterFactory pcf;
 	
 	/**
@@ -116,4 +117,5 @@ public abstract class Tool {
 	public ProgressMeterFactory getProgressMeterFactory() {
 		return pcf;
 	}
+
 }

@@ -11,3 +11,4 @@ bfx.tools.solid.ColorSpectrum
 bfx.tools.spectrum.SpectrumDumper
 bfx.tools.blast.BlastHitCount
 bfx.tools.assembly.AssemblyStats
+bfx.tools.ncbi.GetSeq

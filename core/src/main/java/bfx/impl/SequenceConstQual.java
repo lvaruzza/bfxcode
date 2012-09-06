@@ -3,6 +3,7 @@ package bfx.impl;
 import java.util.Arrays;
 
 import bfx.Sequence;
+import bfx.utils.TextUtils;
 
 /**
  * Representation of Sequence object with text and a constant value
@@ -74,8 +75,8 @@ public class SequenceConstQual extends Sequence {
 	
 	@Override
 	public String toString() {
-		return "Sequence [Id=" + getId() + ", seq=" +
-				getSeqAsString() + ", qual=" + qual + "]";
+		return "Sequence [Id=" + getId() + " ("+ this.getComments() +"),\n\t seq=" +
+				TextUtils.limit(80,getSeqAsString()) + ",\n\t qual=" + qual + "]";
 	}
 
 	@Override

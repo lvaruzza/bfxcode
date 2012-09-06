@@ -97,4 +97,11 @@ public class TextUtils {
 	public static String sha1(String text) {
 		return digest(text,"sha1");
 	}
+
+	public static String limit(int limit, String text) {
+		if (text.length() <= limit)
+			return text;
+		else
+			return text.substring(0, limit) + "...";
+	}
 }
