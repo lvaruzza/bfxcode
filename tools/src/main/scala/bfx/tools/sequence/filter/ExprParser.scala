@@ -18,13 +18,13 @@ class ExprParser extends JavaTokenParsers {
 	  }
 	}
 	
-	def variable:Parser[Variable] = ("name" | "id" | "length"| "quality") ^^ (x=>Variable(Symbol(x.toString)))
-	def funName:Parser[Symbol] = ("mean" | "max" | "min" | "median")  ^^ (x=>Symbol(x.toString))
-	def function:Parser[Function] = (funName~"("~variable~")") ^^ { case f~lp~v~rp => Function(f,v) }
-	def atom:Parser[Expr] = variable | 
+	def funVar:Parser[Expr] = ident~"("~ident~")" ^^ { case f~lp~v~rp => Function(Symbol(f),Variable(Symbol(v))) } |
+							  ident ^^ (x=>Variable(Symbol(x)))
+	def atom:Parser[Expr] = 
 			   (floatingPointNumber | decimalNumber) ^^ (x => Number(x.toFloat)) | 
 			   stringLiteral ^^ (x=>StringLiteral(x)) | 
-			   function
+			   funVar
+			   
 	def compare =  (">=" | "<=" | ">" | "<" | "=")  ^^ (x => Symbol(x))  
 	def term = atom~compare~atom ^^ {case lh~op~rh => BinaryOp(op,lh,rh)}
 	def expr:Parser[Expr] = 
@@ -57,8 +57,12 @@ object ExprParser {
 	  println(p.parse("not length>42").get);
 	  println(p.parse("length>42 and mean(quality)>20").get);
 	  println(p.parse("length>42 and (mean(quality)>20 or min(quality)>5)").get);
-	  println(p.parse("length>42 and (mean(quality)>20 or min(quality)>5) and name = \"marafo\"").get);
 	  
+	  val r = p.parse("length>42 and mean(quality)>20").get;
+	  
+	  println("===============")
+	  println(IR.compile1(r))
+	  println("===============")
 	  
 	  println("Finish")
 	}
