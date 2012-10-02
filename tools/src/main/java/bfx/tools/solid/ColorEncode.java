@@ -64,5 +64,9 @@ public class ColorEncode extends Tool {
 	public String getName() {
 		return "colorEncode";
 	}
+	@Override
+	public String getGroup() {
+		return "solid";
+	}
 
 }

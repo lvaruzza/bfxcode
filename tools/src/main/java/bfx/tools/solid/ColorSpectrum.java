@@ -61,7 +61,11 @@ public class ColorSpectrum extends Tool {
 
 	@Override
 	public String getName() {
-		return "spectrum";
+		return "colorSpectrum";
+	}
+	@Override
+	public String getGroup() {
+		return "solid";
 	}
 
 }

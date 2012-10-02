@@ -28,4 +28,9 @@ public class SpectrumDumper extends Tool {
 		return "specdump";
 	}
 
+	@Override
+	public String getGroup() {
+		return "spectrum";
+	}
+	
 }

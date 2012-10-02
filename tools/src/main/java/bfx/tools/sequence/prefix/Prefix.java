@@ -75,5 +75,9 @@ public class Prefix extends Tool {
 	public String getName() {
 		return "prefix";
 	}
+	@Override
+	public String getGroup() {
+		return "sequence";
+	}
 
 }

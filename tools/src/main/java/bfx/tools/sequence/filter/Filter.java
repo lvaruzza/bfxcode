@@ -143,5 +143,9 @@ public class Filter extends Tool {
 	public String getName() {
 		return "filter";
 	}
+	@Override
+	public String getGroup() {
+		return "sequence";
+	}
 
 }

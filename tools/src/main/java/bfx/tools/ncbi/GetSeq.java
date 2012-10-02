@@ -45,5 +45,10 @@ public class GetSeq extends Tool  {
 	public String getName() {
 		return "getseq";
 	}
+
+	@Override
+	public String getGroup() {
+		return "ncbi";
+	}
 	
 }

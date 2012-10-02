@@ -19,4 +19,9 @@ public class CleanIndelGFF extends Tool {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public String getGroup() {
+		return "solid";
+	}
+	
 }

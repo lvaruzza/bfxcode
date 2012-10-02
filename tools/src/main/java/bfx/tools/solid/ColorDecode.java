@@ -62,5 +62,9 @@ public class ColorDecode extends Tool {
 	public String getName() {
 		return "colorDecode";
 	}
+	@Override
+	public String getGroup() {
+		return "solid";
+	}
 
 }

@@ -180,4 +180,9 @@ public class SequenceStat extends Tool {
 		result.write(getStdOut(output), outputFormat);
 	}
 
+	@Override
+	public String getGroup() {
+		return "sequence";
+	}
+	
 }

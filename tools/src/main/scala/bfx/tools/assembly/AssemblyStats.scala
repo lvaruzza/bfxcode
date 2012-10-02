@@ -250,6 +250,8 @@ class AssemblyStats extends Tool {
      }
     report.write(getStdOut(output), outputFormat);
   }
+  
+  override def getGroup = "assembly"
 }
 
 object AssemblyStats {

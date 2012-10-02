@@ -1,4 +1,4 @@
-package bfx.tools.sequence;
+package bfx.tools.ncbi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +58,11 @@ public class CutNCBINames extends Tool {
 	@Override
 	public String getName() {
 		return "fixncbi";
+	}
+
+	@Override
+	public String getGroup() {
+		return "ncbi";
 	}
 
 }

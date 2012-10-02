@@ -32,10 +32,15 @@ public  abstract class Tool {
 	public abstract void run() throws Exception;
 	
 	/**
-	 * @return
+	 * @return Tool name
 	 */
 	public abstract String getName();
 
+	/**
+	 * @return Tool Group
+	 */
+	public abstract String getGroup();
+	
 	
 	/**
 	 * Verbose Level

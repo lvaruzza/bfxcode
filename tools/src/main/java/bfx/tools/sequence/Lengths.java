@@ -53,5 +53,10 @@ public class Lengths extends Tool {
 	public String getName() {
 		return "lengths";
 	}
+	
+	@Override
+	public String getGroup() {
+		return "sequence";
+	}
 
 }

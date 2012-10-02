@@ -58,5 +58,9 @@ public class Split extends Tool {
 	public String getName() {
 		return "split";
 	}
+	@Override
+	public String getGroup() {
+		return "sequence";
+	}
 
 }

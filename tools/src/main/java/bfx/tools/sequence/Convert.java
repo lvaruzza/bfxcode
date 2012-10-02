@@ -49,4 +49,9 @@ public class Convert extends Tool {
 		return "convert";
 	}
 
+	@Override
+	public String getGroup() {
+		return "sequence";
+	}
+	
 }

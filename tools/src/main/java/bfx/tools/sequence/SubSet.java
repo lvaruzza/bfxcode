@@ -76,5 +76,9 @@ public class SubSet extends Tool {
 	public String getName() {
 		return "subset";
 	}
+	@Override
+	public String getGroup() {
+		return "sequence";
+	}
 
 }

@@ -79,5 +79,9 @@ public class PseudoGenome extends Tool {
 	public String getName() {
 		return "pseudoGenome";
 	}
+	@Override
+	public String getGroup() {
+		return "sequence";
+	}
 
 }
