@@ -8,9 +8,9 @@ import bfx.io.SequenceSink;
 import bfx.io.impl.FileSequenceSink;
 import bfx.io.impl.StreamSequenceSink;
 import bfx.process.ProgressMeterFactory;
+import bfx.tools.cli.CLIProgressMeterFactory;
 import bfx.utils.compression.CompressionUtils;
 
-import com.beust.jcommander.IVariableArity;
 import com.beust.jcommander.Parameter;
 
 
@@ -98,6 +98,10 @@ public  abstract class Tool {
 	
 	protected void execute() {
 		try {
+			// If not set, fall to CLI Progress Meter
+			if (pcf == null) {
+				pcf = new CLIProgressMeterFactory();
+			}
 			run();
 		} catch(Exception e) {
 			System.err.println(String.format("Error execution tool '%': %s",

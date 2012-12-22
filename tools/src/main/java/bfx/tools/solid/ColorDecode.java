@@ -31,7 +31,7 @@ public class ColorDecode extends Tool {
 	public String outputQual;
 	
 	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")
-	public String outputFormat;
+	public String outputFormat = "fastq";
 	
 	@Parameter(names={"--trim","-T"},description="")
 	public boolean trimFirst = false;
@@ -39,7 +39,7 @@ public class ColorDecode extends Tool {
 	@Override
 	public void run() throws Exception {
 		SequenceSource src = new FileSequenceSource(inputFormat,input,qual);
-		SequenceSink sink =  new FileSequenceSink(outputFormat,output,outputQual);
+		SequenceSink sink = getSequenceSink(outputFormat, output, outputQual);
 
 		ProgressMeter pm = getProgressMeterFactory().get();
 		pm.start(String.format("Conversion from Color Space to Base Space"));

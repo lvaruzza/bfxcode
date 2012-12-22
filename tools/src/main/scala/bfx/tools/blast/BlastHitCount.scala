@@ -55,6 +55,8 @@ class BlastHitCount extends Tool with Logging {
         s.scoreSum,
         s.description).mkString("\t"))
     }
-  }    
+  }
+  
+  def getGroup = "blast";
 }
 

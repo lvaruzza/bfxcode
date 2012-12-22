@@ -4,7 +4,6 @@ bfx.tools.sequence.SubSet
 bfx.tools.sequence.Lengths
 bfx.tools.sequence.Split
 bfx.tools.sequence.prefix.Prefix
-bfx.tools.sequence.CutNCBINames
 bfx.tools.sequence.filter.Filter
 bfx.tools.solid.ColorDecode
 bfx.tools.solid.ColorEncode
@@ -13,3 +12,4 @@ bfx.tools.spectrum.SpectrumDumper
 bfx.tools.blast.BlastHitCount
 bfx.tools.assembly.AssemblyStats
 bfx.tools.ncbi.GetSeq
+bfx.tools.ncbi.CutNCBINames

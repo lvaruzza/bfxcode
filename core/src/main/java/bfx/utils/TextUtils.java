@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -103,5 +104,9 @@ public class TextUtils {
 			return text;
 		else
 			return text.substring(0, limit) + "...";
+	}
+
+	public static String tabulate(Object... x) {
+		return StringUtils.join(x,'\t');
 	}
 }
