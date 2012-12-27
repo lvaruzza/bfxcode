@@ -1,0 +1,4 @@
+bfx.sequencing.SOLiDPlatform
+bfx.sequencing.IonTorrentPlatform
+bfx.sequencing.Roche454Platform
+bfx.sequencing.IlluminaPlatform
