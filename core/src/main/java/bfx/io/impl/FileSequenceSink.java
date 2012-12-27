@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import bfx.Sequence;
 import bfx.io.SequenceFormat;
 import bfx.io.SequenceSink;
 import bfx.io.SequenceWriter;
+import bfx.utils.compression.CompressionUtils;
 
 /**
  * Sequence Sink based on a file
@@ -24,8 +26,8 @@ public class FileSequenceSink extends SequenceSink {
 	
 	private File file1 = null;
 	private File file2 = null;
-	private FileOutputStream out1 = null;
-	private FileOutputStream out2 = null;
+	private OutputStream out1 = null;
+	private OutputStream out2 = null;
 	
 	private SequenceWriter writer;
 	
@@ -124,10 +126,10 @@ public class FileSequenceSink extends SequenceSink {
 		setup(new File(file1),new File(file2));
 	}
 
-	private void openFiles() throws FileNotFoundException {
-		out1 = new FileOutputStream(file1);
+	private void openFiles() throws IOException {
+		out1 = CompressionUtils.openOutputStream(file1);
 		if (file2 != null)
-			out2 = new FileOutputStream(file2);
+			out2 = CompressionUtils.openOutputStream(file2);
 	}
 	@Override
 	public void write(Sequence seq) throws IOException {
