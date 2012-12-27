@@ -31,7 +31,9 @@ public abstract class BaseSingleAndDualWriter<T> implements AbstractWriter<T>,Ab
 	 */
 	public void write(File in,T data) throws IOException {
 		try {
-			write(new FileOutputStream(in),data);
+			OutputStream out = CompressionUtils.openOutputStream(in);
+			write(out,data);
+			out.flush(); out.close();
 		} catch(java.lang.Exception e) {
 			throw new FileProcessingIOException(e,in);
 		}
@@ -41,7 +43,10 @@ public abstract class BaseSingleAndDualWriter<T> implements AbstractWriter<T>,Ab
 	 * @see biolite.utils.io.AbstractWriter#write(java.lang.String, T)
 	 */
 	public void write(String filename,T data) throws IOException{
-		write(CompressionUtils.openOutputStream(filename),data);
+		OutputStream out = CompressionUtils.openOutputStream(filename);
+		write(out,data);
+		out.flush();
+		out.close();
 	}
 
 	
@@ -54,10 +59,12 @@ public abstract class BaseSingleAndDualWriter<T> implements AbstractWriter<T>,Ab
 			return;
 		}
 		try {
-
-			write(CompressionUtils.openOutputStream(file1),
-				  CompressionUtils.openOutputStream(file2),data);
-
+			OutputStream out1 = CompressionUtils.openOutputStream(file1);
+			OutputStream out2 = CompressionUtils.openOutputStream(file2);
+			
+			write(out1,out2,data);
+			out1.flush(); out1.close();
+			out2.flush(); out2.close();
 		} catch(Exception e) {
 			throw new MultipleFilesProcessingIOException(e,file1,file2);
 		}
@@ -69,8 +76,13 @@ public abstract class BaseSingleAndDualWriter<T> implements AbstractWriter<T>,Ab
 			return;
 		}
 		try {
-			write(CompressionUtils.openOutputStream(filename1),
-				  CompressionUtils.openOutputStream(filename2),data);
+			OutputStream out1 = CompressionUtils.openOutputStream(filename1);
+			OutputStream out2 = CompressionUtils.openOutputStream(filename2);
+			write(out1,out2,data);
+			out1.flush();
+			out1.close();
+			out2.flush();
+			out2.close();
 		} catch(Exception e) {
 			throw new MultipleFilesProcessingIOException(e,filename1,filename2);
 		}

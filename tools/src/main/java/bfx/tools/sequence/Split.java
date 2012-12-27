@@ -1,7 +1,5 @@
 package bfx.tools.sequence;
 
-import java.io.File;
-
 import bfx.Sequence;
 import bfx.io.SequenceFormat;
 import bfx.io.SequenceSource;
@@ -36,9 +34,8 @@ public class Split extends Tool {
 		SequenceSource src = new FileSequenceSource(inputFormat, input, qual);
 		
 		if (outputFormat==null) {
-			// TODO: create this method
-			//outputFormat = SequenceFormats.getFormatForFile(input);
-			outputFormat = "fasta";
+			SequenceFormat outformat = SequenceFormat.getFormatForFile(input);
+			outputFormat = outformat.getName();
 		}
 		
 		ProgressMeter pm = this.getProgressMeterFactory().get();

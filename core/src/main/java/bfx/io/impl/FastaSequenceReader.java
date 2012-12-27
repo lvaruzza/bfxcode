@@ -85,5 +85,5 @@ public class FastaSequenceReader extends SequenceReader {
 	@Override
 	public String getFormatName() {
 		return "fasta";
-	}
+	}	
 }

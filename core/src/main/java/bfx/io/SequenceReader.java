@@ -34,4 +34,5 @@ public abstract class SequenceReader extends BaseSingleAndDualReader<Iterator<Se
 	 * @return format name
 	 */
 	abstract public String getFormatName();
+
 }
