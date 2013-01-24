@@ -38,23 +38,18 @@ public class PairMatcher {
 		Iterator<Sequence> ri = rightSrc.iterator();
 		Sequence left = li.hasNext() ? li.next() : null;
 		Sequence right = ri.hasNext() ? ri.next() : null;
-		//System.out.println(String.format("%s %s",left,right));
 		while(left != null && right != null) {
 			int cmp = platform.compare(left.getId(),right.getId());
-			//System.out.println(String.format("%s <> %s = %d",left.getId(),right.getId(),cmp));
 			if (cmp == 0) {
-				//System.out.println("Calling pair");
 				callback.pair(left, right);
 				pm.incr(2);
 				left = li.hasNext() ? li.next() : null;
 				right = ri.hasNext() ? ri.next() : null;
 			} else {
 				if (cmp < 0) {
-					//System.out.println("Calling singlet left");
 					callback.singlet(left);
 					left = li.hasNext() ? li.next() : null;					
 				} else {
-					//System.out.println("Calling singlet right");
 					callback.singlet(right);
 					right = ri.hasNext() ? ri.next() : null;
 				}

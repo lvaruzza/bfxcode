@@ -83,4 +83,16 @@ public class SequenceConstQual extends Sequence {
 	public double meanQuality() {
 		return (double)qual;
 	}
+	
+	@Override
+	public Sequence trimRight(int newLength) {
+		byte[] sq = getSeq();
+		
+		if (newLength <= sq.length) {
+			return this.changeSeq(Arrays.copyOf(sq, newLength));
+		} else {
+			return this;
+		}
+	}
+	
 }

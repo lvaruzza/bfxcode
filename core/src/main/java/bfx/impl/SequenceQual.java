@@ -1,5 +1,7 @@
 package bfx.impl;
 
+import java.util.Arrays;
+
 import bfx.Sequence;
 import bfx.utils.stat.OnlineMean;
 import bfx.utils.stat.UnivariableStat;
@@ -65,6 +67,21 @@ public class SequenceQual extends Sequence {
 		return new SequenceQual(this.getId(),this.getComments(),newseq,getQual());
 	}
 
+	
+	@Override
+	public Sequence trimRight(int newLength) {
+		byte[] sq = getSeq();
+		byte[] qv = this.getQual();
+		
+		if (newLength <= sq.length) {
+			return new SequenceQual(this.getId(),this.getComments(),
+					Arrays.copyOf(sq, newLength),
+					Arrays.copyOf(qv, newLength));
+		} else {
+			return this;
+		}
+	}
+	
 	@Override
 	public double meanQuality() {
 		UnivariableStat mean = new OnlineMean();
