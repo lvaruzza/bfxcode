@@ -69,14 +69,15 @@ public class SequenceQual extends Sequence {
 
 	
 	@Override
-	public Sequence trimRight(int newLength) {
+	public Sequence trimRight(int newLength,boolean color) {
 		byte[] sq = getSeq();
 		byte[] qv = this.getQual();
+		int colorDiff = color ? 1 : 0;
 		
 		if (newLength <= sq.length) {
 			return new SequenceQual(this.getId(),this.getComments(),
 					Arrays.copyOf(sq, newLength),
-					Arrays.copyOf(qv, newLength));
+					Arrays.copyOf(qv, newLength-colorDiff));
 		} else {
 			return this;
 		}

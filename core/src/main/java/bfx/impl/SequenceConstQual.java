@@ -85,7 +85,7 @@ public class SequenceConstQual extends Sequence {
 	}
 	
 	@Override
-	public Sequence trimRight(int newLength) {
+	public Sequence trimRight(int newLength,boolean color) {
 		byte[] sq = getSeq();
 		
 		if (newLength <= sq.length) {

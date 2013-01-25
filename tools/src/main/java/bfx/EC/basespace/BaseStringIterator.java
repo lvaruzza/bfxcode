@@ -6,7 +6,7 @@ package bfx.EC.basespace;
  */
 import java.util.Iterator;
 
-public class BaseStringIterator implements Iterator {
+public class BaseStringIterator implements Iterator<String> {
 
     private char[] currentString;
 

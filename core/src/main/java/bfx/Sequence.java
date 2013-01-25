@@ -318,7 +318,7 @@ public abstract class Sequence {
 
 	abstract public double meanQuality();
 
-	public abstract Sequence trimRight(int newLength);
+	public abstract Sequence trimRight(int newLength, boolean color);
 
 	
 	public Sequence changeHeader(String id, String comments) {

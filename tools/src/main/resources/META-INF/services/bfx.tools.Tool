@@ -3,6 +3,7 @@ bfx.tools.sequence.Convert
 bfx.tools.sequence.SubSet
 bfx.tools.sequence.Lengths
 bfx.tools.sequence.Split
+bfx.tools.sequence.Trim
 bfx.tools.sequence.InterleavePairs
 bfx.tools.sequence.prefix.Prefix
 bfx.tools.sequence.filter.Filter
@@ -14,3 +15,4 @@ bfx.tools.blast.BlastHitCount
 bfx.tools.assembly.AssemblyStats
 bfx.tools.ncbi.GetSeq
 bfx.tools.ncbi.CutNCBINames
+bfx.tools.EC.ShrecTool
