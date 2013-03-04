@@ -1,15 +1,17 @@
 package bfx.io;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
 import bfx.Sequence;
 import bfx.io.impl.FileSequenceSink;
 
-public abstract class SequenceSink {
+public abstract class SequenceSink implements Closeable {
 
 	abstract public void write(Sequence seq) throws IOException;
-		
+	abstract public void close() throws IOException;
+	
 	public static SequenceSink fromFile(String format,File file) {
 		return new FileSequenceSink(format,file);
 	}	

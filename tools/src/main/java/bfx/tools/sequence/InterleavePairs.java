@@ -1,7 +1,5 @@
 package bfx.tools.sequence;
 
-import java.io.IOException;
-
 import bfx.Sequence;
 import bfx.io.SequenceSink;
 import bfx.io.SequenceSource;

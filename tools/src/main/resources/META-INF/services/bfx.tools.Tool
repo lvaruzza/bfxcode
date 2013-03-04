@@ -16,3 +16,4 @@ bfx.tools.assembly.AssemblyStats
 bfx.tools.ncbi.GetSeq
 bfx.tools.ncbi.CutNCBINames
 bfx.tools.EC.ShrecTool
+bfx.tools.sequence.SplitPairs

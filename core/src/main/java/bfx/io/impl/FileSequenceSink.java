@@ -141,4 +141,10 @@ public class FileSequenceSink extends SequenceSink {
 		else
 			writer.write(out1,out2,seq);
 	}
+
+	@Override
+	public void close() throws IOException {
+		out1.close();
+		if (out2!=null) out2.close();
+	}
 }
