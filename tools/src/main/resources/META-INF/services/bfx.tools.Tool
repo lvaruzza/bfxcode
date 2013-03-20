@@ -17,3 +17,4 @@ bfx.tools.ncbi.GetSeq
 bfx.tools.ncbi.CutNCBINames
 bfx.tools.EC.ShrecTool
 bfx.tools.sequence.SplitPairs
+bfx.tools.alignment.PrintInsertSize

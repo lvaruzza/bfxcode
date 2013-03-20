@@ -1,6 +1,9 @@
 package bfx.tools.sequence;
 
 import java.io.File;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bfx.Sequence;
 import bfx.io.SequenceFormat;
@@ -41,6 +44,9 @@ public class SplitPairs extends Tool {
 	@Override
 	public void run() throws Exception {
 		SequenceSource src = new FileSequenceSource(inputFormat, input, qual);
+		//Pattern leftpat = Pattern.compile("(.*?)//1");
+		//Pattern rightpat = Pattern.compile("(.*?)//2");
+		Pattern pairseq = Pattern.compile("(.*?)(/[12]|\\.[rf])");
 		
 		if (outputFormat==null) {
 			SequenceFormat outformat = SequenceFormat.getFormatForFile(input);
@@ -56,12 +62,19 @@ public class SplitPairs extends Tool {
 		int count=0;
 		
 		for(Sequence seq: src) {
-			if(count%2==0) 
-				lw.write(seq);
-			else
-				rw.write(seq);
-			count++;
+			Matcher matcher = pairseq.matcher(seq.getId());
+			/*System.out.println(seq.getId());
+			System.out.println(matcher.matches());
+			System.out.println(matcher);*/
+			if (matcher.matches()) { 
+				if(count%2==0) 
+					lw.write(seq);
+				else
+					rw.write(seq);
+				count++;
+			}
 		}
+		
 		pm.finish();
 		lw.close();
 		rw.close();
