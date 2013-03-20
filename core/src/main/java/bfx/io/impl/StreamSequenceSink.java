@@ -62,7 +62,7 @@ public class StreamSequenceSink extends SequenceSink {
 	 * @param format - File format
 	 * @param file1 - OUtput File
 	 */
-	public StreamSequenceSink(String format,OutputStream out2) {
+	public StreamSequenceSink(String format,OutputStream out1) {
 		this.out1 = out1;
 		this.out2 = null;
 		writer = SequenceFormat.getWriter(format);
@@ -82,7 +82,7 @@ public class StreamSequenceSink extends SequenceSink {
 
 	@Override
 	public void close() throws IOException {
-		out1.close();
-		if(out2!=null) out2.close();
+		if (out1!=null) out1.close();
+		if (out2!=null) out2.close();
 	}
 }

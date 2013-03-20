@@ -144,7 +144,7 @@ public class FileSequenceSink extends SequenceSink {
 
 	@Override
 	public void close() throws IOException {
-		out1.close();
+		if (out1!=null) out1.close();
 		if (out2!=null) out2.close();
 	}
 }
