@@ -1,6 +1,6 @@
 package bfx.tools.sequence.filter
 
-abstract case class IR {
+abstract  class IR {
   def typ:Symbol;
 }
 
@@ -8,7 +8,7 @@ case class Unimplemented extends IR {
   def typ = 'Unknown
 }
 
-abstract case class NamedIR extends IR {
+abstract  class NamedIR extends IR {
   def name:Symbol;
 }
 

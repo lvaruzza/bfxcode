@@ -1,8 +1,8 @@
 package bfx.tools.sequence.filter
 
 import scala.util.parsing.combinator.JavaTokenParsers
+import grizzled.slf4j.Logger
 
-import com.weiglewilczek.slf4s.Logger
 
 
 // a > b and c < d

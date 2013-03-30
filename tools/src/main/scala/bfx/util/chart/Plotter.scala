@@ -9,10 +9,10 @@ import com.itextpdf.awt.DefaultFontMapper
 import com.itextpdf.text.Rectangle
 import java.io.OutputStream
 import java.io.File
-import com.weiglewilczek.slf4s.Logging
 import com.itextpdf.text.Document
 import java.io.FileOutputStream
 import java.awt.geom.Rectangle2D
+import grizzled.slf4j.Logging
 
 class Plotter(val author:String,val subject:String,val fontMapper:FontMapper) extends Logging {
   //val defaultFontMapper = new DefaultFontMapper()

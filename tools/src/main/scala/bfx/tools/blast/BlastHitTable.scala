@@ -23,7 +23,7 @@ object BlastHitTable {
     val parser = new BlastXMLReader(CompressionUtils.fileOrStdIn(tool.input))
     
     for (r <- parser) {
-    	for (val hit <- r.getHits.asScala) {
+    	for (hit <- r.getHits.asScala) {
     		println(Array(r.getQueryId,hit.getAccession,hit.getDef).mkString("\t"))
     	}
     }

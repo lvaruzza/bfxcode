@@ -1,10 +1,9 @@
 package bfx.tools.sequence.prefix;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
-
-import scala.actors.threadpool.Arrays;
 
 import com.google.common.primitives.UnsignedBytes;
 

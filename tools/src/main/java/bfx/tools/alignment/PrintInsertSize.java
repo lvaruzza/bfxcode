@@ -3,13 +3,12 @@ package bfx.tools.alignment;
 import java.io.File;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import net.sf.samtools.SAMFileReader;
 import net.sf.samtools.SAMRecord;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-
-import scala.actors.threadpool.Arrays;
 
 import bfx.tools.Report;
 import bfx.tools.Tool;

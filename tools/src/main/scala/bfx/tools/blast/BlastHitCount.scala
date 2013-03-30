@@ -4,8 +4,8 @@ import scala.collection._
 import scala.collection.JavaConverters._
 import com.beust.jcommander._
 import bfx.tools.Tool
-import com.weiglewilczek.slf4s.Logging
 import bfx.blast.io._
+import grizzled.slf4j.Logging
 
 case class BlastHitStat(var count:Int,val description:String,var scoreSum:Long);
 
@@ -29,7 +29,7 @@ class BlastHitCount extends Tool with Logging {
     logger.info("Running %s" format getName)
     
     for (r <- parser) {
-      for (val hit <- r.getHits.asScala) {
+      for (hit <- r.getHits.asScala) {
         val maxHsp = hit.getHsps.asScala.reduceLeft((a, b) =>
           if (a.getScore > b.getScore) a else b)
 

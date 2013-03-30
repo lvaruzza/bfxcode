@@ -75,7 +75,7 @@ object BlastXMLReader {
     val it = parser.iterator
     val r = it.next
     println(r)
-    for (val hit <- r.getHits.asScala) {
+    for (hit <- r.getHits.asScala) {
       println(hit)
       println(hit.getHsps)
     }
