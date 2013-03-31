@@ -65,7 +65,8 @@ class AssemblyStatReport(@BeanProperty val smallest: Int,
 class AssemblyStats extends Tool {
   val plotter = new Plotter()
 
-  def getName = "assemblystats"
+  override def getName = "assemblyStats" 
+  override def getGroup = "assembly"
 
   @Parameter(names = Array("--input", "-i"), description = "Input file")
   var input: String = "-"
@@ -250,8 +251,6 @@ class AssemblyStats extends Tool {
      }
     report.write(getStdOut(output), outputFormat);
   }
-  
-  override def getGroup = "assembly"
 }
 
 object AssemblyStats {

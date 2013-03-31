@@ -1,3 +1,9 @@
-PWD=`dirname $0`
+NAME=`basename $0`
+REAL=`perl -e 'use Cwd "abs_path";print abs_path(shift)' $0`
+PWD=`dirname $REAL`
 VERSION=@VERSION@
-java -jar $PWD/tools-$VERSION.jar $*
+if [ "$NAME" == "bfx" ]; then
+  java -Xmx1024M -jar $PWD/target/tools-$VERSION.jar $*
+else
+  java -Xmx1024M -jar $PWD/target/tools-$VERSION.jar $NAME $* 
+fi

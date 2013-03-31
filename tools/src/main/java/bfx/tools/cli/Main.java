@@ -30,7 +30,7 @@ public class Main {
 	private static Map<String,Class<? extends Tool>> commands = new HashMap<String,Class<? extends Tool>>();;
 	
 	private static void addCommand(String name,Class<? extends Tool> klass) {
-		log.debug(String.format("Registering command '%s' to class '%s'",name,klass.getName()));
+		log.debug(String.format("Registering command '%s' to class '%s'",name.toLowerCase(),klass.getName()));
 		commands.put(name,klass);
 	}
 	
@@ -52,7 +52,7 @@ public class Main {
 			exit(-1);
 		} else {
 			if (commands.containsKey(args[0])) {
-				Class<? extends Tool> klass = commands.get(args[0]);				
+				Class<? extends Tool> klass = commands.get(args[0].toLowerCase());				
 				CLIToolRunner.run(klass,Arrays.copyOfRange(args, 1, args.length));
 			} else {
 				err.println(String.format("Invalid tool name '%s'",args[0]));
