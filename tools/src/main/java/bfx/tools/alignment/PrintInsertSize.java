@@ -65,6 +65,9 @@ public class PrintInsertSize extends Tool {
 	@Parameter(names = {"--output","-o"}, description = "Output File")
 	public String output;
 
+	@Parameter(names = {"--reportFormat", "-rf"}, description = "Output Report Format")
+	public String reportFormat = "human";
+	
 	@Override
 	public void run() throws Exception {
 		SAMFileReader reader = new SAMFileReader(new File(input));
@@ -89,7 +92,7 @@ public class PrintInsertSize extends Tool {
 		if (out!=null) out.close();
 		reader.close();
 		InsertStatReport report = new InsertStatReport(stats,positive,negative,zero);
-		report.write(System.out, "human");
+		report.write(System.out, reportFormat);
 	}
 
 	@Override
