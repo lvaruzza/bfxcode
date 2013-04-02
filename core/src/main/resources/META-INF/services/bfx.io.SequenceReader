@@ -1,2 +1,3 @@
 bfx.io.impl.FastaSequenceReader
 bfx.io.impl.FastQSequenceReader
+bfx.io.impl.BAMSequenceReader

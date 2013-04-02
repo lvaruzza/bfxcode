@@ -1,2 +1,3 @@
 bfx.io.formats.FastaFormat
 bfx.io.formats.FastQFormat
+bfx.io.formats.BAMFormat

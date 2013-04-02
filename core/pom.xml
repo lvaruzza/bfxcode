@@ -41,6 +41,11 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.0.6</version>
 		</dependency>
+		<dependency>
+			<groupId>picard</groupId>
+			<artifactId>sam</artifactId>
+			<version>1.87</version>
+		</dependency>
 	</dependencies>
 
 	<properties>
