@@ -78,16 +78,20 @@ public class PrintInsertSize extends Tool {
 		long zero=0;
 		
 		for (SAMRecord it:reader) {
-			long x=it.getInferredInsertSize();
-			if (out != null) out.println(x);
-			if (x==0) {
-				zero++;
-			} else if (x>0) {
-				positive++;
-			} else {
-				negative++;
+			if(!it.getDuplicateReadFlag() && 
+			   !it.getReadUnmappedFlag() &&
+			   it.getProperPairFlag()) {
+				long x=it.getInferredInsertSize();
+				if (out != null) out.println(x);
+				if (x==0) {
+					zero++;
+				} else if (x>0) {
+					positive++;
+				} else {
+					negative++;
+				}
+				if (x!=0) stats.addValue(Math.abs(x));
 			}
-			if (x!=0) stats.addValue(Math.abs(x));
 		}
 		if (out!=null) out.close();
 		reader.close();
