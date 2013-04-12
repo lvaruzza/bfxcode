@@ -43,7 +43,7 @@ public class Main {
 	 */
 	public static void main(String... args) {
 		for(Tool tool: toolLoader) {
-			addCommand(tool.getName(),tool.getClass());
+			addCommand(tool.getName().toLowerCase(),tool.getClass());
 		}
 		
 		if (args.length < 1) {

@@ -7,6 +7,7 @@ import net.sf.samtools.SAMFileReader;
 import net.sf.samtools.SAMFileWriter;
 import net.sf.samtools.SAMFileWriterFactory;
 import net.sf.samtools.SAMRecord;
+import bfx.process.ProgressMeter;
 import bfx.tools.Tool;
 
 import com.beust.jcommander.Parameter;
@@ -20,23 +21,23 @@ public class FilterBAM extends Tool {
 
 		@Override
 		public boolean keep(SAMRecord align) {
-			return align.getMateUnmappedFlag();
+			return !align.getReadUnmappedFlag();
 		}
 		
 	}
 
-	public static class RemoveUnammaped implements BAMFilter {
+	public static class RemoveUnmapped implements BAMFilter {
 
 		@Override
 		public boolean keep(SAMRecord align) {
-			return !align.getMateUnmappedFlag();
+			return align.getReadUnmappedFlag();
 		}
 		
 	}
 	
 	//private static Logger log = Logger.getLogger(Convert.class);
 
-	@Parameter(names = {"--filter","-F"}, description = "Filter type: mapped or unmmaped. It will remove mapped or unmapped reads, respectively.")
+	@Parameter(names = {"--remove","-R"}, description = "Remove bam records acoording to: mapped or unmmaped.")
 	public String filterName="mapped";
 
 	@Parameter(names = {"--input","-i"}, description = "Input File",required=true)
@@ -56,20 +57,39 @@ public class FilterBAM extends Tool {
 		File outputFile = new File(output);
 		SAMFileHeader header = reader.getFileHeader();
 		SAMFileWriter out = factory.makeBAMWriter(header, true, outputFile);
-		BAMFilter filter = getFilter(filterName);
+		BAMFilter filter = getFilter(filterName.toLowerCase());
+		
+		ProgressMeter pm = getProgressMeterFactory().get();
+		pm.start(String.format("Filtering BAM file"));
+		long count = 0;
+		long unfiltered = 0;
 		
 		for (SAMRecord align:reader) {
 			if(!filter.keep(align)) {
 				out.addAlignment(align);
+				unfiltered++;
 			}
+			count++;
+			pm.incr(1);
 		}
-		
 		out.close();
 		reader.close();
+		pm.finish();
+		
+		System.out.println(String.format("Records %d",count));
+		System.out.println(String.format("Filtered %d (%.2f%%)",count-unfiltered,(count-unfiltered)*100.0/count));
+		System.out.println(String.format("Result %d (%.2f%%)",unfiltered,(unfiltered)*100.0/count));
+		
 	}
 
-	private BAMFilter getFilter(String filterName2) {
-		return null;
+	private BAMFilter getFilter(String filterName) {
+		if (filterName.equals("mapped"))
+			return new RemoveMapped();
+		else if(filterName.equals("unmapped")) {
+			return new RemoveUnmapped();
+		} else {
+			throw new RuntimeException(String.format("Filter '%s' not found.",filterName));
+		}
 	}
 
 	@Override

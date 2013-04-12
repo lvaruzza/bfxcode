@@ -64,8 +64,12 @@ public class CLIToolRunner {
 
 			tool.run();			
 		} catch(Exception e) {
-			err.println(String.format("Error running tool '%s': %s",
-					klass.getName(),e.getMessage()));
+			if (klass == null) {
+				err.println(String.format("Error: %s",e.getMessage()));				
+			} else {
+				err.println(String.format("Error running tool '%s': %s",
+						klass.getName(),e.getMessage()));
+			}
 			e.printStackTrace();
 		}
 	}
