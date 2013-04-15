@@ -1,7 +1,7 @@
 package bfx.support
-import java.util.ServiceLoader;
+import java.util.ServiceLoader
 
-import bfx.tools.Tool;
+import bfx.tools.Tool
 
 
 class CreateScriptLinks {
