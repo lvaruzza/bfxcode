@@ -91,25 +91,14 @@
 			<version>2.1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.jung</groupId>
-			<artifactId>jung2</artifactId>
-			<version>2.0.1</version>
-			<type>pom</type>
+			<groupId>org.graphstream</groupId>
+			<artifactId>gs-core</artifactId>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.jung</groupId>
-			<artifactId>jung-api</artifactId>
-			<version>2.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.jung</groupId>
-			<artifactId>jung-graph-impl</artifactId>
-			<version>2.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.jung</groupId>
-			<artifactId>jung-io</artifactId>
-			<version>2.0.1</version>
+			<groupId>net.sf.jgrapht</groupId>
+			<artifactId>jgrapht</artifactId>
+			<version>0.8.3</version>
 		</dependency>
 	</dependencies>
 
@@ -119,13 +108,13 @@
 
 	<build>
 		<!-- <sourceEncoding>UTF-8</sourceEncoding> -->
+		
+		<plugins>
 
 		<plugin>
 		    <groupId>org.codehaus.gmaven</groupId>
 		    <artifactId>gmaven-plugin</artifactId>
 		</plugin>
-		
-		<plugins>
 			<plugin>
 				<groupId>org.scala-tools</groupId>
 				<artifactId>maven-scala-plugin</artifactId>

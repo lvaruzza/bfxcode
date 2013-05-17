@@ -2,6 +2,7 @@ package bfx.tools.sequence;
 
 import bfx.Sequence;
 import bfx.io.SequenceFormat;
+import bfx.io.SequenceSink;
 import bfx.io.SequenceSource;
 import bfx.io.SequenceWriter;
 import bfx.io.impl.FileSequenceSource;
@@ -26,27 +27,27 @@ public class Split extends Tool {
 	//public String output;
 
 	
-	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")
-	public String outputFormat;
+	//@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")
+	//public String outputFormat;
 	
 	@Override
 	public void run() throws Exception {
 		SequenceSource src = new FileSequenceSource(inputFormat, input, qual);
 		
-		if (outputFormat==null) {
+		/*if (outputFormat==null) {
 			SequenceFormat outformat = SequenceFormat.getFormatForFile(input);
 			outputFormat = outformat.getName();
-		}
+		}*/
 		
 		ProgressMeter pm = this.getProgressMeterFactory().get();
 		src.setProgressMeter(pm);
 
-		SequenceWriter sw = SequenceFormat.getWriter(outputFormat);
-		
 		pm.start("Reading input file");
 		for(Sequence seq: src) {
-			// TODO
-			//sw.write(new File(seq.getId() + "." + sw.getPreferedExtension()),seq);
+			String name = seq.getId();
+			SequenceSink out = SequenceSink.fromFile("fasta", name + ".fasta");
+			out.write(seq);
+			out.close();
 		}
 		pm.finish();
 	}

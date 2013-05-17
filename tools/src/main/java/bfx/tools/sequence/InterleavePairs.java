@@ -43,7 +43,7 @@ public class InterleavePairs extends Tool {
 	@Parameter(names = {"-singlets","-s"}, description = "Output Singlets i, File")
 	public String singlets = "singlets.fastq";
 
-	@Parameter(names = {"--singletsQual","-sq"}, description = "Output Qaul File (only appliable for fasta format)")
+	@Parameter(names = {"--singletsQual","-sq"}, description = "Output Qual File (only appliable for fasta format)")
 	public String singletsQual;
 	
 	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")

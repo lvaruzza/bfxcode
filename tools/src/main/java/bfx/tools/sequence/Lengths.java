@@ -25,7 +25,7 @@ public class Lengths extends Tool {
 	@Parameter(names = {"--output","-o"}, description = "Output File")
 	public String output;
 
-	@Parameter(names = {"--outputQual","-oq"}, description = "Output Qaul File (only appliable for fasta format)")
+	@Parameter(names = {"--outputQual","-oq"}, description = "Output Qual File (only appliable for fasta format)")
 	public String outputQual;
 	
 	@Parameter(names = {"--outputFormat","-of"}, description = "Output Format")

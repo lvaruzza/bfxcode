@@ -13,10 +13,10 @@ public class FilterCompiler {
 	private JavaSourceCompiler javaSourceCompiler = new JavaSourceCompilerImpl();
 
 	public  String makeSource(String pkgname,String classname,String expr) {
-	    String javaSourceCode =  String.format("package %s;" +
+	    String javaSourceCode =  String.format("package %s;\n" +
 	    		"import bfx.tools.sequence.filter.*; \n" +
 	    		"public class %s extends FilterExpr{\n" +
-	    		"       public boolean filter(int length,double meanQuality)  {\n" +
+	    		"       public boolean filter(int length,double meanQuality,String name)  {\n" +
 	    		"            return (%s);\n" +
 	    		"        }\n" +
 	    		"    }",pkgname,classname,expr);

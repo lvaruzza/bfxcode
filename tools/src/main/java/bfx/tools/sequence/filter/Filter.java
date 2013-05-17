@@ -50,7 +50,7 @@ public class Filter extends Tool {
 	@Parameter(names = { "--output", "-o" }, description = "Output File")
 	public String output;
 
-	@Parameter(names = { "--outputQual", "-oq" }, description = "Output Qaul File (only appliable for fasta format)")
+	@Parameter(names = { "--outputQual", "-oq" }, description = "Output Qual File (only appliable for fasta format)")
 	public String outputQual;
 
 	@Parameter(names = { "--outputFormat", "-of" }, description = "Output Format")
@@ -65,6 +65,9 @@ public class Filter extends Tool {
 	@Parameter(names = { "-L" }, description = "Filter by minimum read length")
 	public Integer minLength = null;
 
+	@Parameter(names = { "-N" }, description = "Filter sequence name (regex)")
+	public String name = null;
+	
 	@Parameter(names = { "--logQual" }, description = "Log qual values to file")
 	public String logQual;
 
@@ -89,7 +92,9 @@ public class Filter extends Tool {
 		if (filterExpr != null) {
 			filter = compiler.compile(filterExpr);
 		} else {
-			if (minQuality != null && minLength != null) {
+			if (name != null) {
+				filter = compiler.compile(String.format("name.matches(\"%s\")",name));
+			} else if (minQuality != null && minLength != null) {
 				filter = compiler.compile(String.format(
 						"length >= %d && meanQuality >= %f", minLength,
 						minQuality));

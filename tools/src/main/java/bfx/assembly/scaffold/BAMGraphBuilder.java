@@ -1,8 +1,6 @@
 package bfx.assembly.scaffold;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +12,15 @@ import net.sf.samtools.SAMRecord;
 import net.sf.samtools.SAMSequenceRecord;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.graphstream.graph.Edge;
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.ui.swingViewer.Viewer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import bfx.utils.Pair;
-import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.SparseMultigraph;
-import edu.uci.ics.jung.graph.util.EdgeType;
-import edu.uci.ics.jung.io.GraphMLWriter;
 
 public class BAMGraphBuilder {
 	public static class GraphEdge {		
@@ -66,7 +65,7 @@ public class BAMGraphBuilder {
 	private double inferedInsertIQD = 0;
 	private Map<Pair<String,String>,Long> edgeCount;
 	
-	public Graph<String,GraphEdge> buildGraph(String input,String output) throws Exception {
+	public Graph buildGraph(String input,String output) throws Exception {
 		SAMFileReader reader = new SAMFileReader(new File(input));
 		long edges=0;
 		edgeCount=new HashMap<Pair<String,String>,Long>();
@@ -92,35 +91,49 @@ public class BAMGraphBuilder {
 		double q3 = insertStats.getPercentile(75);
 		inferedInsertMedian = insertStats.getPercentile(50);
 		inferedInsertIQD = q3-q1;
-		log.info(String.format("insertStats: %,d %.1f %.1f",insertStats.getN(), 
+		log.info(String.format("insertStats: N=%,d median=%.1f IQD=%.1f",insertStats.getN(), 
 				inferedInsertMedian,inferedInsertIQD));
 		log.info(String.format("Edges: %,d",edges));
 
-		Graph<String,GraphEdge> graph = buildGraph(edges,seqs);
+		Graph graph = buildGraph(edges,seqs);
 		return graph;
 	}
 
-	private Graph<String, GraphEdge> buildGraph(long totalEdges,List<SAMSequenceRecord> seqs) {
-		Graph<String,GraphEdge> graph = new SparseMultigraph<String,GraphEdge>();
+	private Graph buildGraph(long totalEdges,List<SAMSequenceRecord> seqs) {
+		Graph graph = new MultiGraph("scaffold");
 		long edgeId=0;
 		for(SAMSequenceRecord seq: seqs) {
-				graph.addVertex(seq.getSequenceName());
+				Node node = graph.addNode(seq.getSequenceName());
+				node.addAttribute("ui.label", seq.getSequenceName());
 		}
+		//graph.setAutoCreate( true );
 		for (Entry<Pair<String,String>,Long> e: edgeCount.entrySet()) {
-			if (e.getValue() >= 3) {
-				System.out.println(String.format("<%s %s %d>",
+			if (e.getValue() >= 30) {
+				/*System.out.println(String.format("<%s %s %d>",
 					e.getKey().fst,
-					e.getKey().snd,e.getValue()));
-				graph.addEdge(new GraphEdge(edgeId++,e.getValue()), 
-						e.getKey().fst,e.getKey().snd,EdgeType.DIRECTED);
+					e.getKey().snd,e.getValue()));*/
+				String eid = Long.toString(edgeId++);
+				Edge edge = graph.addEdge(eid,e.getKey().fst,e.getKey().snd,true);
+				edge.addAttribute("count", e.getValue());
+				
 			}
 		}
 		return graph;
 	}
 
 	private void countEdge(SAMRecord align) {
-		Pair<String,String> pair= new Pair<String,String>(align.getReferenceName(),
-									align.getMateReferenceName());
+		String a=align.getReferenceName();
+		String b=align.getMateReferenceName();
+		
+		int flags=align.getFlags();
+	
+		Pair<String,String> pair;
+		
+		if (((flags & 0x10) == 1) && ((flags & 0x20) ==1)) {
+			pair=new Pair<String,String>(b,a);
+		} else {
+			pair=new Pair<String,String>(a,b);
+		}
 		
 		if (edgeCount.containsKey(pair)) {
 			edgeCount.put(pair,edgeCount.get(pair)+1);
@@ -139,11 +152,14 @@ public class BAMGraphBuilder {
 	public static void main(String[] args) {
 		BAMGraphBuilder gbuilder = new BAMGraphBuilder();
 		try {
-			Graph<String,GraphEdge> graph = gbuilder.buildGraph("data/mates.bam", null);
-			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
-			GraphMLWriter<String,GraphEdge> writer= new GraphMLWriter<String,GraphEdge>();
-			writer.save(graph, out);
-			out.close();
+			Graph graph = gbuilder.buildGraph("data/mates.bam", null);
+			Viewer viewer = graph.display();
+
+			//graph.display();
+			//BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+			//GraphMLWriter<String,GraphEdge> writer= new GraphMLWriter<String,GraphEdge>();
+			//writer.save(graph, out);
+			//out.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

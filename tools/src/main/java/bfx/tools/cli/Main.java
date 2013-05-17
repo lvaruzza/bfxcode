@@ -4,9 +4,9 @@ import static java.lang.System.err;
 import static java.lang.System.exit;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class Main {
 	
 	private static ServiceLoader<Tool> toolLoader = ServiceLoader.load(Tool.class);
 	
-	private static Map<String,Class<? extends Tool>> commands = new HashMap<String,Class<? extends Tool>>();;
+	private static Map<String,Class<? extends Tool>> commands = new TreeMap<String,Class<? extends Tool>>();;
 	
 	private static void addCommand(String name,Class<? extends Tool> klass) {
 		log.debug(String.format("Registering command '%s' to class '%s'",name.toLowerCase(),klass.getName()));
@@ -67,7 +67,12 @@ public class Main {
 	private static void listValidCommands() {
 		System.err.println("Valid commands:");
 		for(String cmd: commands.keySet() ) {
-			System.err.println(String.format("\t%s",cmd));
+			try {
+				Tool tool = commands.get(cmd).newInstance();
+				System.err.println(String.format("%15s%30s",tool.getName(),tool.getGroup()));
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 }
