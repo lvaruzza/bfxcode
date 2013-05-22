@@ -4,6 +4,7 @@ import static java.lang.System.err;
 import static java.lang.System.exit;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.TreeMap;
@@ -29,6 +30,8 @@ public class Main {
 	
 	private static Map<String,Class<? extends Tool>> commands = new TreeMap<String,Class<? extends Tool>>();;
 	
+	
+	
 	private static void addCommand(String name,Class<? extends Tool> klass) {
 		log.debug(String.format("Registering command '%s' to class '%s'",name.toLowerCase(),klass.getName()));
 		commands.put(name,klass);
@@ -42,6 +45,8 @@ public class Main {
 	 * 
 	 */
 	public static void main(String... args) {
+		Locale.setDefault(Locale.US);
+		
 		for(Tool tool: toolLoader) {
 			addCommand(tool.getName().toLowerCase(),tool.getClass());
 		}

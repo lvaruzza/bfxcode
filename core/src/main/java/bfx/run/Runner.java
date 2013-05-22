@@ -1,80 +1,99 @@
 package bfx.run;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Runner {
+	private static Logger log = LoggerFactory.getLogger(Runner.class);
+	private ProcessBuilder builder;
 	
-	private OutputStream output = System.out;
-	private ByteArrayOutputStream err;
+	public Runner(String command) {
+		builder = new ProcessBuilder(command);
+	}
 	
-	public void setOutput(OutputStream out) {
-		this.output = out;
+	public Runner(String program,String... args) {
+		builder = new ProcessBuilder((String[])ArrayUtils.add(args, 0,program));
 	}
 
-	public String slurp(ProcessBuilder builder)  {
+	public Runner(String[] cmdv)  {
+		builder = new ProcessBuilder(cmdv);
+	}
+	
+	public String slurp()  {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
-			run(builder,baos);
-			return baos.toString();
-		} catch (Exception e) {
+			run(baos);
+		} catch (RunnerException e) {
 			throw new RuntimeException(e);
+		}
+		return baos.toString();
+	}
+
+	public void run() throws RunnerException  {
+		ByteArrayOutputStream err = new ByteArrayOutputStream();
+		try {
+			run(System.out,err);
+		} catch(RunnerException e) {
+			log.debug(String.format("Error running command %s.\nProgram stderr:\n%s",
+					builder.command().toString(),err.toString()));
+			throw new RunnerException(e,builder.
+					command().toString());			
+		}		
+	}
+
+	public void run(OutputStream out) throws RunnerException  {
+		ByteArrayOutputStream err = new ByteArrayOutputStream();
+		try {
+			run(out,err);
+		} catch(RunnerException e) {
+			log.debug(String.format("Error running command %s.\nProgram stderr:\n%s",
+					builder.command().toString(),err.toString()));
+			throw new RunnerException(e,builder.
+					command().toString());			
 		}
 	}
 	
-	public void run(ProcessBuilder builder,OutputStream out) throws RunnerException  {
-		builder.redirectErrorStream(true);
+	public void run(OutputStream out,OutputStream err) throws RunnerException  {
 		Process proc;
 		StreamGobbler globber;
 		StreamGobbler errGlober;
 		try {
 			proc = builder.start();
 			InputStream procIn = proc.getInputStream();
+
 			globber = new StreamGobbler(procIn,out);
-			err = new ByteArrayOutputStream();
-			errGlober = new StreamGobbler(proc.getErrorStream(),err);
 			globber.start();
+			
+			errGlober = new StreamGobbler(proc.getErrorStream(),err);
 			errGlober.start();
+			
 			proc.waitFor();
 		} catch (Exception e) {
-			throw new RunnerException(e,builder.
-						command().toString(),
-						err.toString());
+			throw new RunnerException(e,builder.command().toString());
 		}
 		if  (proc.exitValue()!=0) {
 			throw new RunnerException(proc.exitValue(),builder.
-					command().toString(),
-					err.toString());
+					command().toString());
 		}
 	}
+
 	
-	public void run(String command) throws RunnerException {
-		ProcessBuilder builder = new ProcessBuilder(command);
-		run(builder,output);	
-	}
-	
-	public void run(String program,String... args) throws RunnerException {
-		ProcessBuilder builder = new ProcessBuilder((String[])ArrayUtils.add(args, 0,program));
-		run(builder,output);	
+	public static String slurp(String command)  {
+		return new Runner(command).slurp();
 	}
 
-	public void run(String[] cmdv) throws IOException, InterruptedException, RunnerException {
-		ProcessBuilder builder = new ProcessBuilder(cmdv);
-		run(builder,output);
+	public static void run(String command) throws RunnerException  {
+		new Runner(command).run();
 	}
 	
-	public String slurp(String command)  {
-		ProcessBuilder builder = new ProcessBuilder(command);
-		return slurp(builder);
-	}
 
-	public String slurp(String program,String... args)  {
-		ProcessBuilder builder = new ProcessBuilder((String[])ArrayUtils.add(args, 0,program));
-		return slurp(builder);	
+	public static String slurp(String program,String... args)   {
+		return new Runner(program,args).slurp();
 	}
 	
 }
