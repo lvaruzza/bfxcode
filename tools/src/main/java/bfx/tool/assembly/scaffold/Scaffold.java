@@ -31,8 +31,8 @@ public class Scaffold extends Tool {
 
 	@Override
 	public void run() throws Exception {
-		BAMGraphBuilder builder = new BAMGraphBuilder();
-		Graph graph = builder.buildGraph(input, null);
+		//BAMGraphBuilder builder = new BAMGraphBuilder();
+		//Graph graph = builder.buildGraph(input, null);
 		//BufferedWriter out = new BufferedWriter(new FileWriter(output));
 		//GraphMLWriter<String,GraphEdge> writer= new GraphMLWriter<String,GraphEdge>();
 		//writer.save(graph, out);
