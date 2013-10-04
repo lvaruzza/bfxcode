@@ -1,11 +1,11 @@
 package bfx.tool.assembly.scaffold;
 
-import bfx.assembly.scaffold.bam.BAMReader;
+import bfx.assembly.scaffold.bam.BAMReaderMappedReads;
 import bfx.assembly.scaffold.edges.PairsToEdges;
 import bfx.assembly.scaffold.edges.SumEdges;
 import bfx.assembly.scaffold.edges.SuperEdge;
-import bfx.assembly.scaffold.technology.IonTorrentTechnology;
 import bfx.assembly.util.Table;
+import bfx.technology.IonTorrent;
 import bfx.tools.Tool;
 
 import com.beust.jcommander.Parameter;
@@ -39,8 +39,8 @@ public class Scaffold extends Tool {
 	@Override
 	public void run() throws Exception {
 		SumEdges sumedges = new SumEdges();
-		BAMReader reader = new BAMReader(input);
-		PairsToEdges merger = new PairsToEdges(new IonTorrentTechnology(),mqFilter);		
+		BAMReaderMappedReads reader = new BAMReaderMappedReads(input);
+		PairsToEdges merger = new PairsToEdges(new IonTorrent(),mqFilter);		
 		merger.setConsumer(sumedges);
 		reader.read(merger);
 		Table table=new Table(output);
