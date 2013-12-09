@@ -1,17 +1,13 @@
 package bfx.io.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
 import bfx.Sequence;
-import bfx.exceptions.FileProcessingRuntimeException;
-import bfx.exceptions.MultipleFilesProcessingRuntimeException;
 import bfx.io.SequenceFormat;
 import bfx.io.SequenceReader;
 import bfx.io.SequenceSource;
-import bfx.utils.compression.CompressionUtils;
 
 public class StreamSequenceSource extends SequenceSource {
 

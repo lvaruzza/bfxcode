@@ -31,7 +31,7 @@ public abstract class Platform {
 			return platform;
 	}
 	
-	private Object getName() {
+	public Object getName() {
 		return getNames()[0];
 	}
 

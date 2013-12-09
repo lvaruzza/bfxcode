@@ -9,5 +9,6 @@ public class NCBIClient {
 		System.out.println(seq);
 		
 		Sequence seq2 = efetch.nucleotide.get("marafo");
+		System.out.println(seq2);
 	}
 }
