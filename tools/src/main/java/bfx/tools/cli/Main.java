@@ -34,7 +34,7 @@ public class Main {
 	
 	private static void addCommand(String name,Class<? extends Tool> klass) {
 		log.debug(String.format("Registering command '%s' to class '%s'",name.toLowerCase(),klass.getName()));
-		commands.put(name,klass);
+		commands.put(name.toLowerCase(),klass);
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class Main {
 			listValidCommands();
 			exit(-1);
 		} else {
-			if (commands.containsKey(args[0])) {
+			if (commands.containsKey(args[0].toLowerCase())) {
 				Class<? extends Tool> klass = commands.get(args[0].toLowerCase());				
 				CLIToolRunner.run(klass,Arrays.copyOfRange(args, 1, args.length));
 			} else {

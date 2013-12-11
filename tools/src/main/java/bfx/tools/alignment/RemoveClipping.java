@@ -82,7 +82,6 @@ public class RemoveClipping extends Tool {
 						aln.setBaseQualities(qual);
 						//aln.setAlignmentStart(aln.getAlignmentStart() + start);
 						aln.setCigar(new Cigar(newCigar));
-						System.out.println(aln);
 					}
 					outSam.addAlignment(aln);
 				}
