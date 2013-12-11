@@ -33,15 +33,14 @@ public class RemoveClipping extends Tool {
 
 	@Override
 	public void run() throws Exception {
-		SAMRecord curAln;
+		SAMRecord curAln = null;
 		
 		SAMFileWriterFactory samFactory = new SAMFileWriterFactory();
 		ProgressMeter pm = this.getProgressMeterFactory().get();
 		pm.start(String.format("Reading %s",input));
 		try (SAMFileReader reader = new SAMFileReader(new File(input))) {
 			SAMFileHeader header = reader.getFileHeader();
-			SAMFileWriter outSam = samFactory.makeBAMWriter(header, false,
-					new File(output));
+			SAMFileWriter outSam = samFactory.makeBAMWriter(header, false,new File(output));
 			try {
 				for (SAMRecord aln : reader) {
 					curAln = aln;
