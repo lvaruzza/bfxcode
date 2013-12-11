@@ -86,7 +86,7 @@ public class RemoveClipping extends Tool {
 					outSam.addAlignment(aln);
 				}
 			} finally {
-				outSam.close();
+				if (outSam!=null) outSam.close();
 			}
 		}
 		pm.finish();
