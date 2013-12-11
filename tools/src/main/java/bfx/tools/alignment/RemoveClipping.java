@@ -33,6 +33,8 @@ public class RemoveClipping extends Tool {
 
 	@Override
 	public void run() throws Exception {
+		SAMRecord curAln;
+		
 		SAMFileWriterFactory samFactory = new SAMFileWriterFactory();
 		ProgressMeter pm = this.getProgressMeterFactory().get();
 		pm.start(String.format("Reading %s",input));
@@ -42,6 +44,7 @@ public class RemoveClipping extends Tool {
 					new File(output));
 			try {
 				for (SAMRecord aln : reader) {
+					curAln = aln;
 					pm.incr(1);
 					List<CigarElement> cigar = aln.getCigar()
 							.getCigarElements();
@@ -85,6 +88,9 @@ public class RemoveClipping extends Tool {
 					}
 					outSam.addAlignment(aln);
 				}
+			} catch(Exception e) {
+				System.err.println("ERROR: " + e.getMessage());
+				System.err.println("While processing " + curAln);
 			} finally {
 				if (outSam!=null) outSam.close();
 			}
