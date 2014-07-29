@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.io.FilenameUtils;
+
 import net.sf.samtools.Cigar;
 import net.sf.samtools.CigarElement;
 import net.sf.samtools.CigarOperator;
@@ -36,11 +38,20 @@ public class RemoveClipping extends Tool {
 		SAMRecord curAln = null;
 		
 		SAMFileWriterFactory samFactory = new SAMFileWriterFactory();
+		//samFactory.setCreateMd5File(true);
+		//samFactory.setMaxRecordsInRam(10^9);
+		samFactory.setUseAsyncIo(true);
+		//samFactory.setAsyncOutputBufferSize(1000000);
+		
+		File outputFile = new File(output);
+		
+		samFactory.setTempDirectory(new File(FilenameUtils.getFullPath(outputFile.getAbsolutePath())));
+		
 		ProgressMeter pm = this.getProgressMeterFactory().get();
 		pm.start(String.format("Reading %s",input));
 		try (SAMFileReader reader = new SAMFileReader(new File(input))) {
 			SAMFileHeader header = reader.getFileHeader();
-			SAMFileWriter outSam = samFactory.makeBAMWriter(header, false,new File(output));
+			SAMFileWriter outSam = samFactory.makeBAMWriter(header, false,outputFile);
 			try {
 				for (SAMRecord aln : reader) {
 					curAln = aln;
