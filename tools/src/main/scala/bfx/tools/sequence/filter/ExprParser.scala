@@ -1,7 +1,9 @@
 package bfx.tools.sequence.filter
 
 import scala.util.parsing.combinator.JavaTokenParsers
+
 import grizzled.slf4j.Logger
+
 
 
 
@@ -36,17 +38,13 @@ class ExprParser extends JavaTokenParsers {
 			   term
 				
 
-	def parse(text:String):Option[Expr] = {
-	  parseAll(this.expr,text) match {
-	    case this.Success(x,_) => Some(x)
-	    case this.NoSuccess(msg,_) => {
-	       logger.debug(msg)
-	       println(msg)
-	       None 
-	    }
-	  }	  
+	def parse(text:CharSequence):ParseResult[Expr] = {
+	  parseAll[Expr](expr,text) 
 	}
 
+   	def parse(text:String):ParseResult[Expr] = {
+   	  parse(text.asInstanceOf[CharSequence]);
+   	}
 }
 
 object ExprParser {
@@ -61,7 +59,7 @@ object ExprParser {
 	  val r = p.parse("length>42 and mean(quality)>20").get;
 	  
 	  println("===============")
-	  println(IR.compile1(r))
+	  //println(IR.compile1(r))
 	  println("===============")
 	  
 	  println("Finish")

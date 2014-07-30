@@ -18,37 +18,37 @@ class TestExprParser {
 	@Test
 	def testTerm() {
 		val r = parser.parse("length >= 10")
-		assertEquals(Some(opge),r);
+		assertEquals(opge,r);
 	}
 	
 	@Test
 	def testFun() {
 		val r = parser.parse("mean(quality) < 10")
-		assertEquals(Some(oplt),r);
+		assertEquals(oplt,r);
 	}
 
 	@Test
 	def testAnd() {
 		val r = parser.parse("mean(quality) < 10 and (length >= 10)")
-		assertEquals(Some(and),r);
+		assertEquals(and,r);
 	}
 
 	@Test
 	def testAndParen() {
 		val r = parser.parse("mean(quality) < 10 and length >= 10")
-		assertEquals(Some(and),r);
+		assertEquals(and,r);
 	}
 	
 	@Test
 	def testAndOr() {
 		val r = parser.parse("mean(quality) < 10 and length >= 10 or mean(quality) < 10")
-		assertEquals(Some(andor),r);
+		assertEquals(andor,r);
 	}
 
 	@Test
 	def testAndOrPar() {
 		val r = parser.parse("mean(quality) < 10 and (length >= 10 or mean(quality) < 10)")
-		assertEquals(Some(andor),r);
+		assertEquals(andor,r);
 	}
 	
 }

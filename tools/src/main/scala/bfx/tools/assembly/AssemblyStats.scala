@@ -3,8 +3,6 @@ package bfx.tools.assembly
 import java.io.PrintWriter
 import scala.collection._
 import scala.collection.JavaConverters._
-import scala.reflect.BeanInfo
-import scala.reflect.BeanProperty
 import com.beust.jcommander.Parameter
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationConfig
@@ -29,6 +27,10 @@ import org.jfree.chart.title.LegendTitle
 import org.jfree.chart.LegendItemSource
 import org.jfree.chart.LegendItemCollection
 import org.jfree.chart.axis.LogarithmicAxis
+import bfx.util.chart.Plotter
+import scala.beans.BeanInfo
+import scala.beans.BeanProperty
+import bfx.util.chart.Plotter
 
 @BeanInfo
 class NStat (@BeanProperty val L:Int,

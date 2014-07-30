@@ -17,7 +17,10 @@ public class FilterCompiler {
 	    		"import bfx.tools.sequence.filter.*; \n" +
 	    		"public class %s extends FilterExpr{\n" +
 	    		"       public boolean filter(int length,double meanQuality,String name)  {\n" +
-	    		"            return (%s);\n" +
+//	    		"            System.out.println(name);\n" +
+	    		"            boolean r = (%s);\n" +
+//	    		"            System.out.println(String.format(\" %%s\",r));\n" +
+	    		"            return r;\n" +
 	    		"        }\n" +
 	    		"    }",pkgname,classname,expr);
 	    log.debug("Generated code: " + javaSourceCode);

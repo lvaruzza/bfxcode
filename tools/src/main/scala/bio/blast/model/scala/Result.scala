@@ -1,7 +1,7 @@
 package bio.blast.model.scala
 
-import javax.xml.bind.annotation._
-import scala.reflect.BeanProperty
+import javax.xml.bind.annotation.XmlElement
+import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement(name = "Iteration")
 class ResultScala {

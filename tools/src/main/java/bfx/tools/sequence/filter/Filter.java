@@ -93,6 +93,7 @@ public class Filter extends Tool {
 			filter = compiler.compile(filterExpr);
 		} else {
 			if (name != null) {
+				log.info(String.format("Filter by name '%s'",name));
 				filter = compiler.compile(String.format("name.matches(\"%s\")",name));
 			} else if (minQuality != null && minLength != null) {
 				filter = compiler.compile(String.format(

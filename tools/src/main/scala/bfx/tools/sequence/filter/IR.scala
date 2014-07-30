@@ -4,7 +4,7 @@ abstract  class IR {
   def typ:Symbol;
 }
 
-case class Unimplemented extends IR {
+case class Unimplemented() extends IR {
   def typ = 'Unknown
 }
 
