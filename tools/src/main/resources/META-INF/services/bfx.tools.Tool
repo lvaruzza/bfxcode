@@ -21,5 +21,6 @@ bfx.tools.sequence.SplitPairs
 bfx.tools.alignment.PrintInsertSize
 bfx.tools.alignment.FilterBAM
 bfx.tools.alignment.RemoveClipping
+bfx.tools.alignment.MergeRG
 
 

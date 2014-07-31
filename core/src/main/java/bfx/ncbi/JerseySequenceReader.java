@@ -33,7 +33,7 @@ public class JerseySequenceReader implements MessageBodyReader<SequenceSource> {
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
 		ByteStreams.copy(entityStream, out);
-		return new StreamSequenceSource("fasta",out.getSupplier().getInput());
+		return new StreamSequenceSource("fasta",out.asByteSource().openStream());
 	}
 	
 

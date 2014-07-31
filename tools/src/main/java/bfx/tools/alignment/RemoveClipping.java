@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Nullable;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -75,8 +74,7 @@ public class RemoveClipping extends Tool {
 						List<CigarElement> newCigar = new ArrayList<CigarElement>(Collections2
 								.filter(cigar, new Predicate<CigarElement>() {
 									@Override
-									public boolean apply(
-											@Nullable CigarElement input) {
+									public boolean apply(CigarElement input) {
 										return input.getOperator() != CigarOperator.S;
 									}
 								}));

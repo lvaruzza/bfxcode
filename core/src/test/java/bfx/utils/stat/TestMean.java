@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import javax.annotation.Nullable;
-
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,7 @@ public class TestMean {
 	Function<Long,Double> invX21k = new Function<Long,Double>() {
 
 		@Override
-		public Double apply(@Nullable Long i) {
+		public Double apply(Long i) {
 			return 1000.0/(i*i);
 		}
 		
@@ -28,7 +26,7 @@ public class TestMean {
 	Function<Long,Double> sum = new Function<Long,Double>() {
 
 		@Override
-		public Double apply(@Nullable Long i) {
+		public Double apply(Long i) {
 			return (double)i;
 		}
 		

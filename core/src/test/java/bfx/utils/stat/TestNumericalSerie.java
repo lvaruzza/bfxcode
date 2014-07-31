@@ -1,7 +1,5 @@
 package bfx.utils.stat;
 
-import javax.annotation.Nullable;
-
 import org.junit.Test;
 
 import com.google.common.base.Function;
@@ -13,7 +11,7 @@ public class TestNumericalSerie {
 		Function<Long,Double> fun = new Function<Long,Double>() {
 
 			@Override
-			public Double apply(@Nullable Long i) {
+			public Double apply(Long i) {
 				return 1.0/(i*i);
 			}
 			
