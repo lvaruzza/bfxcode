@@ -64,10 +64,10 @@ public class MergeRG extends Tool {
 			SAMFileWriter outSam = samFactory.makeBAMWriter(outputHeader, false,
 					outputFile);
 			try {
-				for (SAMRecord aln : reader) {
-					aln.getReadGroup();
+				for (final SAMRecord aln : reader) {
 					aln.setAttribute("RG", "merged");
 					outSam.addAlignment(aln);
+					pm.incr(1);
 				}			
 			} catch (Exception e) {	
 				System.err.println("ERROR: " + e.getMessage());
