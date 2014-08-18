@@ -1,12 +1,15 @@
 package bfx.io.impl;
 
+import htsjdk.samtools.SAMRecord;
+import htsjdk.samtools.SamInputResource;
+import htsjdk.samtools.SamReader;
+import htsjdk.samtools.SamReaderFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Iterator;
 
-import net.sf.samtools.SAMFileReader;
-import net.sf.samtools.SAMRecord;
 import bfx.Sequence;
 import bfx.impl.SequenceQual;
 import bfx.io.SequenceReader;
@@ -14,17 +17,21 @@ import bfx.io.SequenceReader;
 public class BAMSequenceReader extends SequenceReader {
 	public static class BAMIterator implements Iterator<Sequence> {
 		private Iterator<SAMRecord> samit;
-		private SAMFileReader reader;
+		private SamReader reader;
 		
-		public BAMIterator(InputStream in) {
-			reader = new SAMFileReader(in);
+		public BAMIterator(InputStream input) {
+			reader = SamReaderFactory.makeDefault().open(SamInputResource.of(input));					
 			samit = reader.iterator();
 		}
 		
 		@Override
 		public boolean hasNext() {
 			if (!samit.hasNext())
-				reader.close();
+				try {
+					reader.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
 			
 			return samit.hasNext();
 		}

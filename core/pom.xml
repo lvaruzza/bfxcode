@@ -42,9 +42,9 @@
 			<version>1.0.6</version>
 		</dependency>
 		<dependency>
-			<groupId>picard</groupId>
-			<artifactId>sam</artifactId>
-			<version>1.87</version>
+			<groupId>htsjdk</groupId>
+			<artifactId>htsjdk</artifactId>
+			<version>1.118</version>
 		</dependency>
 	</dependencies>
 
