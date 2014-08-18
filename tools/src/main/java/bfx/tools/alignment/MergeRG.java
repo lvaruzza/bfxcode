@@ -36,14 +36,15 @@ public class MergeRG extends Tool {
 
 		SAMFileWriterFactory samFactory = new SAMFileWriterFactory();
 		// samFactory.setCreateMd5File(true);
-		// samFactory.setMaxRecordsInRam(10^9);
+		samFactory.setMaxRecordsInRam(10^7);
 		samFactory.setUseAsyncIo(true);
-		// samFactory.setAsyncOutputBufferSize(1000000);
-
+		samFactory.setAsyncOutputBufferSize(1_000_000);
+		//samFactory.setDefaultCreateIndexWhileWriting(true);
+		
 		File outputFile = new File(output);
 
 		samFactory.setTempDirectory(new File(FilenameUtils
-				.getFullPath(outputFile.getAbsolutePath())));
+				.getFullPath(outputFile.getAbsolutePath()) + "/temp/"));
 
 		ProgressMeter pm = this.getProgressMeterFactory().get();
 		pm.start(String.format("Reading %s", input));
@@ -66,6 +67,7 @@ public class MergeRG extends Tool {
 			try {
 				for (final SAMRecord aln : reader) {
 					aln.setAttribute("RG", "merged");
+					curAln=aln;
 					outSam.addAlignment(aln);
 					pm.incr(1);
 				}			
