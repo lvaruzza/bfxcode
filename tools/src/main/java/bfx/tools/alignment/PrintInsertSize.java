@@ -1,12 +1,14 @@
 package bfx.tools.alignment;
 
+import htsjdk.samtools.SAMRecord;
+import htsjdk.samtools.SamInputResource;
+import htsjdk.samtools.SamReader;
+import htsjdk.samtools.SamReaderFactory;
+
 import java.io.File;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
-
-import net.sf.samtools.SAMFileReader;
-import net.sf.samtools.SAMRecord;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
@@ -70,7 +72,7 @@ public class PrintInsertSize extends Tool {
 	
 	@Override
 	public void run() throws Exception {
-		SAMFileReader reader = new SAMFileReader(new File(input));
+		SamReader reader = SamReaderFactory.makeDefault().open(SamInputResource.of(new File(input)));					
 		PrintStream out = output == null ? null : new PrintStream(output);
 		DescriptiveStatistics stats = new DescriptiveStatistics();
 		long positive=0;

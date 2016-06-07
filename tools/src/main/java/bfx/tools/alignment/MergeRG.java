@@ -1,15 +1,17 @@
 package bfx.tools.alignment;
 
+import htsjdk.samtools.SAMFileHeader;
+import htsjdk.samtools.SAMFileWriter;
+import htsjdk.samtools.SAMFileWriterFactory;
+import htsjdk.samtools.SAMReadGroupRecord;
+import htsjdk.samtools.SAMRecord;
+import htsjdk.samtools.SamInputResource;
+import htsjdk.samtools.SamReader;
+import htsjdk.samtools.SamReaderFactory;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
-import net.sf.samtools.SAMFileHeader;
-import net.sf.samtools.SAMFileReader;
-import net.sf.samtools.SAMFileWriter;
-import net.sf.samtools.SAMFileWriterFactory;
-import net.sf.samtools.SAMReadGroupRecord;
-import net.sf.samtools.SAMRecord;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -48,7 +50,8 @@ public class MergeRG extends Tool {
 
 		ProgressMeter pm = this.getProgressMeterFactory().get();
 		pm.start(String.format("Reading %s", input));
-		try (SAMFileReader reader = new SAMFileReader(new File(input))) {
+		try (SamReader reader = SamReaderFactory.makeDefault().open(SamInputResource.of(new File(input)))) {		
+
 			SAMFileHeader header = reader.getFileHeader();
 			List<SAMReadGroupRecord> rgs = header.getReadGroups();
 			if (rgs.size() < 2) {

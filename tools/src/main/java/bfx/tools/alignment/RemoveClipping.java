@@ -1,21 +1,23 @@
 package bfx.tools.alignment;
 
+import htsjdk.samtools.Cigar;
+import htsjdk.samtools.CigarElement;
+import htsjdk.samtools.CigarOperator;
+import htsjdk.samtools.SAMFileHeader;
+import htsjdk.samtools.SAMFileWriter;
+import htsjdk.samtools.SAMFileWriterFactory;
+import htsjdk.samtools.SAMRecord;
+import htsjdk.samtools.SamInputResource;
+import htsjdk.samtools.SamReader;
+import htsjdk.samtools.SamReaderFactory;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 import org.apache.commons.io.FilenameUtils;
 
-import net.sf.samtools.Cigar;
-import net.sf.samtools.CigarElement;
-import net.sf.samtools.CigarOperator;
-import net.sf.samtools.SAMFileHeader;
-import net.sf.samtools.SAMFileReader;
-import net.sf.samtools.SAMFileWriter;
-import net.sf.samtools.SAMFileWriterFactory;
-import net.sf.samtools.SAMRecord;
 import bfx.process.ProgressMeter;
 import bfx.tools.Tool;
 
@@ -48,7 +50,8 @@ public class RemoveClipping extends Tool {
 		
 		ProgressMeter pm = this.getProgressMeterFactory().get();
 		pm.start(String.format("Reading %s",input));
-		try (SAMFileReader reader = new SAMFileReader(new File(input))) {
+
+		try (SamReader reader = SamReaderFactory.makeDefault().open(SamInputResource.of(new File(input)))) {					
 			SAMFileHeader header = reader.getFileHeader();
 			SAMFileWriter outSam = samFactory.makeBAMWriter(header, false,outputFile);
 			try {
