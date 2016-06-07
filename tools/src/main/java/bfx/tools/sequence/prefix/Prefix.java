@@ -48,7 +48,7 @@ public class Prefix extends Tool {
 		ProgressMeter pm = getProgressMeterFactory().get();
 
 		src.setProgressMeter(pm);
-		BytePrefixes prefix =  new BytePrefixes();
+		BytePrefix prefix =  new BytePrefixeMap();
 		
 		PrefixReport report = new PrefixReport();
 
@@ -63,9 +63,11 @@ public class Prefix extends Tool {
 		log.info(TextUtils.doubleLine());
 
 		for(Entry<byte[],Long> e:prefix) {
-			out.print(new String(e.getKey()));
-			out.print('\t');
-			out.println(e.getValue());
+			if (e.getValue()>1) {
+				out.print(new String(e.getKey()));
+				out.print('\t');
+				out.println(e.getValue());
+			}
 		}
 		out.close();
 		report.write(System.out, Report.Format.HUMAN);

@@ -56,8 +56,8 @@ public class Filter extends Tool {
 	@Parameter(names = { "--outputFormat", "-of" }, description = "Output Format")
 	public String outputFormat = "fasta";
 
-	@Parameter(names = { "-e" }, description = "Filter by a generic Filter Expression (advanced)")
-	public String filterExpr;
+	/*@Parameter(names = { "-e" }, description = "Filter by a generic Filter Expression (advanced)")
+	public String filterExpr;*/
 
 	@Parameter(names = { "-Q" }, description = "Filter by minimum mean quality")
 	public Float minQuality = null;
@@ -67,7 +67,7 @@ public class Filter extends Tool {
 
 	@Parameter(names = { "-N" }, description = "Filter sequence name (regex)")
 	public String name = null;
-	
+
 	@Parameter(names = { "--logQual" }, description = "Log qual values to file")
 	public String logQual;
 
@@ -83,32 +83,28 @@ public class Filter extends Tool {
 
 		PrintStream logQualOut = null;
 
-		FilterCompiler compiler = new FilterCompiler();
-
 		// Create filterExpr
 
 		FilterExpr filter;
-		
-		if (filterExpr != null) {
-			filter = compiler.compile(filterExpr);
-		} else {
-			if (name != null) {
-				log.info(String.format("Filter by name '%s'",name));
-				filter = compiler.compile(String.format("name.matches(\"%s\")",name));
-			} else if (minQuality != null && minLength != null) {
-				filter = compiler.compile(String.format(
-						"length >= %d && meanQuality >= %f", minLength,
-						minQuality));
-			} else if (minQuality != null) {
-				filter = compiler.compile(String.format("meanQuality >= %f",
-						minQuality));
-			} else if (minLength != null) {
-				filter = compiler.compile(String.format("length >= %d",
-						minLength));
-			} else
-				throw new RuntimeException(
-						"You need to specify -Q, -L or -e in command line.");
-		}
+
+		if (name != null) {
+			log.info(String.format("Filter by name '%s'", name));
+			// filter =
+			// compiler.compile(String.format("name.matches(\"%s\")",name));
+			throw new RuntimeException("Not Implemented");
+		} else if (minQuality != null && minLength != null) {
+			/*
+			 * filter = compiler.compile(String.format(
+			 * "length >= %d && meanQuality >= %f", minLength, minQuality));
+			 */
+			throw new RuntimeException("Not Implemented");
+		} else if (minQuality != null) {
+			filter = new QualityFilter(minQuality);
+		} else if (minLength != null) {
+			filter = new LengthFilter(minLength);
+		} else
+			throw new RuntimeException(
+					"You need to specify -Q, -L or -e in command line.");
 
 		if (logQual != null)
 			logQualOut = new PrintStream(new FileOutputStream(logQual));
@@ -134,7 +130,8 @@ public class Filter extends Tool {
 		if (report.filtered == report.total && output != null) {
 			FileUtils.openOutputStream(new File(output)).write("".getBytes());
 			if (outputQual != null) {
-				FileUtils.openOutputStream(new File(outputQual)).write("".getBytes());
+				FileUtils.openOutputStream(new File(outputQual)).write(
+						"".getBytes());
 			}
 		}
 
@@ -149,6 +146,7 @@ public class Filter extends Tool {
 	public String getName() {
 		return "filter";
 	}
+
 	@Override
 	public String getGroup() {
 		return "sequence";

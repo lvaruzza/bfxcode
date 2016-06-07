@@ -7,17 +7,25 @@ import java.util.TreeMap;
 
 import com.google.common.primitives.UnsignedBytes;
 
-public class BytePrefixes implements Iterable<Map.Entry<byte[],Long>> {
+public class BytePrefixeMap implements BytePrefix {
 	private Map<byte[],Long> prefix;
 	
-	public BytePrefixes() {
+	public BytePrefixeMap() {
 		prefix = new TreeMap<byte[],Long>(UnsignedBytes.lexicographicalComparator());
 	}
 	
+	/* (non-Javadoc)
+	 * @see bfx.tools.sequence.prefix.BytePrefix#add(byte[])
+	 */
+	@Override
 	public void add(byte[] x) {
 		add(x,0,x.length);
 	}
 
+	/* (non-Javadoc)
+	 * @see bfx.tools.sequence.prefix.BytePrefix#add(byte[], int, int)
+	 */
+	@Override
 	public void add(byte[] x,int start,int end) {
 		
 		for(int i=start+1;i<=end;i++) {
@@ -29,6 +37,10 @@ public class BytePrefixes implements Iterable<Map.Entry<byte[],Long>> {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see bfx.tools.sequence.prefix.BytePrefix#iterator()
+	 */
+	@Override
 	public Iterator<Map.Entry<byte[],Long>> iterator() {
 		return prefix.entrySet().iterator();
 	}
